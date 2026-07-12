@@ -672,3 +672,11 @@ ul { list-style: none; }
   }
   #guarantee .trust-icon svg{ width:23px; height:23px; }
 }
+
+/* ===== gallery ===== */
+#gallery .gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:920px;margin:0 auto;align-items:end}
+#gallery .gal-item{margin:0;text-align:center}
+#gallery .gal-item img{width:100%;max-width:270px;height:auto;filter:drop-shadow(0 22px 46px rgba(16,64,120,.22));transition:transform .35s ease}
+#gallery .gal-item img:hover{transform:translateY(-10px)}
+#gallery figcaption{margin-top:18px;font-weight:600;color:var(--ink);font-size:15px}
+@media(max-width:760px){#gallery .gal-grid{grid-template-columns:1fr;gap:40px}}
