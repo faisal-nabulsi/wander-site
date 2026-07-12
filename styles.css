@@ -680,3 +680,11 @@ ul { list-style: none; }
 #gallery .gal-item img:hover{transform:translateY(-10px)}
 #gallery figcaption{margin-top:18px;font-weight:600;color:var(--ink);font-size:15px}
 @media(max-width:760px){#gallery .gal-grid{grid-template-columns:1fr;gap:40px}}
+
+/* ===== download columns (iPhone / Desktop) ===== */
+#download .dl-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:22px;text-align:center}
+#download .dl-col{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:var(--radius-lg);padding:26px 22px}
+#download .dl-col h3{margin:0 0 6px;font-size:20px;color:#fff}
+#download .dl-sub{font-size:14px;opacity:.9;margin:0 0 16px;color:#fff}
+#download .dl-soon{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:#F5A623;color:#241700;border-radius:8px;padding:3px 8px;vertical-align:middle;margin-left:6px}
+@media(max-width:720px){#download .dl-cols{grid-template-columns:1fr}}
