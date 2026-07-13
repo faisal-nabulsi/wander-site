@@ -704,3 +704,87 @@ ul { list-style: none; }
 #gallery .gal-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:22px;max-width:none}
 #gallery .gal-item{flex:0 0 auto;width:min(200px,42vw)}
 #gallery .gal-item img{max-width:100%;border-radius:22px}
+
+/* ==========================================================================
+   Multi-page additions — appended when the site was split into
+   index / features / download / pricing / contact pages.
+   ========================================================================== */
+
+/* Current-page highlight in the top nav (class set per page in the HTML) */
+.nav-links a.active { color: var(--brand); background: var(--bg-tint); }
+.nav-links a.active:hover { color: var(--brand); background: var(--bg-tint); }
+.nav-mobile a.active { color: var(--brand); background: var(--bg-tint); font-weight: 700; }
+
+/* Centered "see more" row under a grid (e.g. See all features / install guide) */
+.more-row { margin-top: 36px; text-align: center; }
+
+/* ==========================================================================
+   Account system — auth pages (login.html / account.html) + nav auth link
+   ========================================================================== */
+
+/* Signed-in nav link: truncate long emails so the nav never overflows */
+.nav-links a.nav-auth-in {
+  max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* Centered single-column layout for auth pages (below the sticky nav) */
+.auth-section { padding: clamp(48px, 8vw, 96px) 0; background: var(--grad-soft); min-height: 70vh; }
+.auth-card {
+  width: min(440px, 92vw); margin: 0 auto; background: #fff;
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg); padding: clamp(28px, 5vw, 40px);
+}
+.auth-card .brand-mark { display: grid; place-items: center; margin-bottom: 18px; }
+.auth-card .brand-mark svg { width: 44px; height: 44px; border-radius: 12px; box-shadow: var(--shadow-sm); }
+.auth-head { text-align: center; margin-bottom: 24px; }
+.auth-head h1 { font-size: clamp(1.5rem, 3.4vw, 1.9rem); letter-spacing: -.02em; }
+.auth-head p { margin-top: 8px; color: var(--ink-2); font-size: .96rem; }
+
+/* Reuse the contact-form field styling; add a grid + label spacing */
+.auth-form { display: grid; gap: 14px; }
+.auth-form label { font-weight: 700; font-size: .88rem; color: var(--ink-2); display: block; margin-bottom: 6px; }
+.auth-form input {
+  width: 100%; font-family: inherit; font-size: 1rem; padding: 13px 15px;
+  border: 1.5px solid var(--line); border-radius: 12px; background: #fff;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.auth-form input:focus { outline: none; border-color: var(--brand-400); box-shadow: 0 0 0 4px rgba(63,143,220,.15); }
+
+/* Small inline message area for auth errors / status */
+.auth-msg { min-height: 20px; font-size: .9rem; font-weight: 600; text-align: center; }
+.auth-msg.err { color: #c0392b; }
+.auth-msg.ok  { color: #14804a; }
+
+/* "or" divider between email form and Google button */
+.auth-divider { display: flex; align-items: center; gap: 12px; color: var(--ink-3); font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin: 20px 0; }
+.auth-divider::before, .auth-divider::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+/* Google button — ghost style with the multicolour G */
+.btn-google { background: #fff; color: var(--ink); border-color: var(--line); box-shadow: var(--shadow-sm); }
+.btn-google:hover { transform: translateY(-2px); border-color: var(--brand-300); box-shadow: var(--shadow-md); }
+.btn-google svg { width: 18px; height: 18px; }
+
+/* Toggle line under the form ("Need an account? Sign up") */
+.auth-toggle { margin-top: 20px; text-align: center; font-size: .92rem; color: var(--ink-2); }
+.auth-toggle button {
+  background: none; border: 0; font: inherit; font-weight: 700; color: var(--brand);
+  cursor: pointer; padding: 0; text-decoration: underline;
+}
+
+/* ---------- Account dashboard ---------- */
+.account-wrap { width: min(560px, 92vw); margin: 0 auto; }
+.account-head { margin-bottom: 24px; }
+.account-head h1 { font-size: clamp(1.6rem, 3.6vw, 2.1rem); letter-spacing: -.02em; }
+.account-head .email { margin-top: 6px; color: var(--ink-2); font-weight: 600; word-break: break-all; }
+.account-card {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-sm); padding: 26px 24px; margin-bottom: 18px;
+}
+.account-card h2 { font-size: 1.05rem; color: var(--ink-2); margin-bottom: 10px; }
+.plan-badge {
+  display: inline-flex; align-items: center; gap: 8px; font-weight: 800;
+  font-size: 1.4rem; letter-spacing: -.02em; color: var(--ink);
+}
+.plan-badge .chip { font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--brand); background: var(--bg-tint); padding: 4px 11px; border-radius: 100px; }
+.account-card .muted { margin-top: 8px; color: var(--ink-3); font-size: .9rem; }
+.account-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; }

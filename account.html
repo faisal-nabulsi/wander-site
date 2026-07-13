@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your Wander account</title>
+<meta name="description" content="Manage your Wander account, license, and plan." />
+<meta name="robots" content="noindex" />
+<meta name="theme-color" content="#185FA5" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  /* Hide the dashboard until we confirm the user is signed in, to avoid a
+     flash of the signed-in UI before the redirect fires for logged-out users. */
+  #accountMain { display: none; }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand" aria-label="Wander home">
+      <img class="logo" src="wander-logo.png" alt="Wander" width="34" height="34">
+      Wander
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="download.html">Download</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" id="navAuthLink" class="active">Log in</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost" target="_blank" rel="noopener">GitHub</a>
+      <a href="download.html" class="btn btn-primary">Download</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="nav-mobile" id="navMobile">
+  <a href="index.html">Home</a>
+  <a href="features.html">Features</a>
+  <a href="download.html">Download</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="contact.html">Contact</a>
+  <a href="login.html" id="navAuthLinkMobile" class="active">Log in</a>
+</nav>
+
+<!-- ===================== DASHBOARD ===================== -->
+<section class="section" id="accountMain">
+  <div class="wrap account-wrap">
+    <div class="account-head reveal">
+      <span class="eyebrow">Account</span>
+      <h1>Your account</h1>
+      <div class="email" id="acctEmail">—</div>
+    </div>
+
+    <!-- Your plan -->
+    <div class="account-card reveal">
+      <h2>Your plan</h2>
+      <!-- TODO: Once payments/licensing are wired, read the user's real plan
+           from Firestore (e.g. doc users/{uid}.plan) and render it here in
+           place of the hard-coded "Free" below. -->
+      <div class="plan-badge">Free <span class="chip">Trial</span></div>
+      <p class="muted">You're on the free trial. Upgrade to Wander Pro for unlimited teleports, joystick, and routes.</p>
+      <div class="account-actions" style="margin-top:16px">
+        <a href="pricing.html" class="btn btn-primary">Upgrade to Pro</a>
+      </div>
+    </div>
+
+    <!-- Session -->
+    <div class="account-card reveal">
+      <h2>Session</h2>
+      <p class="muted">Signed in as the email shown above. Sign out to switch accounts.</p>
+      <div class="account-actions" style="margin-top:16px">
+        <button type="button" class="btn btn-ghost" id="signOutBtn">Sign out</button>
+      </div>
+      <div class="auth-msg err" id="acctMsg" role="status" aria-live="polite" style="text-align:left;margin-top:10px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="brand">
+          <img class="logo" src="wander-logo.png" alt="Wander" width="34" height="34">
+          Wander
+        </a>
+        <p>Your location, anywhere. A clean, affordable iPhone location changer with a free trial.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="download.html#instructions">Install guide</a></li>
+          <li><a href="download.html">Download</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:faisalnab25@gmail.com">Email</a></li>
+          <li><a href="https://github.com/faisal-nabulsi/Wander" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://discord.gg/gfHdsRXUVA" target="_blank" rel="noopener">Discord</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Wander. Built by Faisal Nabulsi.</span>
+      <span>For personal &amp; testing use — you're responsible for the terms of the apps you use it with.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script type="module" src="auth.js"></script>
+
+<!-- Page logic: gate on auth, fill email, wire sign-out -->
+<script type="module">
+  import { auth, onAuthStateChanged, logout, friendlyError } from "./auth.js";
+
+  const main    = document.getElementById("accountMain");
+  const emailEl = document.getElementById("acctEmail");
+  const msg     = document.getElementById("acctMsg");
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      // Not signed in → bounce to login.
+      location.replace("login.html");
+      return;
+    }
+    emailEl.textContent = user.email || "(no email on this account)";
+    main.style.display = "block";
+  });
+
+  document.getElementById("signOutBtn").addEventListener("click", async () => {
+    msg.textContent = "";
+    try {
+      await logout();
+      location.replace("login.html"); // signed out → back to login
+    } catch (err) {
+      msg.textContent = friendlyError(err);
+    }
+  });
+</script>
+</body>
+</html>

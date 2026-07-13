@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Log in to Wander</title>
+<meta name="description" content="Log in or create your Wander account to manage your license and plan." />
+<meta name="robots" content="noindex" />
+<meta name="theme-color" content="#185FA5" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand" aria-label="Wander home">
+      <img class="logo" src="wander-logo.png" alt="Wander" width="34" height="34">
+      Wander
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="download.html">Download</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" id="navAuthLink" class="active">Log in</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost" target="_blank" rel="noopener">GitHub</a>
+      <a href="download.html" class="btn btn-primary">Download</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="nav-mobile" id="navMobile">
+  <a href="index.html">Home</a>
+  <a href="features.html">Features</a>
+  <a href="download.html">Download</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="contact.html">Contact</a>
+  <a href="login.html" id="navAuthLinkMobile" class="active">Log in</a>
+</nav>
+
+<!-- ===================== AUTH CARD ===================== -->
+<section class="auth-section">
+  <div class="wrap">
+    <div class="auth-card reveal">
+      <div class="brand-mark">
+        <svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="#185FA5"/><path d="M50 22c-11 0-20 9-20 20 0 15 20 36 20 36s20-21 20-36c0-11-9-20-20-20z" fill="#fff"/><circle cx="50" cy="42" r="8" fill="#185FA5"/></svg>
+      </div>
+      <div class="auth-head">
+        <h1 id="authTitle">Welcome back</h1>
+        <p id="authSubtitle">Log in to manage your Wander license.</p>
+      </div>
+
+      <form class="auth-form" id="authForm" novalidate>
+        <div>
+          <label for="authEmail">Email</label>
+          <input id="authEmail" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+        </div>
+        <div>
+          <label for="authPassword">Password</label>
+          <input id="authPassword" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" minlength="6" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="authSubmit">Log in</button>
+        <div class="auth-msg" id="authMsg" role="status" aria-live="polite"></div>
+      </form>
+
+      <div class="auth-divider">or</div>
+
+      <button type="button" class="btn btn-google btn-block" id="googleBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.15-4.53H2.18v2.84A11 11 0 0012 23z"/><path fill="#FBBC05" d="M5.85 14.1a6.6 6.6 0 010-4.2V7.06H2.18a11 11 0 000 9.88l3.67-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1A11 11 0 002.18 7.06l3.67 2.84C6.71 7.3 9.14 5.38 12 5.38z"/></svg>
+        Continue with Google
+      </button>
+
+      <div class="auth-toggle" id="authToggleWrap">
+        <span id="authTogglePrompt">New to Wander?</span>
+        <button type="button" id="authToggleBtn">Create an account</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="brand">
+          <img class="logo" src="wander-logo.png" alt="Wander" width="34" height="34">
+          Wander
+        </a>
+        <p>Your location, anywhere. A clean, affordable iPhone location changer with a free trial.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="download.html#instructions">Install guide</a></li>
+          <li><a href="download.html">Download</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:faisalnab25@gmail.com">Email</a></li>
+          <li><a href="https://github.com/faisal-nabulsi/Wander" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://discord.gg/gfHdsRXUVA" target="_blank" rel="noopener">Discord</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Wander. Built by Faisal Nabulsi.</span>
+      <span>For personal &amp; testing use — you're responsible for the terms of the apps you use it with.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script type="module" src="auth.js"></script>
+
+<!-- Page logic: toggle login/sign-up, submit, Google, redirect on success -->
+<script type="module">
+  import {
+    auth, onAuthStateChanged,
+    loginEmail, signUpEmail, loginGoogle, friendlyError,
+  } from "./auth.js";
+
+  // If already signed in, skip straight to the dashboard.
+  onAuthStateChanged(auth, (user) => { if (user) location.replace("account.html"); });
+
+  const form      = document.getElementById("authForm");
+  const emailEl    = document.getElementById("authEmail");
+  const passEl     = document.getElementById("authPassword");
+  const submitBtn  = document.getElementById("authSubmit");
+  const msg        = document.getElementById("authMsg");
+  const title      = document.getElementById("authTitle");
+  const subtitle   = document.getElementById("authSubtitle");
+  const togglePrompt = document.getElementById("authTogglePrompt");
+  const toggleBtn  = document.getElementById("authToggleBtn");
+  const googleBtn  = document.getElementById("googleBtn");
+
+  let mode = "login"; // or "signup"
+
+  function setMsg(text, kind) {
+    msg.textContent = text || "";
+    msg.className = "auth-msg" + (kind ? " " + kind : "");
+  }
+
+  function applyMode() {
+    if (mode === "login") {
+      title.textContent = "Welcome back";
+      subtitle.textContent = "Log in to manage your Wander license.";
+      submitBtn.textContent = "Log in";
+      passEl.autocomplete = "current-password";
+      togglePrompt.textContent = "New to Wander?";
+      toggleBtn.textContent = "Create an account";
+    } else {
+      title.textContent = "Create your account";
+      subtitle.textContent = "Sign up to save your license and plan.";
+      submitBtn.textContent = "Sign up";
+      passEl.autocomplete = "new-password";
+      togglePrompt.textContent = "Already have an account?";
+      toggleBtn.textContent = "Log in";
+    }
+    setMsg("");
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    mode = mode === "login" ? "signup" : "login";
+    applyMode();
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = emailEl.value.trim();
+    const password = passEl.value;
+    if (!email || !password) { setMsg("Please enter your email and password.", "err"); return; }
+
+    submitBtn.disabled = true;
+    setMsg(mode === "login" ? "Logging in…" : "Creating your account…", "ok");
+    try {
+      if (mode === "login") await loginEmail(email, password);
+      else                  await signUpEmail(email, password);
+      location.replace("account.html"); // success
+    } catch (err) {
+      setMsg(friendlyError(err), "err");
+      submitBtn.disabled = false;
+    }
+  });
+
+  googleBtn.addEventListener("click", async () => {
+    googleBtn.disabled = true;
+    setMsg("Opening Google sign-in…", "ok");
+    try {
+      await loginGoogle();
+      location.replace("account.html"); // success
+    } catch (err) {
+      setMsg(friendlyError(err), "err");
+      googleBtn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
