@@ -331,6 +331,7 @@ ul { list-style: none; }
 }
 @media (max-width: 820px) {
   .feature-grid, .price-grid { grid-template-columns: 1fr; }
+  .feature.wide { grid-column: 1 / -1; }   /* was span 3 → invented implicit cols → page overflow */
   .plan.popular { transform: none; }
   .steps { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
@@ -688,3 +689,10 @@ ul { list-style: none; }
 #download .dl-sub{font-size:14px;opacity:.9;margin:0 0 16px;color:#fff}
 #download .dl-soon{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:#F5A623;color:#241700;border-radius:8px;padding:3px 8px;vertical-align:middle;margin-left:6px}
 @media(max-width:720px){#download .dl-cols{grid-template-columns:1fr}}
+
+/* ===== mobile: stack download-card buttons so .dl-col doesn't overflow ===== */
+@media (max-width: 640px) {
+  #download .dl-col { min-width: 0; }
+  #download .dl-col .hero-cta { flex-direction: column; align-items: stretch; }
+  #download .dl-col .btn { width: 100%; justify-content: center; }
+}
