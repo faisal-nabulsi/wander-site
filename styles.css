@@ -696,3 +696,8 @@ ul { list-style: none; }
   #download .dl-col .hero-cta { flex-direction: column; align-items: stretch; }
   #download .dl-col .btn { width: 100%; justify-content: center; }
 }
+
+/* real-screenshot gallery: 5 phones, flex-wrap centered, rounded like the App Store */
+#gallery .gal-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:22px;max-width:none}
+#gallery .gal-item{flex:0 0 auto;width:min(200px,42vw)}
+#gallery .gal-item img{max-width:100%;border-radius:22px}
