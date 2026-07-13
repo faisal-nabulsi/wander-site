@@ -292,11 +292,16 @@
           </div>
         </div>
         <div class="dl-col">
-          <h3>💻 Desktop <span class="dl-soon">Coming soon</span></h3>
-          <p class="dl-sub">Spoof straight from your Mac or PC — all the same modes, no phone install needed. In private beta now.</p>
+          <h3>💻 Desktop <span class="dl-beta">macOS beta</span></h3>
+          <p class="dl-sub">Spoof straight from your Mac — teleport, joystick, routes &amp; PoGo Mode, no phone install needed.</p>
           <div class="hero-cta" style="justify-content:center">
-            <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-ghost btn-lg" target="_blank" rel="noopener">Get notified — join the Discord</a>
+            <a href="downloads/Wander-Desktop-mac.zip" class="btn btn-light btn-lg" download>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+              Download for Mac
+            </a>
+            <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-ghost btn-lg" target="_blank" rel="noopener">Windows? Join the Discord</a>
           </div>
+          <p class="dl-note">Apple Silicon &amp; Intel. Free &amp; open-source. Unsigned beta — see the <a href="#instructions">desktop setup steps</a> to run it (needs admin for the device tunnel).</p>
         </div>
       </div>
     </div>
@@ -341,6 +346,16 @@
           <li>Launch Wander and tap <b>Get Started</b>. The setup checklist confirms everything's ready.</li>
           <li>Drop a pin, grab the joystick, or plan a route — you're anywhere now.</li>
           <li>Wander refreshes itself, so you won't need the computer again.</li>
+        </ol></div>
+      </details>
+      <details>
+        <summary>💻 Prefer your Mac? Set up Wander Desktop <span class="chev">⌄</span></summary>
+        <div class="body"><ol>
+          <li>Download <b>Wander for Mac</b> from the section above, unzip it, and drag <b>Wander Desktop</b> into your <b>Applications</b> folder.</li>
+          <li>First launch only: <b>right-click the app → Open → Open</b> to clear the unsigned-app warning (it's free &amp; open-source, just not paid-notarized).</li>
+          <li>It opens a secure tunnel to your iPhone, which needs admin. Open <b>Terminal</b> and paste, then enter your Mac password:<br>
+            <code>sudo "/Applications/Wander Desktop.app/Contents/MacOS/Wander Desktop"</code></li>
+          <li>Plug your iPhone in (or put it on the same Wi-Fi), click <b>Connect Device</b>, then teleport, joystick, or run a route — all from your Mac.</li>
         </ol></div>
       </details>
     </div>
