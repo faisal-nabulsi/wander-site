@@ -26,6 +26,7 @@ import {
   onAuthStateChanged,
   GoogleAuthProvider,
   signInWithPopup,
+  sendEmailVerification,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 /* ==========================================================================
@@ -78,8 +79,16 @@ function friendlyError(err) {
    3) AUTH ACTIONS (used by login.html / account.html)
    Each returns a Promise; callers await + catch to show friendlyError().
    ========================================================================== */
-export function signUpEmail(email, password) {
-  return createUserWithEmailAndPassword(auth, email, password);
+export async function signUpEmail(email, password) {
+  const cred = await createUserWithEmailAndPassword(auth, email, password);
+  // Send a "confirm your email" verification link right after sign-up.
+  try { await sendEmailVerification(cred.user); } catch (e) { /* non-fatal */ }
+  return cred;
+}
+
+/** Re-send the email-verification link to the currently signed-in user. */
+export async function resendVerification() {
+  if (auth.currentUser) { await sendEmailVerification(auth.currentUser); }
 }
 export function loginEmail(email, password) {
   return signInWithEmailAndPassword(auth, email, password);
@@ -110,16 +119,15 @@ function paintNav(user) {
   links.forEach((el) => {
     if (!el) return;
     if (user) {
-      // Signed in — show the account entry (email, truncated if very long).
-      const label = user.email || "Account";
-      el.textContent = label;
-      el.title = label;
-      el.setAttribute("href", "account.html");
+      // Signed in — show a simple "Account" entry (not the raw email).
+      el.textContent = "Account";
+      el.title = user.email || "Account";
+      el.setAttribute("href", "/account/");
       el.classList.add("nav-auth-in");
     } else {
       el.textContent = "Log in";
       el.removeAttribute("title");
-      el.setAttribute("href", "login.html");
+      el.setAttribute("href", "/login/");
       el.classList.remove("nav-auth-in");
     }
   });

@@ -7,10 +7,10 @@
 <meta name="description" content="Manage your Wander account, license, and plan." />
 <meta name="robots" content="noindex" />
 <meta name="theme-color" content="#185FA5" />
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
-<link rel="apple-touch-icon" href="apple-touch-icon.png" />
-<link rel="stylesheet" href="styles.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="stylesheet" href="/styles.css" />
 <style>
   /* Hide the dashboard until we confirm the user is signed in, to avoid a
      flash of the signed-in UI before the redirect fires for logged-out users. */
@@ -22,32 +22,32 @@
 <!-- ===================== NAV ===================== -->
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
-    <a href="index.html" class="brand" aria-label="Wander home">
-      <img class="logo" src="wander-logo.png" alt="Wander" width="34" height="34">
+    <a href="/" class="brand" aria-label="Wander home">
+      <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
       Wander
     </a>
     <nav class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="features.html">Features</a>
-      <a href="download.html">Download</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="contact.html">Contact</a>
-      <a href="login.html" id="navAuthLink" class="active">Log in</a>
+      <a href="/">Home</a>
+      <a href="/features/">Features</a>
+      <a href="/download/">Download</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/contact/">Contact</a>
+      <a href="/login/" id="navAuthLink" class="active">Log in</a>
     </nav>
     <div class="nav-cta">
       <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost" target="_blank" rel="noopener">GitHub</a>
-      <a href="download.html" class="btn btn-primary">Download</a>
+      <a href="/download/" class="btn btn-primary">Download</a>
       <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
 <nav class="nav-mobile" id="navMobile">
-  <a href="index.html">Home</a>
-  <a href="features.html">Features</a>
-  <a href="download.html">Download</a>
-  <a href="pricing.html">Pricing</a>
-  <a href="contact.html">Contact</a>
-  <a href="login.html" id="navAuthLinkMobile" class="active">Log in</a>
+  <a href="/">Home</a>
+  <a href="/features/">Features</a>
+  <a href="/download/">Download</a>
+  <a href="/pricing/">Pricing</a>
+  <a href="/contact/">Contact</a>
+  <a href="/login/" id="navAuthLinkMobile" class="active">Log in</a>
 </nav>
 
 <!-- ===================== DASHBOARD ===================== -->
@@ -59,6 +59,16 @@
       <div class="email" id="acctEmail">—</div>
     </div>
 
+    <!-- Email-verification banner (shown only when the account's email is unverified) -->
+    <div class="account-card reveal" id="verifyBanner" style="display:none;border:1px solid #F5A623;background:#fff8ec">
+      <h2>⚠️ Confirm your email</h2>
+      <p class="muted">We sent a verification link to your email — click it to confirm your account. Didn't get it? Check spam, or resend below.</p>
+      <div class="account-actions" style="margin-top:14px">
+        <button type="button" class="btn btn-ghost" id="resendVerifyBtn">Resend verification email</button>
+      </div>
+      <div class="auth-msg" id="verifyMsg" role="status" aria-live="polite" style="text-align:left;margin-top:10px"></div>
+    </div>
+
     <!-- Your plan -->
     <div class="account-card reveal">
       <h2>Your plan</h2>
@@ -68,7 +78,7 @@
       <div class="plan-badge">Free <span class="chip">Trial</span></div>
       <p class="muted">You're on the free trial. Upgrade to Wander Pro for unlimited teleports, joystick, and routes.</p>
       <div class="account-actions" style="margin-top:16px">
-        <a href="pricing.html" class="btn btn-primary">Upgrade to Pro</a>
+        <a href="/pricing/" class="btn btn-primary">Upgrade to Pro</a>
       </div>
     </div>
 
@@ -89,8 +99,8 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <a href="index.html" class="brand">
-          <img class="logo" src="wander-logo.png" alt="Wander" width="34" height="34">
+        <a href="/" class="brand">
+          <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
           Wander
         </a>
         <p>Your location, anywhere. A clean, affordable iPhone location changer with a free trial.</p>
@@ -98,10 +108,10 @@
       <div>
         <h4>Product</h4>
         <ul>
-          <li><a href="features.html">Features</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="download.html#instructions">Install guide</a></li>
-          <li><a href="download.html">Download</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/download/#instructions">Install guide</a></li>
+          <li><a href="/download/">Download</a></li>
         </ul>
       </div>
       <div>
@@ -120,12 +130,12 @@
   </div>
 </footer>
 
-<script src="script.js"></script>
-<script type="module" src="auth.js"></script>
+<script src="/script.js"></script>
+<script type="module" src="/auth.js"></script>
 
 <!-- Page logic: gate on auth, fill email, wire sign-out -->
 <script type="module">
-  import { auth, onAuthStateChanged, logout, friendlyError } from "./auth.js";
+  import { auth, onAuthStateChanged, logout, friendlyError, resendVerification } from "/auth.js";
 
   const main    = document.getElementById("accountMain");
   const emailEl = document.getElementById("acctEmail");
@@ -134,18 +144,36 @@
   onAuthStateChanged(auth, (user) => {
     if (!user) {
       // Not signed in → bounce to login.
-      location.replace("login.html");
+      location.replace("/login/");
       return;
     }
     emailEl.textContent = user.email || "(no email on this account)";
     main.style.display = "block";
+    // Show the verify-email banner for accounts that haven't confirmed yet
+    // (Google sign-ins are already verified, so it stays hidden for them).
+    const vb = document.getElementById("verifyBanner");
+    if (vb && user.email && !user.emailVerified) vb.style.display = "block";
+  });
+
+  const resendBtn = document.getElementById("resendVerifyBtn");
+  if (resendBtn) resendBtn.addEventListener("click", async () => {
+    const vm = document.getElementById("verifyMsg");
+    resendBtn.disabled = true;
+    try {
+      await resendVerification();
+      vm.textContent = "✅ Sent — check your inbox (and spam).";
+    } catch (err) {
+      vm.textContent = friendlyError(err);
+    } finally {
+      setTimeout(() => { resendBtn.disabled = false; }, 4000);
+    }
   });
 
   document.getElementById("signOutBtn").addEventListener("click", async () => {
     msg.textContent = "";
     try {
       await logout();
-      location.replace("login.html"); // signed out → back to login
+      location.replace("/login/"); // signed out → back to login
     } catch (err) {
       msg.textContent = friendlyError(err);
     }
