@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 6,
-  "versionName": "0.6.0",
+  "versionCode": 7,
+  "versionName": "0.7.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Save & replay favorite routes (Pro), game presets (Monster Hunter Now/Pikmin/Ingress), an instant Panic-Stop, and folders/tags/notes for saved places."
+  "notes": "Multi-device sync of your saved places (Pro) and an in-app IP-matching guide."
 }
