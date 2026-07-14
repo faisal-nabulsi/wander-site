@@ -1,7 +1,7 @@
 {
   "_comment": "bump WANDER_VERSION in main.py AND version in desktop.json each release.",
-  "version": "1.4.0",
-  "notes": "Saved loops (Pro) \u2014 save a route and run it on repeat \u2014 plus AI natural-language teleport: just type where you want to go.",
+  "version": "1.5.0",
+  "notes": "AI believable-day now takes a prompt (or surprise you), plus a live Raids/Eggs/Events board for Pokemon GO.",
   "url_mac": "https://wanderspoofer.com/downloads/Wander-Desktop-mac.zip",
   "url_win": "https://wanderspoofer.com/downloads/Wander-Windows.zip"
 }
