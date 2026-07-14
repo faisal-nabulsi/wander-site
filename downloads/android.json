@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 18,
-  "versionName": "0.18.0",
+  "versionCode": 19,
+  "versionName": "0.19.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Full translations \u2014 offline maps, appearance, globe and more now appear in all 9 languages (was partly English-only before)."
+  "notes": "Route transport modes \u2014 pick driving, walking, cycling, public transport, boat, or plane (real altitude on plane), each routes differently. Plus drag your stops to reorder the trip."
 }
