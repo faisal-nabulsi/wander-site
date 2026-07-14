@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 21,
-  "versionName": "0.21.0",
+  "versionCode": 22,
+  "versionName": "0.22.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Geofence triggers \u2014 auto-revert to real GPS when you actually arrive somewhere (set a place + radius, arrival or departure)."
+  "notes": "Scheduling \u2014 set Wander to be at a place during set hours (auto start/stop, works even when the app is closed)."
 }
