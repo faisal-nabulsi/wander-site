@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 16,
-  "versionName": "0.16.0",
+  "versionCode": 17,
+  "versionName": "0.17.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Search any address or place (with autocomplete), more natural movement (smooth acceleration, slows into turns), and 2\u00d7/4\u00d7/8\u00d7 route replay."
+  "notes": "Import KML routes (not just GPX), and the panic Stop now gives a firm haptic tap when it reverts you to real GPS."
 }
