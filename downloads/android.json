@@ -1,0 +1,7 @@
+{
+  "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
+  "versionCode": 1,
+  "versionName": "0.1.0",
+  "url": "https://wanderspoofer.com/downloads/Wander.apk",
+  "notes": "Account sign-in + free-trial system."
+}
