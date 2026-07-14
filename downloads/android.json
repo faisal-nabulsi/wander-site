@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 9,
-  "versionName": "0.9.0",
+  "versionCode": 10,
+  "versionName": "0.10.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Record a real route and replay it later (Pro), plus back up & restore all your saved places and routes."
+  "notes": "Choose your language in Settings \u2014 Wander now speaks 9 more languages (Spanish, French, German, Portuguese, Italian, Japanese, Korean, Chinese, Russian)."
 }
