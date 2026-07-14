@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 4,
-  "versionName": "0.4.0",
+  "versionCode": 5,
+  "versionName": "0.5.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Snap routes to real roads + loop them hands-free (Pro), a new Run speed, and more natural, humanized movement."
+  "notes": "Teleport undo, paste coordinates or a Plus Code to teleport, export routes to GPX, and a PoGo cooldown-safety lock."
 }
