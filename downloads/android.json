@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 11,
-  "versionName": "0.11.0",
+  "versionCode": 12,
+  "versionName": "0.12.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "AI believable-day takes a prompt (or surprises you), natural-language teleport (just type where to go), and a live Raids/Eggs/Events board."
+  "notes": "Timed itineraries (Pro) \u2014 queue stops with stay-times, run them in order \u2014 plus a spinnable 3D globe you can tap to teleport."
 }
