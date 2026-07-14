@@ -23,6 +23,18 @@ The free alternative to paid apps like **iMyFone AnyTo** and **Tenorshare iAnyGo
 
 ### 👉 [**Visit the live site → wanderspoofer.com**](https://wanderspoofer.com) &nbsp;·&nbsp; [**⭐ Star this repo**](https://github.com/faisal-nabulsi/wander-site)
 
+<br/>
+
+<a href="https://github.com/faisal-nabulsi/Wander"><img src="https://img.shields.io/badge/⭐_Star_Wander_on_GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Star Wander on GitHub"/></a>
+
+**⭐ [Star Wander on GitHub](https://github.com/faisal-nabulsi/Wander) — it's free, takes one click, and helps more people find a free alternative to the paid spoofers.**
+
+<br/>
+
+[![Join our Discord](https://img.shields.io/badge/💬_Join_the_Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/gfHdsRXUVA)
+
+**💬 [Join the Wander Discord](https://discord.gg/gfHdsRXUVA) — setup help, release updates, and feature requests.**
+
 </div>
 
 ---
@@ -87,6 +99,18 @@ python3 -m http.server 8080   # then open http://localhost:8080
 - Icons are inline SVG; the phone mockups are pure CSS (no image files to host).
 - Fully responsive with a mobile menu, and respects `prefers-reduced-motion`.
 - Want a **contact form that saves messages** (instead of `mailto:`)? Use the **Firebase version** in the sibling `firebase/` folder.
+
+---
+
+## 💬 Community & support
+
+[![Join our Discord](https://img.shields.io/badge/💬_Join_the_Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/gfHdsRXUVA)
+
+**[Join the Wander Discord →](https://discord.gg/gfHdsRXUVA)** for setup help, release updates, and feature requests. It's the fastest way to get unstuck and to hear about new builds first.
+
+- 🌐 **Website:** [wanderspoofer.com](https://wanderspoofer.com)
+- ⭐ **Star the flagship repo:** [give Wander a star](https://github.com/faisal-nabulsi/Wander) — the easiest way to support the project.
+- 💬 **Discord:** [join the server](https://discord.gg/gfHdsRXUVA).
 
 ---
 
