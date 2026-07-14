@@ -1,7 +1,7 @@
 {
   "_comment": "bump WANDER_VERSION in main.py AND version in desktop.json each release.",
-  "version": "1.11.0",
-  "notes": "Export your drawn routes and pins as GPX or KML (for Garmin, Google Earth, AllTrails and more), not just GeoJSON.",
+  "version": "1.12.0",
+  "notes": "Route transport modes \u2014 pick driving, walking, cycling, public transport, boat, or plane for a route (boat/plane fly a great-circle path), and drag your stops to reorder the trip.",
   "url_mac": "https://wanderspoofer.com/downloads/Wander-Desktop-mac.zip",
   "url_win": "https://wanderspoofer.com/downloads/Wander-Windows.zip"
 }
