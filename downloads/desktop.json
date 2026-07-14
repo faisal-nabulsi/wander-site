@@ -1,7 +1,7 @@
 {
   "_comment": "bump WANDER_VERSION in main.py AND version in desktop.json each release.",
-  "version": "1.3.0",
-  "notes": "AI 'generate a believable day' (Pro) you can replay, plus multi-game presets (Pokemon GO / Monster Hunter Now / Pikmin Bloom / Ingress).",
+  "version": "1.4.0",
+  "notes": "Saved loops (Pro) \u2014 save a route and run it on repeat \u2014 plus AI natural-language teleport: just type where you want to go.",
   "url_mac": "https://wanderspoofer.com/downloads/Wander-Desktop-mac.zip",
   "url_win": "https://wanderspoofer.com/downloads/Wander-Windows.zip"
 }
