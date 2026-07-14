@@ -1,7 +1,7 @@
 {
   "_comment": "bump WANDER_VERSION in main.py AND version in desktop.json each release.",
-  "version": "1.5.0",
-  "notes": "AI believable-day now takes a prompt (or surprise you), plus a live Raids/Eggs/Events board for Pokemon GO.",
+  "version": "1.6.0",
+  "notes": "Spin a 3D globe and tap anywhere to teleport, plus timed itineraries (Pro) \u2014 queue stops with stay-times and run them in order.",
   "url_mac": "https://wanderspoofer.com/downloads/Wander-Desktop-mac.zip",
   "url_win": "https://wanderspoofer.com/downloads/Wander-Windows.zip"
 }
