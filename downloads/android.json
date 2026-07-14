@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 22,
-  "versionName": "0.22.0",
+  "versionCode": 23,
+  "versionName": "0.23.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Scheduling \u2014 set Wander to be at a place during set hours (auto start/stop, works even when the app is closed)."
+  "notes": "Flight planner \u2014 pick two airports (or a time range to choose a flight) and fly the route. Plus 'hold perfectly still' and 'approximate location' privacy toggles."
 }
