@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 2,
-  "versionName": "0.2.0",
+  "versionCode": 3,
+  "versionName": "0.3.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Live local time & weather at your spoofed location."
+  "notes": "Street View \u2014 preview the real street before you teleport (Pro), plus live time & weather."
 }
