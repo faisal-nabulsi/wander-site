@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 10,
-  "versionName": "0.10.0",
+  "versionCode": 11,
+  "versionName": "0.11.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Choose your language in Settings \u2014 Wander now speaks 9 more languages (Spanish, French, German, Portuguese, Italian, Japanese, Korean, Chinese, Russian)."
+  "notes": "AI believable-day takes a prompt (or surprises you), natural-language teleport (just type where to go), and a live Raids/Eggs/Events board."
 }
