@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 14,
-  "versionName": "0.14.0",
+  "versionCode": 15,
+  "versionName": "0.15.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Offline maps \u2014 download a map area and use it without internet (teleport, joystick and routes work offline)."
+  "notes": "Cleaner offline experience \u2014 calm messages instead of broken screens, a subtle offline indicator, and teleport/joystick/routes keep working with no connection."
 }
