@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 7,
-  "versionName": "0.7.0",
+  "versionCode": 8,
+  "versionName": "0.8.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Multi-device sync of your saved places (Pro) and an in-app IP-matching guide."
+  "notes": "AI: generate a believable daily routine (home-work-gym) you can replay (Pro)."
 }
