@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 19,
-  "versionName": "0.19.0",
+  "versionCode": 20,
+  "versionName": "0.20.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Route transport modes \u2014 pick driving, walking, cycling, public transport, boat, or plane (real altitude on plane), each routes differently. Plus drag your stops to reorder the trip."
+  "notes": "Smooth long jumps \u2014 big teleports glide over a few seconds so apps can't flag an impossible instant jump. Plus one-tap Reverse route."
 }
