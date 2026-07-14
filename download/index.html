@@ -94,6 +94,11 @@
           <p class="dl-note">Apple Silicon &amp; Intel. Free &amp; open-source. Unsigned beta — see the <a href="#instructions">desktop setup steps</a> to run it (needs admin for the device tunnel).</p>
         </div>
       </div>
+      <div style="max-width:760px;margin:20px auto 0;padding:14px 16px;border:1px solid #F5A623;background:#fff8ec;border-radius:12px;color:#5a4a2a;font-size:14px;line-height:1.55;text-align:left">
+        <strong>⚠️ macOS says "damaged" or "can't be opened"?</strong> It's not damaged — that's just macOS blocking an unsigned app. Drag the app into <b>Applications</b>, then paste this into <b>Terminal</b> (⌘-Space → "Terminal") and press Return:
+        <div style="margin:8px 0;padding:9px 11px;background:#1e1e1e;color:#e8e8e8;border-radius:8px;font-family:ui-monospace,Menlo,monospace;font-size:13px;overflow-x:auto">xattr -cr /Applications/Wander\ Installer.app</div>
+        For the desktop app, use <code style="background:#eaeaea;padding:1px 5px;border-radius:4px;font-family:ui-monospace,Menlo,monospace;font-size:12px">xattr -cr /Applications/Wander\ Desktop.app</code> instead. Then open it normally — you only do this once. <a href="#instructions">Full setup guide →</a>
+      </div>
     </div>
   </div>
 </section>
