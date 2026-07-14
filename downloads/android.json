@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 20,
-  "versionName": "0.20.0",
+  "versionCode": 21,
+  "versionName": "0.21.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Smooth long jumps \u2014 big teleports glide over a few seconds so apps can't flag an impossible instant jump. Plus one-tap Reverse route."
+  "notes": "Geofence triggers \u2014 auto-revert to real GPS when you actually arrive somewhere (set a place + radius, arrival or departure)."
 }
