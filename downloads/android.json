@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 8,
-  "versionName": "0.8.0",
+  "versionCode": 9,
+  "versionName": "0.9.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "AI: generate a believable daily routine (home-work-gym) you can replay (Pro)."
+  "notes": "Record a real route and replay it later (Pro), plus back up & restore all your saved places and routes."
 }
