@@ -1,7 +1,7 @@
 {
   "_comment": "bump WANDER_VERSION in main.py AND version in desktop.json each release.",
-  "version": "1.9.0",
-  "notes": "Back up & restore all your data, organize favorites with folders/tags/notes, and a Dark Mode toggle.",
+  "version": "1.10.0",
+  "notes": "Choose your language \u2014 the app now speaks 9 languages (English, Espa\u00f1ol, Fran\u00e7ais, Deutsch, Portugu\u00eas, Italiano, \u65e5\u672c\u8a9e, \ud55c\uad6d\uc5b4, \u7b80\u4f53\u4e2d\u6587, \u0420\u0443\u0441\u0441\u043a\u0438\u0439).",
   "url_mac": "https://wanderspoofer.com/downloads/Wander-Desktop-mac.zip",
   "url_win": "https://wanderspoofer.com/downloads/Wander-Windows.zip"
 }
