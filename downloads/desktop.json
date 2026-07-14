@@ -1,7 +1,7 @@
 {
   "_comment": "bump WANDER_VERSION in main.py AND version in desktop.json each release.",
-  "version": "1.8.0",
-  "notes": "Multi-device (beta): hold a location on several connected iPhones at once from one desktop.",
+  "version": "1.9.0",
+  "notes": "Back up & restore all your data, organize favorites with folders/tags/notes, and a Dark Mode toggle.",
   "url_mac": "https://wanderspoofer.com/downloads/Wander-Desktop-mac.zip",
   "url_win": "https://wanderspoofer.com/downloads/Wander-Windows.zip"
 }
