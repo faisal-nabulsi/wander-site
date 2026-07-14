@@ -6,7 +6,7 @@
 
 # Wander — Website
 
-### The landing page for **Wander**, the free, open-source location spoofer for iPhone, Android, Mac & Windows.
+### The landing page for **Wander**, the affordable location spoofer for iPhone, Android, Mac & Windows — with a real free trial.
 
 The free alternative to paid apps like **iMyFone AnyTo** and **Tenorshare iAnyGo**.
 
@@ -16,7 +16,7 @@ The free alternative to paid apps like **iMyFone AnyTo** and **Tenorshare iAnyGo
 [![Download](https://img.shields.io/badge/⬇️_Download-Free-22C55E?style=for-the-badge)](https://wanderspoofer.com/#download)
 [![Discord](https://img.shields.io/badge/💬_Discord-Join-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/gfHdsRXUVA)
 
-[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg?style=flat-square)](../LICENSE)
+![Free trial](https://img.shields.io/badge/Free_trial-no_card-22C55E?style=flat-square)
 ![Platform](https://img.shields.io/badge/platform-iOS_·_Android_·_macOS_·_Windows-lightgrey?style=flat-square)
 
 <br/>
@@ -45,7 +45,7 @@ This repo just hosts the marketing site. To **download the app and get set up in
 
 ### 👉 [**wanderspoofer.com**](https://wanderspoofer.com) — teleport, joystick, routes, GPX import, no jailbreak.
 
-**Get the app source:**
+**Follow the app on GitHub:**
 - 📱 **iOS (flagship):** [github.com/faisal-nabulsi/Wander](https://github.com/faisal-nabulsi/Wander)
 - 💻 **Desktop (Mac & Windows):** [github.com/faisal-nabulsi/wander-desktop](https://github.com/faisal-nabulsi/wander-desktop)
 
@@ -114,9 +114,12 @@ python3 -m http.server 8080   # then open http://localhost:8080
 
 ---
 
-## 📜 License
+## 💸 Why Wander
 
-Wander is free and open-source under the **GNU AGPL-3.0**. See [LICENSE](../LICENSE).
+- **A real free trial** — no credit card, real features (not a countdown lock).
+- **Affordable, one-time pricing** — $3.99/mo, $36/yr, or an $80 lifetime license, instead of the recurring subscriptions rivals charge.
+- **Four platforms, one license** — iPhone, Android, Mac & Windows.
+- **No jailbreak, no root**, and honest, privacy-respecting by design.
 
 ---
 

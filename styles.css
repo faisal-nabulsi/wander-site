@@ -803,6 +803,18 @@ ul { list-style: none; }
   .nav-mobile .nav-mobile-social a.btn-discord:hover { background: #4752c4; }
 }
 
+/* "Get Pro" — the primary action in the header, on desktop and mobile.
+   Reuses .btn-primary; .btn-pro just adds a little presence so it reads as
+   the top CTA next to the other nav buttons. */
+.nav-cta .btn-pro { font-weight: 800; }
+/* Mobile-menu "Get Pro": a full-width primary button. Override the plain
+   .nav-mobile a text styling so the .btn-primary look (gradient + white) wins. */
+.nav-mobile a.nav-mobile-pro {
+  display: block; margin: 10px 6vw 4px; padding: 13px 20px; text-align: center;
+  border-radius: 100px; color: #fff; font-weight: 800;
+}
+.nav-mobile a.nav-mobile-pro:hover { color: #fff; background: var(--grad); }
+
 /* Centered single-column layout for auth pages (below the sticky nav) */
 .auth-section { padding: clamp(48px, 8vw, 96px) 0; background: var(--grad-soft); min-height: 70vh; }
 .auth-card {
