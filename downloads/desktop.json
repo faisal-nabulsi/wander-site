@@ -1,7 +1,7 @@
 {
   "_comment": "bump WANDER_VERSION in main.py AND version in desktop.json each release.",
-  "version": "1.2.0",
-  "notes": "Fixes location search (adds a fallback so a busy map service no longer shows 'no results'), adds a Panic button that instantly reverts to your real GPS, and an IP-matching guide.",
+  "version": "1.3.0",
+  "notes": "AI 'generate a believable day' (Pro) you can replay, plus multi-game presets (Pokemon GO / Monster Hunter Now / Pikmin Bloom / Ingress).",
   "url_mac": "https://wanderspoofer.com/downloads/Wander-Desktop-mac.zip",
   "url_win": "https://wanderspoofer.com/downloads/Wander-Windows.zip"
 }
