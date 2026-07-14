@@ -1,7 +1,7 @@
 {
   "_comment": "bump WANDER_VERSION in main.py AND version in desktop.json each release.",
-  "version": "1.7.0",
-  "notes": "Heads-up when your computer's time zone doesn't match your spoofed location (some apps compare them). Satellite + dark map already available in the layer switcher.",
+  "version": "1.8.0",
+  "notes": "Multi-device (beta): hold a location on several connected iPhones at once from one desktop.",
   "url_mac": "https://wanderspoofer.com/downloads/Wander-Desktop-mac.zip",
   "url_win": "https://wanderspoofer.com/downloads/Wander-Windows.zip"
 }
