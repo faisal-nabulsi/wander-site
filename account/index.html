@@ -69,15 +69,12 @@
       <div class="auth-msg" id="verifyMsg" role="status" aria-live="polite" style="text-align:left;margin-top:10px"></div>
     </div>
 
-    <!-- Your plan -->
+    <!-- Your plan (filled from Firestore licenses/{uid} by the script below) -->
     <div class="account-card reveal">
       <h2>Your plan</h2>
-      <!-- TODO: Once payments/licensing are wired, read the user's real plan
-           from Firestore (e.g. doc users/{uid}.plan) and render it here in
-           place of the hard-coded "Free" below. -->
-      <div class="plan-badge">Free <span class="chip">Trial</span></div>
-      <p class="muted">You're on the free trial. Upgrade to Wander Pro for unlimited teleports, joystick, and routes.</p>
-      <div class="account-actions" style="margin-top:16px">
+      <div class="plan-badge" id="planBadge">Free <span class="chip">Trial</span></div>
+      <p class="muted" id="planDesc">Checking your plan…</p>
+      <div class="account-actions" id="planActions" style="margin-top:16px">
         <a href="/pricing/" class="btn btn-primary">Upgrade to Pro</a>
       </div>
     </div>
@@ -136,7 +133,9 @@
 <!-- Page logic: gate on auth, fill email, wire sign-out -->
 <script type="module">
   import { auth, onAuthStateChanged, logout, friendlyError, resendVerification } from "/auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+  const db      = getFirestore(auth.app);
   const main    = document.getElementById("accountMain");
   const emailEl = document.getElementById("acctEmail");
   const msg     = document.getElementById("acctMsg");
@@ -153,7 +152,44 @@
     // (Google sign-ins are already verified, so it stays hidden for them).
     const vb = document.getElementById("verifyBanner");
     if (vb && user.email && !user.emailVerified) vb.style.display = "block";
+    // Read the real Pro entitlement and render the plan card.
+    loadPlan(user);
   });
+
+  /* Read licenses/{uid} first (the Worker keys purchases by Firebase UID). If
+     that's not Pro, fall back to licenses/{lowercased-email} for any purchase
+     that came in without a UID. The Firestore rules only let a user read their
+     own doc, so this is safe. */
+  async function loadPlan(user) {
+    let plan = "free";
+    try {
+      const byUid = await getDoc(doc(db, "licenses", user.uid));
+      if (byUid.exists() && byUid.data().plan === "pro") {
+        plan = "pro";
+      } else if (user.email) {
+        const byEmail = await getDoc(doc(db, "licenses", user.email.toLowerCase()));
+        if (byEmail.exists() && byEmail.data().plan === "pro") plan = "pro";
+      }
+    } catch (e) {
+      // Network/permission hiccup → leave as free, don't block the page.
+    }
+    renderPlan(plan);
+  }
+
+  function renderPlan(plan) {
+    const badge   = document.getElementById("planBadge");
+    const desc    = document.getElementById("planDesc");
+    const actions = document.getElementById("planActions");
+    if (plan === "pro") {
+      badge.innerHTML = 'Pro <span class="chip">Active</span>';
+      desc.textContent = "You're on Wander Pro — everything's unlocked on iOS, Android, and desktop. Thanks for supporting Wander 💙";
+      actions.innerHTML = '<a href="/download/" class="btn btn-primary">Open the apps</a>';
+    } else {
+      badge.innerHTML = 'Free <span class="chip">Trial</span>';
+      desc.textContent = "You're on the free trial. Upgrade to Wander Pro for unlimited teleports, joystick, and routes.";
+      actions.innerHTML = '<a href="/pricing/" class="btn btn-primary">Upgrade to Pro</a>';
+    }
+  }
 
   const resendBtn = document.getElementById("resendVerifyBtn");
   if (resendBtn) resendBtn.addEventListener("click", async () => {

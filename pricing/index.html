@@ -82,7 +82,7 @@
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Auto-updates included</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Cancel anytime</li>
         </ul>
-        <a href="/contact/" class="btn btn-ghost btn-block">Get Monthly</a>
+        <a href="/contact/" class="btn btn-ghost btn-block js-buy" data-tier="monthly">Get Monthly</a>
       </div>
       <div class="plan popular reveal">
         <span class="tag">Best value</span>
@@ -95,7 +95,7 @@
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Priority support</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>One device, bound to you</li>
         </ul>
-        <a href="/contact/" class="btn btn-primary btn-block">Get Yearly</a>
+        <a href="/contact/" class="btn btn-primary btn-block js-buy" data-tier="yearly">Get Yearly</a>
       </div>
       <div class="plan reveal">
         <h3>Lifetime</h3>
@@ -107,10 +107,10 @@
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>No subscription, ever</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Best for regular users</li>
         </ul>
-        <a href="/contact/" class="btn btn-ghost btn-block">Get Lifetime</a>
+        <a href="/contact/" class="btn btn-ghost btn-block js-buy" data-tier="lifetime">Get Lifetime</a>
       </div>
     </div>
-    <p class="price-note">Pay by Venmo <b>@faisal_nabulsi</b> (or ask about card / PayPal). You'll get a single-use license key that binds to your phone — paste it in the app and you're unlocked.</p>
+    <p class="price-note" id="buyNote">Secure card checkout. You'll sign in first so your purchase links to your Wander account — one plan unlocks iOS, Android &amp; desktop, and it survives reinstalls and new phones.</p>
   </div>
 </section>
 
@@ -255,7 +255,7 @@
         </button>
         <div class="faq-a">
           <div class="faq-a-inner">
-            <p>Yes — there's no lock-in. The <strong>lifetime</strong> license is a one-time payment, so there's nothing to cancel. For <strong>monthly</strong> or <strong>yearly</strong> Pro you simply stop paying when you're done — since you pay by Venmo, nothing auto-charges your card. You're never on a recurring billing hook.</p>
+            <p>Yes — there's no lock-in. The <strong>lifetime</strong> license is a one-time payment, so there's nothing to cancel. For <strong>monthly</strong> or <strong>yearly</strong> Pro, one click cancels from your account — you keep Pro until the end of the period you already paid for, and it simply won't renew. No emails, no hoops.</p>
           </div>
         </div>
       </div>
@@ -281,7 +281,7 @@
         </button>
         <div class="faq-a">
           <div class="faq-a-inner">
-            <p>Right now payment is via <strong>Venmo &mdash; @faisal_nabulsi</strong>. Once your payment comes through, you get a <strong>license key emailed or DM'd back to you</strong>. That one key activates Pro on both iOS and desktop.</p>
+            <p>Checkout is <strong>secure card payment</strong> (handled by Lemon Squeezy — cards, Apple Pay, Google Pay). The moment it clears, <strong>Pro unlocks automatically on your Wander account</strong> — there's no key to copy or paste. Just sign in on any device and it's already there.</p>
           </div>
         </div>
       </div>
@@ -307,7 +307,7 @@
         </button>
         <div class="faq-a">
           <div class="faq-a-inner">
-            <p>A license <strong>binds to one phone</strong> to keep keys from being shared around. Got a new phone? Just <strong>contact us for a re-issue</strong> and we'll move your key over. The same key also works on the <strong>desktop</strong> app — iOS and desktop share one license.</p>
+            <p>Your Pro is tied to <strong>your Wander account, not a device</strong>. Sign in on iOS, Android, or the desktop app and Pro is there — reinstall, upgrade phones, switch platforms, it follows your account. One purchase covers everything; nothing to re-issue.</p>
           </div>
         </div>
       </div>
@@ -452,5 +452,88 @@
 
 <script src="/script.js"></script>
 <script type="module" src="/auth.js"></script>
+
+<!-- ============ BUY BUTTONS → Lemon Squeezy (account-linked checkout) ============ -->
+<script type="module">
+  import { auth, onAuthStateChanged } from "/auth.js";
+
+  /* -------------------------------------------------------------------------
+     CONFIG — paste your 3 Lemon Squeezy buy links here.
+     Get each from: Lemon Squeezy → Products → (product) → Share → copy the
+     checkout URL, e.g.
+        https://YOURSTORE.lemonsqueezy.com/buy/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+     Until these are filled in (they still say PASTE_…), the buttons safely
+     fall back to the /contact/ page, so nothing looks broken before launch.
+     ------------------------------------------------------------------------- */
+  const LS = {
+    monthly:  "https://wanderapp.lemonsqueezy.com/checkout/buy/36d24084-b102-4bee-a439-85e6d789d080",
+    yearly:   "https://wanderapp.lemonsqueezy.com/checkout/buy/a1296ea9-5093-4b39-8bc7-af20f3c8b383",
+    lifetime: "https://wanderapp.lemonsqueezy.com/checkout/buy/38e3749c-3189-4cfe-ac54-8e281d8cb4f9",
+    // Optional launch discount code you created in Lemon Squeezy (e.g. "LAUNCH50").
+    // Leave "" to charge full price.
+    discountCode: "",
+  };
+
+  let currentUser = null;
+  const note    = document.getElementById("buyNote");
+  const buyBtns = Array.from(document.querySelectorAll(".js-buy"));
+
+  const isConfigured = (base) => !!base && !base.includes("PASTE_");
+
+  /* Build the checkout URL with the buyer's Firebase UID baked in as custom
+     data, so the webhook attaches Pro to THIS exact account. Email is prefilled
+     + also sent as a fallback key for the Worker. */
+  function buildCheckoutUrl(base, user) {
+    const params = [
+      ["checkout[email]", user.email || ""],
+      ["checkout[custom][user_id]", user.uid],
+      ["checkout[custom][email]", user.email || ""],
+    ];
+    if (LS.discountCode) params.push(["checkout[discount_code]", LS.discountCode]);
+    const qs = params.map(([k, v]) => k + "=" + encodeURIComponent(v)).join("&");
+    return base + (base.includes("?") ? "&" : "?") + qs;
+  }
+
+  function paintNote(user) {
+    if (!note) return;
+    if (user) {
+      note.innerHTML = "Signed in as <b>" + (user.email || "your account") +
+        "</b> — your purchase links to this account automatically. One plan unlocks iOS, Android &amp; desktop and survives reinstalls.";
+    } else {
+      note.innerHTML = "Secure card checkout. You'll sign in first so your purchase links to your Wander account — one plan unlocks iOS, Android &amp; desktop, and it survives reinstalls and new phones.";
+    }
+  }
+
+  buyBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const tier = btn.dataset.tier;
+      const base = LS[tier] || "";
+      if (!isConfigured(base)) return; // not set up yet → let href="/contact/" work
+      e.preventDefault();
+      if (!currentUser) {
+        // Remember what they wanted, send them to sign in, then land back and resume.
+        try { sessionStorage.setItem("wander_pending_tier", tier); } catch (_) {}
+        location.href = "/login/?next=" + encodeURIComponent("/pricing/");
+        return;
+      }
+      location.href = buildCheckoutUrl(base, currentUser);
+    });
+  });
+
+  paintNote(null);
+  onAuthStateChanged(auth, (user) => {
+    currentUser = user || null;
+    paintNote(user);
+    // Resume a purchase the user started before they signed in.
+    if (user) {
+      let pending = null;
+      try { pending = sessionStorage.getItem("wander_pending_tier"); } catch (_) {}
+      if (pending && isConfigured(LS[pending])) {
+        try { sessionStorage.removeItem("wander_pending_tier"); } catch (_) {}
+        location.href = buildCheckoutUrl(LS[pending], user);
+      }
+    }
+  });
+</script>
 </body>
 </html>

@@ -131,8 +131,16 @@
     loginEmail, signUpEmail, loginGoogle, friendlyError,
   } from "/auth.js";
 
-  // If already signed in, skip straight to the dashboard.
-  onAuthStateChanged(auth, (user) => { if (user) location.replace("/account/"); });
+  // Where to go after a successful sign-in: honor ?next= if it's a safe,
+  // same-origin path (e.g. coming from a "Get Pro" button), else the account page.
+  function nextUrl() {
+    const p = new URLSearchParams(location.search).get("next");
+    if (p && p.startsWith("/") && !p.startsWith("//")) return p;
+    return "/account/";
+  }
+
+  // If already signed in, skip straight ahead.
+  onAuthStateChanged(auth, (user) => { if (user) location.replace(nextUrl()); });
 
   const form      = document.getElementById("authForm");
   const emailEl    = document.getElementById("authEmail");
@@ -187,7 +195,7 @@
     try {
       if (mode === "login") await loginEmail(email, password);
       else                  await signUpEmail(email, password);
-      location.replace("/account/"); // success
+      location.replace(nextUrl()); // success
     } catch (err) {
       setMsg(friendlyError(err), "err");
       submitBtn.disabled = false;
@@ -199,7 +207,7 @@
     setMsg("Opening Google sign-in…", "ok");
     try {
       await loginGoogle();
-      location.replace("/account/"); // success
+      location.replace(nextUrl()); // success
     } catch (err) {
       setMsg(friendlyError(err), "err");
       googleBtn.disabled = false;
