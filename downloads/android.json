@@ -1,7 +1,7 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 17,
-  "versionName": "0.17.0",
+  "versionCode": 18,
+  "versionName": "0.18.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Import KML routes (not just GPX), and the panic Stop now gives a firm haptic tap when it reverts you to real GPS."
+  "notes": "Full translations \u2014 offline maps, appearance, globe and more now appear in all 9 languages (was partly English-only before)."
 }
