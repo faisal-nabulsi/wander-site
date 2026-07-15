@@ -704,10 +704,15 @@ ul { list-style: none; }
   #download .dl-col .btn { width: 100%; justify-content: center; }
 }
 
-/* real-screenshot gallery: 5 phones, flex-wrap centered, rounded like the App Store */
+/* real-screenshot gallery: phones flex-wrap centered, rounded like the App Store */
 #gallery .gal-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:22px;max-width:none}
 #gallery .gal-item{flex:0 0 auto;width:min(200px,42vw)}
 #gallery .gal-item img{max-width:100%;border-radius:22px}
+/* per-platform sub-headings + a wide variant for the landscape desktop shot */
+#gallery .gal-platform{width:100%;text-align:center;font-weight:800;font-size:1.05rem;letter-spacing:.01em;color:var(--brand,#185FA5);margin:36px 0 2px}
+#gallery .gal-platform:first-of-type{margin-top:8px}
+#gallery .gal-item-wide{width:min(720px,94vw)}
+#gallery .gal-item-wide img{border-radius:14px}
 
 /* ==========================================================================
    Multi-page additions — appended when the site was split into
