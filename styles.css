@@ -691,14 +691,15 @@ ul { list-style: none; }
 #download .dl-col{display:flex;flex-direction:column;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:var(--radius-lg);padding:26px 22px}
 #download .dl-col h3{margin:0 0 6px;font-size:20px;color:#fff}
 #download .dl-sub{font-size:14px;opacity:.9;margin:0 0 16px;color:#fff;min-height:40px}
-/* keep the button row anchored to a consistent spot and the note pinned to the card bottom
-   so cards with one vs two buttons and short vs long notes still line up across the grid */
-#download .dl-col .hero-cta{margin-top:6px}
+/* center the button block in the free space and pin the note to the bottom, so the
+   leftover height on one-button cards is shared as even gaps above/below the buttons
+   instead of one awkward empty gap — balanced, and notes still line up at the bottom */
+#download .dl-col .hero-cta{margin-top:auto;margin-bottom:auto}
 #download .dl-soon{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:#F5A623;color:#241700;border-radius:8px;padding:3px 8px;vertical-align:middle;margin-left:6px}
 #download .dl-beta{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:#2ecc71;color:#062b14;border-radius:8px;padding:3px 8px;vertical-align:middle;margin-left:6px}
-#download .dl-note{font-size:12.5px;opacity:.82;margin:14px 0 0;color:#fff;line-height:1.5;margin-top:auto;padding-top:14px}
+#download .dl-note{font-size:12.5px;opacity:.82;margin:16px 0 0;color:#fff;line-height:1.5}
 #download .dl-note a{color:#fff;text-decoration:underline}
-@media(max-width:720px){#download .dl-cols{grid-template-columns:1fr}}
+@media(max-width:720px){#download .dl-cols{grid-template-columns:1fr;grid-auto-rows:auto}#download .dl-col{display:flex}#download .dl-col .hero-cta{margin:14px 0}#download .dl-sub{min-height:0}}
 
 /* ===== mobile: stack download-card buttons so .dl-col doesn't overflow ===== */
 @media (max-width: 640px) {
