@@ -511,10 +511,15 @@
   function paintNote(user) {
     if (!note) return;
     if (user) {
-      note.innerHTML = "Signed in as <b>" + (user.email || "your account") +
-        "</b> — your purchase links to this account automatically. One plan unlocks iOS, Android &amp; desktop and survives reinstalls.";
+      // Build with textContent (never innerHTML) so an account email can't inject markup.
+      note.textContent = "Signed in as ";
+      const b = document.createElement("b");
+      b.textContent = user.email || "your account";
+      note.appendChild(b);
+      note.appendChild(document.createTextNode(
+        " — your purchase links to this account automatically. One plan unlocks iOS, Android & desktop and survives reinstalls."));
     } else {
-      note.innerHTML = "Secure card checkout. You'll sign in first so your purchase links to your Wander account — one plan unlocks iOS, Android &amp; desktop, and it survives reinstalls and new phones.";
+      note.textContent = "Secure card checkout. You'll sign in first so your purchase links to your Wander account — one plan unlocks iOS, Android & desktop, and it survives reinstalls and new phones.";
     }
   }
 
