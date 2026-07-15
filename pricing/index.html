@@ -87,7 +87,7 @@
     <div class="price-grid">
       <div class="plan reveal">
         <h3>Monthly</h3>
-        <div class="price">$3.99<small>/mo</small></div>
+        <div class="price" data-usd="3.99" data-suf="/mo">$3.99<small>/mo</small></div>
         <div class="save" id="promoPrice">50% off first month → $2.00</div>
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Unlimited teleports &amp; routes</li>
@@ -100,7 +100,7 @@
       <div class="plan popular reveal">
         <span class="tag">Best value</span>
         <h3>Yearly</h3>
-        <div class="price">$36<small>/yr</small></div>
+        <div class="price" data-usd="36" data-suf="/yr">$36<small>/yr</small></div>
         <div class="save">Just $3/mo — save 25%</div>
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Everything in Monthly</li>
@@ -112,7 +112,7 @@
       </div>
       <div class="plan reveal">
         <h3>Lifetime</h3>
-        <div class="price">$80<small> once</small></div>
+        <div class="price" data-usd="80" data-suf=" once">$80<small> once</small></div>
         <div class="save">Pay once, yours forever</div>
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Everything, forever</li>
@@ -550,5 +550,28 @@
   });
 </script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a52c69fd55864ba897a82f7afe24df6c"}'></script><!-- End Cloudflare Web Analytics -->
+<!-- Localized price display: convert the USD prices to the visitor's currency (display only; charged in local currency at checkout). -->
+<script>
+(function(){
+  var API=(window.WANDER_API||"https://wander-payments.wanderlocation.workers.dev").replace(/\/+$/,"");
+  fetch(API+"/pricing/geo").then(function(r){return r.json();}).then(function(d){
+    if(!d||!d.ok||!d.currency||d.currency==="USD"||!(d.rate>0)) return;
+    var fmt;
+    try{ fmt=new Intl.NumberFormat(navigator.language||"en",{style:"currency",currency:d.currency}); }catch(e){ return; }
+    document.querySelectorAll(".price[data-usd]").forEach(function(el){
+      var usd=parseFloat(el.getAttribute("data-usd")); if(isNaN(usd)) return;
+      var suf=(el.getAttribute("data-suf")||"").replace(/</g,"&lt;");
+      el.innerHTML=fmt.format(usd*d.rate)+(suf?'<small>'+suf+'</small>':'');
+    });
+    var note=document.getElementById("buyNote");
+    if(note&&note.parentNode){
+      var p=document.createElement("div");
+      p.style.cssText="font-size:.85em;opacity:.75;margin-top:6px";
+      p.textContent="Prices shown in "+d.currency+" at today's rate — you're charged in your local currency at secure checkout.";
+      note.parentNode.insertBefore(p, note.nextSibling);
+    }
+  }).catch(function(){});
+})();
+</script>
 </body>
 </html>
