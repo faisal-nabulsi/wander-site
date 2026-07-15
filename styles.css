@@ -704,6 +704,22 @@ ul { list-style: none; }
   #download .dl-col .btn { width: 100%; justify-content: center; }
 }
 
+/* per-platform install guide: pill tabs + one panel per platform */
+#instructions .plat-tabs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 auto 24px;max-width:660px}
+#instructions .plat-tab{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border:1.5px solid #dfe6ef;background:#fff;border-radius:999px;font-weight:700;font-size:.95rem;color:#33526f;cursor:pointer;transition:background .18s ease,border-color .18s ease,color .18s ease}
+#instructions .plat-tab:hover{border-color:#185FA5;color:#185FA5}
+#instructions .plat-tab.active{background:#185FA5;border-color:#185FA5;color:#fff}
+#instructions .plat-panel{display:none}
+#instructions .plat-panel.active{display:block}
+#instructions .plat-panel-inner{max-width:720px;margin:0 auto;background:#fff;border:1px solid #e7edf4;border-radius:16px;padding:24px 26px;box-shadow:0 14px 34px rgba(16,64,120,.07)}
+#instructions .plat-panel-inner h3{margin:0 0 4px;font-size:1.18rem}
+#instructions .plat-panel-inner .lead{color:#5b6b7d;font-size:.95rem;margin:0 0 16px;line-height:1.5}
+#instructions .plat-panel-inner ol{margin:0;padding-left:22px;line-height:1.62}
+#instructions .plat-panel-inner ol li{margin-bottom:10px}
+#instructions .plat-panel-inner ol li code,#instructions .plat-panel-inner .tip code{background:#eef2f7;padding:1px 6px;border-radius:5px;font-family:ui-monospace,Menlo,monospace;font-size:.86em;white-space:nowrap}
+#instructions .plat-panel-inner .tip{margin-top:16px;font-size:13px;color:#5a6775;background:#f4f8fc;border:1px solid #e3edf6;border-radius:10px;padding:11px 13px;line-height:1.5}
+@media(max-width:520px){#instructions .plat-tab{flex:1 1 40%;justify-content:center}#instructions .plat-panel-inner{padding:20px 18px}}
+
 /* real-screenshot gallery: phones flex-wrap centered, rounded like the App Store */
 #gallery .gal-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:22px;max-width:none}
 #gallery .gal-item{flex:0 0 auto;width:min(200px,42vw)}

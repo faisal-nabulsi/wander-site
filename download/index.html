@@ -173,63 +173,92 @@
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">Install guide</span>
-      <h2>How to download &amp; set up</h2>
-      <p>Ten minutes, one time, on a Mac. After that your phone runs on its own.</p>
+      <h2>How to install — pick your platform</h2>
+      <p>Full step-by-step for every platform. Android installs in seconds with no computer; iPhone is a one-time ~10-minute setup.</p>
     </div>
-    <div class="acc reveal">
-      <details open>
-        <summary>1. Install Wander on your iPhone <span class="chev">⌄</span></summary>
-        <div class="body"><ol>
-          <li>On your Mac, open the <b>Wander Installer</b> (from the Download section above).</li>
-          <li>Sign in with your <b>free Apple ID</b> — no paid developer account needed.</li>
-          <li>Click <b>Install Wander</b>. It signs the app and installs it to your connected iPhone automatically.</li>
-        </ol></div>
-      </details>
-      <details>
-        <summary>2. Trust the developer &amp; enable Developer Mode <span class="chev">⌄</span></summary>
-        <div class="body"><ol>
-          <li>The first time you tap Wander, iPhone shows <b>"Untrusted Developer"</b> and won't open it — this is normal for sideloaded apps. To fix it: <code>Settings → General → VPN &amp; Device Management</code> → under <b>Developer App</b>, tap your <b>Apple ID email</b> → <b>Trust "…"</b> → <b>Trust</b> to confirm.</li>
-          <li>Then turn on <code>Settings → Privacy &amp; Security → Developer Mode</code> → toggle on → restart when asked.</li>
-          <li>(The Developer Mode toggle only appears <i>after</i> Wander is installed — that's normal.)</li>
-          <li>Now open Wander — it launches normally from here on.</li>
-        </ol></div>
-      </details>
-      <details>
-        <summary>3. Get the tunnel app <span class="chev">⌄</span></summary>
-        <div class="body"><ol>
-          <li>Install <b>LocalDevVPN</b> free from the App Store — it's the secure tunnel Wander uses.</li>
-          <li>Connect it on Wi-Fi. No Wi-Fi? Turn on <b>Airplane Mode</b> first, then connect it — works on cellular.</li>
-        </ol></div>
-      </details>
-      <details>
-        <summary>4. Open Wander &amp; go <span class="chev">⌄</span></summary>
-        <div class="body"><ol>
-          <li>Launch Wander and tap <b>Get Started</b>. The setup checklist confirms everything's ready.</li>
-          <li>Drop a pin, grab the joystick, or plan a route — you're anywhere now.</li>
-          <li>Wander refreshes itself, so you won't need the computer again.</li>
-        </ol></div>
-      </details>
-      <details>
-        <summary>🤖 On Android? Install the APK <span class="chev">⌄</span></summary>
-        <div class="body"><ol>
-          <li>Download <b>Wander.apk</b> from the section above (or open this page on your Android phone).</li>
-          <li>When you tap the APK, Android asks to allow installs from your browser — enable <b>"Install unknown apps"</b> for that browser, then go back and open the APK again.</li>
-          <li>Tap <b>Install</b>, open Wander, and you're ready — teleport, joystick, routes &amp; PoGo Mode. No jailbreak or root needed.</li>
-        </ol></div>
-      </details>
-      <details>
-        <summary>💻 Prefer your Mac? Set up Wander Desktop <span class="chev">⌄</span></summary>
-        <div class="body"><ol>
-          <li>Download <b>Wander for Mac</b> from the section above, unzip it, and drag <b>Wander Desktop</b> into your <b>Applications</b> folder.</li>
-          <li>First launch only: <b>right-click the app → Open → Open</b> to clear the unsigned-app warning (it's an indie build, just not paid-notarized).</li>
-          <li><b>Open Wander Desktop and enter your Mac password</b> when it asks — it needs admin just once to open the secure tunnel to your iPhone. No Terminal needed.</li>
-          <li>Plug your iPhone in (or put it on the same Wi-Fi), click <b>Connect Device</b>, then teleport, joystick, or run a route — all from your Mac.</li>
-        </ol>
-        <p style="margin-top:10px;font-size:13px;opacity:.75">Password prompt didn't show? You can always launch it from Terminal instead:<br><code>sudo "/Applications/Wander Desktop.app/Contents/MacOS/Wander Desktop"</code></p>
-        <p style="margin-top:10px;font-size:13px;opacity:.75"><b>On Windows?</b> Download <b>Wander-Windows.zip</b>, unzip the folder, and run <b>Wander Desktop.exe</b>. It's an unsigned build, so SmartScreen may pop up — click <b>"More info"</b> then <b>"Run anyway"</b>.</p>
+
+    <div class="plat-tabs reveal">
+      <button type="button" class="plat-tab active" data-plat="iphone">📱 iPhone</button>
+      <button type="button" class="plat-tab" data-plat="android">🤖 Android</button>
+      <button type="button" class="plat-tab" data-plat="mac">💻 Mac</button>
+      <button type="button" class="plat-tab" data-plat="windows">🪟 Windows</button>
+    </div>
+
+    <div class="reveal">
+      <!-- iPhone -->
+      <div class="plat-panel active" data-plat="iphone">
+        <div class="plat-panel-inner">
+          <h3>📱 iPhone — install the Wander app</h3>
+          <p class="lead">One-time ~10-minute setup using a Mac. No jailbreak. After that your iPhone runs on its own — you won't need the computer again.</p>
+          <ol>
+            <li>On your Mac, open the <b>Wander Installer</b> (download above) and sign in with your <b>free Apple ID</b> — no paid developer account needed.</li>
+            <li>Click <b>Install Wander</b>. It signs the app and installs it onto your connected iPhone automatically.</li>
+            <li><b>Trust the app:</b> the first launch shows "Untrusted Developer." Go to <code>Settings → General → VPN &amp; Device Management</code>, tap your Apple ID email, and tap <b>Trust</b>. Then turn on <code>Settings → Privacy &amp; Security → Developer Mode</code> and restart when asked.</li>
+            <li><b>Get the tunnel app:</b> install <b>LocalDevVPN</b> (free) from the App Store — it's the secure tunnel Wander uses. Connect it on Wi-Fi, or turn on <b>Airplane Mode</b> first and then connect to run on cellular.</li>
+            <li>Open <b>Wander → Get Started</b>, then drop a pin, grab the joystick, or run a route. Wander re-signs itself, so you won't need the computer again.</li>
+          </ol>
+          <div class="tip">💡 <b>Only have a Windows PC, no Mac?</b> You can still spoof your iPhone — open the <b>Windows</b> tab: Wander Desktop drives your tethered iPhone straight from your PC, with nothing to install on the phone.</div>
         </div>
-      </details>
+      </div>
+
+      <!-- Android -->
+      <div class="plat-panel" data-plat="android">
+        <div class="plat-panel-inner">
+          <h3>🤖 Android — install the APK</h3>
+          <p class="lead">No computer, no root — it installs straight on your phone in under a minute.</p>
+          <ol>
+            <li>On your Android phone, tap <b>Download APK</b> above (or open this page on the phone).</li>
+            <li>Open the downloaded <b>Wander.apk</b>. Android asks to allow installs from your browser — enable <b>"Install unknown apps"</b> for that browser, then go back and open the APK again.</li>
+            <li>Tap <b>Install</b>, open <b>Wander</b>, and you're set — teleport, joystick, routes &amp; PoGo Mode, no jailbreak or root.</li>
+          </ol>
+          <div class="tip">💡 The "unknown apps" permission is per-app and only used for installing — you can switch it back off afterward. Wander auto-updates itself from inside the app.</div>
+        </div>
+      </div>
+
+      <!-- Mac desktop -->
+      <div class="plat-panel" data-plat="mac">
+        <div class="plat-panel-inner">
+          <h3>💻 Mac — Wander Desktop</h3>
+          <p class="lead">Spoof a tethered iPhone straight from your Mac. Nothing gets installed on the phone.</p>
+          <ol>
+            <li>Download <b>Wander for Mac</b> above, unzip it, and drag <b>Wander Desktop</b> into your <b>Applications</b> folder.</li>
+            <li>First launch only: <b>right-click the app → Open → Open</b> to clear the unsigned-app warning. If macOS says "damaged," run the <code>xattr -cr</code> command in the yellow box above — that always fixes it.</li>
+            <li>Open <b>Wander Desktop</b> and enter your Mac password once — it needs admin just to open the secure tunnel to your iPhone. No Terminal needed.</li>
+            <li>Plug your iPhone in (or put it on the same Wi-Fi), click <b>Connect Device</b>, then teleport, joystick, or run a route — all from your Mac.</li>
+          </ol>
+          <div class="tip">💡 Works on Apple Silicon &amp; Intel. Password prompt didn't appear? Launch from Terminal: <code>sudo "/Applications/Wander Desktop.app/Contents/MacOS/Wander Desktop"</code></div>
+        </div>
+      </div>
+
+      <!-- Windows desktop -->
+      <div class="plat-panel" data-plat="windows">
+        <div class="plat-panel-inner">
+          <h3>🪟 Windows — Wander Desktop</h3>
+          <p class="lead">The same desktop spoofer for Windows — it drives your tethered iPhone from your PC.</p>
+          <ol>
+            <li><b>Install the Apple driver first:</b> get <b>Apple Devices</b> from the Microsoft Store (or iTunes from apple.com) so Windows can talk to your iPhone over USB.</li>
+            <li>Download <b>Wander-Windows.zip</b> above and unzip the folder.</li>
+            <li>Run <b>Wander Desktop.exe</b>. It's an unsigned indie build, so SmartScreen may warn — click <b>"More info" → "Run anyway."</b> Approve the admin (UAC) prompt — it's needed for the device tunnel.</li>
+            <li>Plug your iPhone in, click <b>Connect Device</b>, then teleport, joystick, or run a route — all from your PC.</li>
+          </ol>
+          <div class="tip">💡 If <b>Connect Device</b> can't see your iPhone, tap <b>"Trust This Computer"</b> on the phone and make sure Apple Devices / iTunes is installed.</div>
+        </div>
+      </div>
     </div>
+
+    <script>
+    (function(){
+      var root = document.getElementById('instructions'); if(!root) return;
+      var tabs = root.querySelectorAll('.plat-tab'), panels = root.querySelectorAll('.plat-panel');
+      function show(id){
+        tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.plat === id); });
+        panels.forEach(function(p){ p.classList.toggle('active', p.dataset.plat === id); });
+      }
+      tabs.forEach(function(t){ t.addEventListener('click', function(){ show(t.dataset.plat); }); });
+      // Light auto-detect: Android visitors land on the Android steps first.
+      if(/Android/i.test(navigator.userAgent || '')) show('android');
+    })();
+    </script>
     <div class="more-row reveal">
       <a href="/pricing/" class="btn btn-ghost">Ready for Pro? See pricing</a>
     </div>
