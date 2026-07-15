@@ -45,15 +45,21 @@
     + "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}"
     + ".wsw *{box-sizing:border-box;}"
     // launcher bubble
-    + ".wsw-launch{width:58px;height:58px;border-radius:50%;border:none;cursor:pointer;"
+    + ".wsw-launch{position:relative;display:flex;align-items:center;gap:10px;height:60px;padding:0 22px 0 15px;"
+    + "border-radius:999px;border:none;cursor:pointer;font-weight:700;font-size:1rem;letter-spacing:-.01em;"
     + "background:linear-gradient(135deg,#2b7fd4 0%,#185FA5 55%,#0f4c86 100%);color:#fff;"
-    + "box-shadow:0 20px 50px rgba(24,95,165,.35),0 2px 8px rgba(12,26,43,.18);"
-    + "display:flex;align-items:center;justify-content:center;"
+    + "box-shadow:0 20px 50px rgba(24,95,165,.42),0 2px 8px rgba(12,26,43,.18);"
     + "transition:transform .16s ease,box-shadow .2s ease;}"
-    + ".wsw-launch:hover{transform:translateY(-2px);box-shadow:0 26px 60px rgba(24,95,165,.45);}"
+    + ".wsw-launch::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;"
+    + "animation:wsw-ring 2.6s ease-out infinite;}"
+    + "@keyframes wsw-ring{0%{box-shadow:0 0 0 0 rgba(43,127,212,.5)}70%{box-shadow:0 0 0 16px rgba(43,127,212,0)}100%{box-shadow:0 0 0 0 rgba(43,127,212,0)}}"
+    + ".wsw-launch:hover{transform:translateY(-2px);box-shadow:0 26px 64px rgba(24,95,165,.5);}"
     + ".wsw-launch:focus-visible{outline:3px solid #6fb0ef;outline-offset:3px;}"
-    + ".wsw-launch svg{width:26px;height:26px;display:block;}"
+    + ".wsw-launch .wsw-emoji{font-size:30px;line-height:1;}"
+    + ".wsw-launch .wsw-label{white-space:nowrap;}"
     + ".wsw-launch.wsw-hide{display:none;}"
+    + "@media(prefers-reduced-motion:reduce){.wsw-launch::after{animation:none;}}"
+    + "@media(max-width:520px){.wsw-launch{width:60px;height:60px;padding:0;justify-content:center;}.wsw-launch .wsw-label{display:none;}}"
     // panel
     + ".wsw-panel{position:fixed;right:20px;bottom:20px;width:380px;max-width:calc(100vw - 32px);"
     + "height:560px;max-height:calc(100vh - 40px);background:#fff;border-radius:20px;overflow:hidden;"
@@ -172,7 +178,8 @@
       "aria-haspopup": "dialog"
     });
     launchBtn.innerHTML =
-      '<span aria-hidden="true" style="font-size:28px;line-height:1;">🐧</span>';
+      '<span class="wsw-emoji" aria-hidden="true">🐧</span>' +
+      '<span class="wsw-label">Chat with Wanda</span>';
 
     // Panel
     panel = el("div", "wsw-panel", {
