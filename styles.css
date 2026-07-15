@@ -107,7 +107,7 @@ ul { list-style: none; }
 }
 .nav.scrolled { border-color: var(--line); box-shadow: 0 2px 20px rgba(12,26,43,.06); }
 .nav-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; }
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.18rem; letter-spacing: -.01em; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.18rem; letter-spacing: -.01em; flex-shrink: 0; white-space: nowrap; }
 .brand .logo { width: 34px; height: 34px; border-radius: 9px; box-shadow: var(--shadow-sm); }
 .nav-links { display: flex; align-items: center; gap: 4px; }
 .nav-links a {
@@ -318,8 +318,12 @@ ul { list-style: none; }
   .contact-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
-@media (max-width: 880px) {
-  .nav-links, .nav-cta .btn-ghost, .nav-cta .btn-discord { display: none; }
+/* The two secondary buttons (GitHub star, Discord) only fit on wide screens — hide them below 1300px so the full nav can't overflow the brand. */
+@media (max-width: 1300px) {
+  .nav-cta .btn-star, .nav-cta .btn-discord { display: none; }
+}
+@media (max-width: 980px) {
+  .nav-links { display: none; }
   .hamburger { display: block; }
   .nav-mobile {
     display: block; position: fixed; inset: var(--nav-h) 0 auto 0; background: #fff; border-bottom: 1px solid var(--line);
