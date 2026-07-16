@@ -1,8 +1,8 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 27,
-  "versionName": "0.24.3",
+  "versionCode": 28,
+  "versionName": "0.25.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Two-factor authentication (2FA), Google sign-in + forgot password, bottom-tab layout, and accessibility improvements (TalkBack labels).",
-  "size": 49520321
+  "notes": "Games tab: opt-in per-game speed guardrail, multi-game presets with hotspot gating, and a 2-3 route options picker (preview alternatives, pick one, then drive).",
+  "size": 70352081
 }
