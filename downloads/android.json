@@ -1,7 +1,8 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 23,
-  "versionName": "0.23.0",
+  "versionCode": 24,
+  "versionName": "0.24.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Flight planner \u2014 pick two airports (or a time range to choose a flight) and fly the route. Plus 'hold perfectly still' and 'approximate location' privacy toggles."
+  "notes": "Sign in with Google or Apple + Forgot password. New bottom-tab layout (matches iPhone). Street View is now Pro + more secure. Plus the multi-game cooldown improvements.",
+  "size": 49516225
 }
