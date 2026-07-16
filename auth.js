@@ -130,6 +130,60 @@ export function logout() {
 }
 
 /* ==========================================================================
+   3a) SELF-SERVICE ACCOUNT MANAGEMENT (account page)
+   --------------------------------------------------------------------------
+   These call the payments Worker, which holds the Firebase admin credentials
+   (the client SDK can't revoke other sessions or delete server-side data). We
+   send the current user's Firebase ID token; the Worker verifies it and acts
+   ONLY on that verified uid.
+   ========================================================================== */
+
+// Same base-URL convention the rest of the site uses (support widget, pricing).
+const WANDER_API =
+  (typeof window !== "undefined" && window.WANDER_API) ||
+  "https://wander-payments.wanderlocation.workers.dev";
+
+/** POST the current user's ID token to a Worker /account/* route. Returns the
+ *  parsed JSON on success; throws an Error(message) the UI can show on failure. */
+async function postAccountAction(path) {
+  const user = auth.currentUser;
+  if (!user) throw new Error("You're not signed in.");
+  const idToken = await user.getIdToken();
+  let res, data;
+  try {
+    res = await fetch(WANDER_API.replace(/\/+$/, "") + path, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idToken }),
+    });
+    data = await res.json().catch(() => ({}));
+  } catch (e) {
+    throw new Error("Network error. Check your connection and try again.");
+  }
+  if (!res.ok || !data || data.ok !== true) {
+    throw new Error((data && data.error) || "Something went wrong. Please try again.");
+  }
+  return data;
+}
+
+/** "Sign out of all devices": ask the Worker to revoke every refresh token for
+ *  this account (validSince), then sign out locally so this tab is signed out too. */
+export async function signOutAllDevices() {
+  await postAccountAction("/account/revoke");
+  await signOut(auth);
+}
+
+/** Self-serve account deletion: the Worker deletes the user's Firestore data and
+ *  the Auth user, then we sign out locally. If the account needs a fresh login
+ *  first, Firebase throws auth/requires-recent-login on getIdToken; but since the
+ *  Worker does the delete server-side, the usual failure surfaces as a Worker
+ *  error string, which the caller shows via friendlyError/message. */
+export async function deleteAccount() {
+  await postAccountAction("/account/delete");
+  try { await signOut(auth); } catch (e) { /* already gone — non-fatal */ }
+}
+
+/* ==========================================================================
    3b) TWO-FACTOR AUTHENTICATION (TOTP / authenticator apps)
    --------------------------------------------------------------------------
    Enrollment happens on the account page; the sign-in challenge is handled by

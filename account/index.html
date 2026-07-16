@@ -68,6 +68,8 @@
       <span class="eyebrow">Account</span>
       <h1>Your account</h1>
       <div class="email" id="acctEmail">—</div>
+      <!-- Email-verified status pill (filled by the script: verified / unverified). -->
+      <div id="emailStatus" class="muted" style="margin-top:6px;font-size:.9rem"></div>
     </div>
 
     <!-- Email-verification banner (shown only when the account's email is unverified) -->
@@ -135,11 +137,22 @@
     <!-- Session -->
     <div class="account-card reveal">
       <h2>Session</h2>
-      <p class="muted">Signed in as the email shown above. Sign out to switch accounts.</p>
+      <p class="muted">Signed in as the email shown above. Sign out to switch accounts, or sign out everywhere to end every active session on all your devices.</p>
       <div class="account-actions" style="margin-top:16px">
         <button type="button" class="btn btn-ghost" id="signOutBtn">Sign out</button>
+        <button type="button" class="btn btn-ghost" id="signOutAllBtn">Sign out of all devices</button>
       </div>
       <div class="auth-msg err" id="acctMsg" role="status" aria-live="polite" style="text-align:left;margin-top:10px"></div>
+    </div>
+
+    <!-- Danger zone: irreversible account deletion, visually separated. -->
+    <div class="account-card reveal" id="dangerZone" style="border:1px solid #E5484D;background:#fff5f5">
+      <h2 style="color:#C62828">Danger zone</h2>
+      <p class="muted">Permanently delete your Wander account and all its data — your license, trial history, and saved places. This can't be undone. If you have Pro, deleting here does not cancel a subscription in Lemon Squeezy; cancel that separately first if it's still active.</p>
+      <div class="account-actions" style="margin-top:16px">
+        <button type="button" class="btn btn-ghost" id="deleteAccountBtn" style="border-color:#E5484D;color:#C62828">Delete my account</button>
+      </div>
+      <div class="auth-msg err" id="deleteMsg" role="status" aria-live="polite" style="text-align:left;margin-top:10px"></div>
     </div>
   </div>
 </section>
@@ -193,6 +206,7 @@
   import {
     auth, onAuthStateChanged, logout, friendlyError, resendVerification,
     enrollTotpStart, enrollTotpFinish, listFactors, unenrollFactor,
+    signOutAllDevices, deleteAccount,
   } from "/auth.js";
   import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -213,6 +227,8 @@
     // (Google sign-ins are already verified, so it stays hidden for them).
     const vb = document.getElementById("verifyBanner");
     if (vb && user.email && !user.emailVerified) vb.style.display = "block";
+    // Reflect the email-verified status inline (informational — NOT a hard gate).
+    renderEmailStatus(user);
     // Read the real Pro entitlement and render the plan card.
     loadPlan(user);
     // Render the current 2FA state (enrolled factors + set-up affordance).
@@ -251,6 +267,21 @@
       badge.innerHTML = 'Free <span class="chip">Trial</span>';
       desc.textContent = "You're on the free trial. Upgrade to Wander Pro for unlimited teleports, joystick, and routes.";
       actions.innerHTML = '<a href="/pricing/" class="btn btn-primary">Upgrade to Pro</a>';
+    }
+  }
+
+  /* Inline email-verified status. Informational + a gentle nudge only — Pro is
+     NEVER gated on this, so existing users are never locked out. */
+  function renderEmailStatus(user) {
+    const el = document.getElementById("emailStatus");
+    if (!el) return;
+    if (!user.email) { el.textContent = ""; return; }   // e.g. provider with no email
+    if (user.emailVerified) {
+      el.innerHTML = '✅ Email verified';
+      el.style.color = "#2E7D32";
+    } else {
+      el.innerHTML = '⚠️ Verify your email to secure your account';
+      el.style.color = "#B26A00";
     }
   }
 
@@ -427,6 +458,57 @@
       location.replace("/login/"); // signed out → back to login
     } catch (err) {
       msg.textContent = friendlyError(err);
+    }
+  });
+
+  /* Sign out of ALL devices: revoke every session server-side, then this tab is
+     signed out too → bounce to login with a confirmation note. */
+  const signOutAllBtn = document.getElementById("signOutAllBtn");
+  if (signOutAllBtn) signOutAllBtn.addEventListener("click", async () => {
+    msg.textContent = "";
+    msg.className = "auth-msg";
+    signOutAllBtn.disabled = true;
+    const prev = signOutAllBtn.textContent;
+    signOutAllBtn.textContent = "Signing out everywhere…";
+    try {
+      await signOutAllDevices();
+      // Signed out everywhere — send them back to login to sign in again.
+      location.replace("/login/?signedOutEverywhere=1");
+    } catch (err) {
+      signOutAllBtn.disabled = false;
+      signOutAllBtn.textContent = prev;
+      msg.className = "auth-msg err";
+      msg.textContent = friendlyError(err);
+    }
+  });
+
+  /* Delete account (Danger zone): confirm, then delete server-side + sign out. */
+  const deleteBtn = document.getElementById("deleteAccountBtn");
+  const deleteMsg = document.getElementById("deleteMsg");
+  if (deleteBtn) deleteBtn.addEventListener("click", async () => {
+    if (deleteMsg) { deleteMsg.textContent = ""; deleteMsg.className = "auth-msg err"; }
+    const sure = window.confirm(
+      "Delete your Wander account?\n\n" +
+      "This permanently removes your account and all its data — license, trial history, and saved places. " +
+      "This cannot be undone."
+    );
+    if (!sure) return;
+    deleteBtn.disabled = true;
+    const prev = deleteBtn.textContent;
+    deleteBtn.textContent = "Deleting…";
+    try {
+      await deleteAccount();
+      // Gone. Send them home with a note; the account no longer exists.
+      alert("Your account and data were deleted.");
+      location.replace("/");
+    } catch (err) {
+      deleteBtn.disabled = false;
+      deleteBtn.textContent = prev;
+      if (err && err.code === "auth/requires-recent-login") {
+        if (deleteMsg) deleteMsg.textContent = "For your security, please sign out and sign back in, then delete your account.";
+      } else if (deleteMsg) {
+        deleteMsg.textContent = friendlyError(err);
+      }
     }
   });
 </script>

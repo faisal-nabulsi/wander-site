@@ -148,6 +148,12 @@
           title.textContent = "Email change reverted";
           sub.textContent = "";
           done("✓ Your account email has been restored" + (info?.data?.email ? " to " + info.data.email : "") + ".");
+        } else if (mode === "revertSecondFactorAddition") {
+          // The "2-step verification was added" email's "remove it" link.
+          await applyActionCode(auth, oobCode);
+          title.textContent = "Two-factor removed";
+          sub.textContent = "";
+          done("✓ The two-factor sign-in that was added to your account has been removed.");
         } else {
           fail("Unsupported action.");
         }
