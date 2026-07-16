@@ -62,6 +62,14 @@
     world.controls().autoRotate = true;
     world.controls().autoRotateSpeed = 0.35;
 
+    // Zoom: globe.gl's default kept the camera far out ("can't zoom in much"). The globe radius is
+    // 100 units, so a minDistance just above the surface lets you dive in close to street level,
+    // while maxDistance still lets you pull back to the whole planet.
+    world.controls().enableZoom = true;
+    world.controls().minDistance = 104;
+    world.controls().maxDistance = 500;
+    world.controls().zoomSpeed = 1.1;
+
     function setPin(lat,lng){
       picked={lat:lat,lng:lng};
       world.pointsData([{lat:lat,lng:lng}])
