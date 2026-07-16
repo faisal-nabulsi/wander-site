@@ -1,8 +1,8 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 28,
-  "versionName": "0.25.0",
+  "versionCode": 29,
+  "versionName": "0.26.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Games tab: opt-in per-game speed guardrail, multi-game presets with hotspot gating, and a 2-3 route options picker (preview alternatives, pick one, then drive).",
+  "notes": "Games now has curated 'popular play areas' spots for every game — Monster Hunter Now, Pikmin Bloom and Ingress get the shared list + game-specific extras + a link to each game's community tools. Plus a 2-3 route options picker and an opt-in per-game speed guardrail.",
   "size": 49520321
 }

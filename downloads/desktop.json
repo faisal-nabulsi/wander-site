@@ -1,7 +1,7 @@
 {
   "_comment": "bump WANDER_VERSION in main.py AND version in desktop.json each release.",
-  "version": "1.13.0",
-  "notes": "Flight planner \u2014 pick two airports (or a time range to choose a flight) and fly the great-circle route. Plus one-tap Reverse route for your trips.",
+  "version": "1.14.0",
+  "notes": "Route options picker \u2014 preview 2\u20133 driving routes in Two-Spot mode and pick one. Games mode now has curated 'popular play areas' spots for every game (Monster Hunter Now, Pikmin Bloom, Ingress) plus a link to each game's community tools. Opt-in per-game speed guardrail.",
   "url_mac": "https://wanderspoofer.com/downloads/Wander-Desktop-mac.zip",
   "url_win": "https://wanderspoofer.com/downloads/Wander-Windows.zip"
 }
