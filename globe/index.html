@@ -62,13 +62,26 @@
     world.controls().autoRotate = true;
     world.controls().autoRotateSpeed = 0.35;
 
-    // Zoom: globe.gl's default kept the camera far out ("can't zoom in much"). The globe radius is
-    // 100 units, so a minDistance just above the surface lets you dive in close to street level,
-    // while maxDistance still lets you pull back to the whole planet.
+    // Zoom limits. The globe radius is 100 units. Diving right onto the surface (minDistance ~104)
+    // stretches even the 4K Earth texture into a blurry mush — there's no street-level detail on a
+    // globe texture, so getting that close just looks broken. Cap the closest zoom to a crisp
+    // country/region view; the user picks a spot here, then teleports to the real map for detail.
     world.controls().enableZoom = true;
-    world.controls().minDistance = 104;
+    world.controls().minDistance = 148;
     world.controls().maxDistance = 500;
     world.controls().zoomSpeed = 1.1;
+
+    // Sharpen the texture at grazing angles (poles / globe edge) with anisotropic filtering, once
+    // globe.gl has loaded the material's map. Cheap and removes the smeared look near the horizon.
+    setTimeout(function(){
+      try{
+        var mat = world.globeMaterial && world.globeMaterial();
+        if(mat && mat.map && world.renderer){
+          mat.map.anisotropy = world.renderer().capabilities.getMaxAnisotropy();
+          mat.map.needsUpdate = true;
+        }
+      }catch(e){}
+    }, 1200);
 
     function setPin(lat,lng){
       picked={lat:lat,lng:lng};
