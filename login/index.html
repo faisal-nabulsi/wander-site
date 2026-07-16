@@ -113,6 +113,11 @@
         Continue with Google
       </button>
 
+      <button type="button" class="btn btn-apple btn-block" id="appleBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.36 12.78c.03 2.87 2.52 3.82 2.55 3.84-.02.07-.4 1.36-1.31 2.7-.79 1.16-1.61 2.31-2.9 2.33-1.27.03-1.68-.75-3.13-.75-1.45 0-1.9.73-3.1.78-1.25.05-2.2-1.25-3-2.4-1.63-2.37-2.88-6.69-1.2-9.6.83-1.45 2.32-2.36 3.94-2.39 1.22-.02 2.38.82 3.13.82.75 0 2.16-1.02 3.64-.87.62.03 2.36.25 3.48 1.89-.09.06-2.08 1.21-2.05 3.61M13.99 4.6c.66-.8 1.11-1.92.99-3.03-.95.04-2.11.63-2.8 1.43-.62.71-1.16 1.85-1.02 2.94 1.06.08 2.14-.54 2.83-1.34"/></svg>
+        Continue with Apple
+      </button>
+
       <div class="auth-toggle" id="authToggleWrap">
         <span id="authTogglePrompt">New to Wander?</span>
         <button type="button" id="authToggleBtn">Create an account</button>
@@ -164,7 +169,7 @@
 <script type="module">
   import {
     auth, onAuthStateChanged,
-    loginEmail, signUpEmail, loginGoogle, friendlyError, resetPassword,
+    loginEmail, signUpEmail, loginGoogle, loginApple, friendlyError, resetPassword,
   } from "/auth.js";
 
   // Where to go after a successful sign-in: honor ?next= if it's a safe,
@@ -188,6 +193,7 @@
   const togglePrompt = document.getElementById("authTogglePrompt");
   const toggleBtn  = document.getElementById("authToggleBtn");
   const googleBtn  = document.getElementById("googleBtn");
+  const appleBtn   = document.getElementById("appleBtn");
   const pwToggle   = document.getElementById("pwToggle");
   const pwEye      = document.getElementById("pwEye");
   const forgotWrap = document.getElementById("forgotWrap");
@@ -280,6 +286,18 @@
     } catch (err) {
       setMsg(friendlyError(err), "err");
       googleBtn.disabled = false;
+    }
+  });
+
+  appleBtn.addEventListener("click", async () => {
+    appleBtn.disabled = true;
+    setMsg("Opening Apple sign-in…", "ok");
+    try {
+      await loginApple();
+      location.replace(nextUrl()); // success
+    } catch (err) {
+      setMsg(friendlyError(err), "err");
+      appleBtn.disabled = false;
     }
   });
 </script>

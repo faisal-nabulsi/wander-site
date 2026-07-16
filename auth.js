@@ -25,6 +25,7 @@ import {
   signOut,
   onAuthStateChanged,
   GoogleAuthProvider,
+  OAuthProvider,
   signInWithPopup,
   sendEmailVerification,
   sendPasswordResetEmail,
@@ -101,6 +102,15 @@ export function resetPassword(email) {
 }
 export function loginGoogle() {
   return signInWithPopup(auth, googleProvider);
+}
+/** Sign in with Apple via a popup. Requests the user's email + name scopes.
+ *  Returns auth/operation-not-allowed until the Apple provider is enabled in
+ *  the Firebase Console (Authentication → Sign-in method → Apple). */
+export function loginApple() {
+  const provider = new OAuthProvider("apple.com");
+  provider.addScope("email");
+  provider.addScope("name");
+  return signInWithPopup(auth, provider);
 }
 export function logout() {
   return signOut(auth);
