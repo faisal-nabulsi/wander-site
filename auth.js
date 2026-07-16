@@ -27,6 +27,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   sendEmailVerification,
+  sendPasswordResetEmail,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 /* ==========================================================================
@@ -92,6 +93,11 @@ export async function resendVerification() {
 }
 export function loginEmail(email, password) {
   return signInWithEmailAndPassword(auth, email, password);
+}
+/** Send a password-reset email. For a Google-only account this lets the user SET a
+ *  password for the first time, so they can then also sign in with email + password. */
+export function resetPassword(email) {
+  return sendPasswordResetEmail(auth, email);
 }
 export function loginGoogle() {
   return signInWithPopup(auth, googleProvider);

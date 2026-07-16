@@ -334,6 +334,16 @@ ul { list-style: none; }
   .nav-mobile a { display: block; padding: 13px 6vw; font-weight: 600; color: var(--ink-2); }
   .nav-mobile a:hover { background: var(--bg-soft); }
 }
+/* Narrow phones: the header packed Brand + Get Pro + Download + hamburger past the
+   viewport (horizontal scroll). Drop the header "Download" ghost button — it's still
+   in the hamburger menu — leaving Brand + Get Pro + hamburger, which fits. */
+@media (max-width: 600px) {
+  .nav-cta .btn-ghost { display: none; }
+  /* Stack the download-band CTAs and let the long "Get Wander for iPhone, Android,
+     Mac & Windows" label wrap instead of being clipped by the band's overflow:hidden. */
+  .cta-band .hero-cta { flex-direction: column; align-items: stretch; }
+  .cta-band .hero-cta .btn { white-space: normal; width: 100%; }
+}
 @media (max-width: 820px) {
   .feature-grid, .price-grid { grid-template-columns: 1fr; }
   .feature.wide { grid-column: 1 / -1; }   /* was span 3 → invented implicit cols → page overflow */

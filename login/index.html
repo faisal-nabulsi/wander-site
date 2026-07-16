@@ -12,6 +12,23 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="stylesheet" href="/styles.css" />
+<style>
+  .pw-wrap { position: relative; }
+  .pw-wrap input { width: 100%; padding-right: 44px; box-sizing: border-box; }
+  .pw-toggle {
+    position: absolute; top: 50%; right: 6px; transform: translateY(-50%);
+    display: flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px; padding: 0; border: none; background: transparent;
+    color: #7a7a7a; cursor: pointer; border-radius: 8px;
+  }
+  .pw-toggle:hover { color: #185FA5; background: rgba(24,95,165,.08); }
+  .auth-forgot { margin-top: 8px; text-align: right; }
+  .auth-forgot button {
+    border: none; background: none; padding: 0; cursor: pointer;
+    color: #185FA5; font-size: 13px; font-weight: 600;
+  }
+  .auth-forgot button:hover { text-decoration: underline; }
+</style>
 </head>
 <body>
 
@@ -75,7 +92,15 @@
         </div>
         <div>
           <label for="authPassword">Password</label>
-          <input id="authPassword" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" minlength="6" />
+          <div class="pw-wrap">
+            <input id="authPassword" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" minlength="6" />
+            <button type="button" id="pwToggle" class="pw-toggle" aria-label="Show password" aria-pressed="false">
+              <svg id="pwEye" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="auth-forgot" id="forgotWrap">
+            <button type="button" id="forgotBtn">Forgot password?</button>
+          </div>
         </div>
         <button type="submit" class="btn btn-primary btn-block btn-lg" id="authSubmit">Log in</button>
         <div class="auth-msg" id="authMsg" role="status" aria-live="polite"></div>
@@ -139,7 +164,7 @@
 <script type="module">
   import {
     auth, onAuthStateChanged,
-    loginEmail, signUpEmail, loginGoogle, friendlyError,
+    loginEmail, signUpEmail, loginGoogle, friendlyError, resetPassword,
   } from "/auth.js";
 
   // Where to go after a successful sign-in: honor ?next= if it's a safe,
@@ -163,8 +188,40 @@
   const togglePrompt = document.getElementById("authTogglePrompt");
   const toggleBtn  = document.getElementById("authToggleBtn");
   const googleBtn  = document.getElementById("googleBtn");
+  const pwToggle   = document.getElementById("pwToggle");
+  const pwEye      = document.getElementById("pwEye");
+  const forgotWrap = document.getElementById("forgotWrap");
+  const forgotBtn  = document.getElementById("forgotBtn");
 
   let mode = "login"; // or "signup"
+
+  // Show/hide the password (#20).
+  const eyeOpen  = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+  const eyeSlash = '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+  pwToggle.addEventListener("click", () => {
+    const show = passEl.type === "password";
+    passEl.type = show ? "text" : "password";
+    pwEye.innerHTML = show ? eyeSlash : eyeOpen;
+    pwToggle.setAttribute("aria-pressed", show ? "true" : "false");
+    pwToggle.setAttribute("aria-label", show ? "Hide password" : "Show password");
+    passEl.focus();
+  });
+
+  // Forgot password (#19) — also lets a Google-only account SET a password.
+  forgotBtn.addEventListener("click", async () => {
+    const email = emailEl.value.trim();
+    if (!email) { setMsg("Enter your email above first, then tap “Forgot password?”.", "err"); emailEl.focus(); return; }
+    forgotBtn.disabled = true;
+    setMsg("Sending a reset link…", "ok");
+    try {
+      await resetPassword(email);
+      setMsg("Check your inbox — we sent a link to set a new password.", "ok");
+    } catch (err) {
+      setMsg(friendlyError(err), "err");
+    } finally {
+      forgotBtn.disabled = false;
+    }
+  });
 
   function setMsg(text, kind) {
     msg.textContent = text || "";
@@ -187,6 +244,7 @@
       togglePrompt.textContent = "Already have an account?";
       toggleBtn.textContent = "Log in";
     }
+    forgotWrap.style.display = mode === "login" ? "block" : "none";
     setMsg("");
   }
 
