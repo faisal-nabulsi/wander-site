@@ -29,6 +29,9 @@ import {
   signInWithPopup,
   sendEmailVerification,
   sendPasswordResetEmail,
+  multiFactor,
+  TotpMultiFactorGenerator,
+  getMultiFactorResolver,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 /* ==========================================================================
@@ -73,6 +76,16 @@ function friendlyError(err) {
     "auth/operation-not-allowed":  "This sign-in method isn't enabled in Firebase yet.",
     "auth/invalid-api-key":        "Firebase isn't configured yet — paste your config into auth.js.",
     "auth/configuration-not-found":"Firebase isn't configured yet — see ACCOUNT-SETUP.md.",
+    // --- Two-factor (TOTP) ---
+    // "auth/multi-factor-auth-required" is NOT really an error: it signals the
+    // sign-in needs a 6-digit code. Login pages catch it specially (see
+    // resolveMfaSignIn) rather than showing this text, but we map it anyway so a
+    // stray path still reads sensibly.
+    "auth/multi-factor-auth-required": "Enter the 6-digit code from your authenticator app to finish signing in.",
+    "auth/invalid-verification-code":  "That 6-digit code was wrong or expired.",
+    "auth/totp-challenge-timeout":     "That code timed out. Grab a fresh one from your authenticator app and try again.",
+    "auth/second-factor-already-in-use":"That authenticator is already set up on this account.",
+    "auth/requires-recent-login":      "For your security, please log out and log back in, then try again.",
   };
   return map[code] || (err && err.message) || "Something went wrong. Please try again.";
 }
@@ -116,8 +129,74 @@ export function logout() {
   return signOut(auth);
 }
 
+/* ==========================================================================
+   3b) TWO-FACTOR AUTHENTICATION (TOTP / authenticator apps)
+   --------------------------------------------------------------------------
+   Enrollment happens on the account page; the sign-in challenge is handled by
+   the login + app-login pages. These wrap Firebase's multi-factor APIs.
+
+   IMPORTANT: TOTP multi-factor requires the project to be on Google Cloud
+   Identity Platform with TOTP enabled. Until the owner upgrades + enables it,
+   these calls return errors (typically auth/operation-not-allowed or an
+   admin-restricted-operation). The UI degrades gracefully — nothing else on
+   the site breaks.
+   ========================================================================== */
+
+/** Begin TOTP enrollment for a signed-in user.
+ *  Returns { secret, qrUrl, secretKey }:
+ *    • secret    — the TotpSecret object; pass it back to enrollTotpFinish.
+ *    • qrUrl     — an otpauth:// URL to render as a QR code.
+ *    • secretKey — the base32 key, for manual entry when a camera isn't handy.
+ *  Can throw auth/requires-recent-login — the caller should ask the user to
+ *  re-authenticate (log out + back in) and retry. */
+export async function enrollTotpStart(user) {
+  const session = await multiFactor(user).getSession();
+  const secret = await TotpMultiFactorGenerator.generateSecret(session);
+  return {
+    secret,
+    qrUrl: secret.generateQrCodeUrl(user.email || "Wander", "Wander"),
+    secretKey: secret.secretKey,
+  };
+}
+
+/** Finish TOTP enrollment: verify the first code and register the factor.
+ *  `secret` is the object returned by enrollTotpStart; `code` is the 6-digit
+ *  code from the authenticator app; `displayName` labels the factor. */
+export async function enrollTotpFinish(user, secret, code, displayName) {
+  const assertion = TotpMultiFactorGenerator.assertionForEnrollment(secret, code.trim());
+  await multiFactor(user).enroll(assertion, displayName || "Authenticator app");
+}
+
+/** List the user's enrolled second factors: [{ uid, displayName, factorId }]. */
+export function listFactors(user) {
+  return multiFactor(user).enrolledFactors;
+}
+
+/** Remove one enrolled factor by its uid. */
+export async function unenrollFactor(user, uid) {
+  await multiFactor(user).unenroll(uid);
+}
+
+/** Complete a sign-in that was interrupted by auth/multi-factor-auth-required.
+ *  Pass the original error and the 6-digit code; resolves to a UserCredential
+ *  on success (the user is now signed in). Uses the first enrolled hint. */
+export function resolveMfaSignIn(error, code) {
+  const resolver = getMultiFactorResolver(auth, error);
+  const hint = resolver.hints[0];
+  const assertion = TotpMultiFactorGenerator.assertionForSignIn(hint.uid, code.trim());
+  return resolver.resolveSignIn(assertion);
+}
+
 /* Expose the raw pieces + helper so page scripts can import them. */
-export { auth, onAuthStateChanged, friendlyError };
+export {
+  auth,
+  onAuthStateChanged,
+  friendlyError,
+  // Re-export the raw MFA primitives so pages (e.g. app-login) can build their
+  // own resolver flow when they aren't importing the whole friendly wrapper.
+  getMultiFactorResolver,
+  TotpMultiFactorGenerator,
+};
 
 /* ==========================================================================
    4) SITE-WIDE NAV: reflect auth state on every page

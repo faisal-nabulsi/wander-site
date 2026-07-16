@@ -90,6 +90,48 @@
       </div>
     </div>
 
+    <!-- Two-factor authentication (2FA) -->
+    <div class="account-card reveal" id="twofaCard">
+      <h2>Two-factor authentication (2FA)</h2>
+      <p class="muted" id="twofaState">Checking your two-factor settings…</p>
+
+      <!-- List of enrolled authenticator factors (filled by the script). -->
+      <div id="twofaList" style="margin-top:14px"></div>
+
+      <!-- Idle: prompt to start enrollment. -->
+      <div class="account-actions" id="twofaStartWrap" style="margin-top:16px;display:none">
+        <button type="button" class="btn btn-primary" id="twofaStartBtn">Set up authenticator app</button>
+      </div>
+
+      <!-- Enroll: QR + secret + code entry (hidden until "Set up" is tapped). -->
+      <div id="twofaEnroll" style="display:none;margin-top:18px">
+        <p class="muted" style="margin-top:0">
+          Scan this QR code with an authenticator app (Google Authenticator, 1Password, Authy…),
+          or enter the key manually. Then type the 6-digit code it shows to confirm.
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin-top:14px">
+          <div id="twofaQr" style="width:180px;height:180px;background:#fff;border:1px solid var(--line);border-radius:12px;display:grid;place-items:center;overflow:hidden"></div>
+          <div style="flex:1;min-width:180px">
+            <label style="font-weight:700;font-size:.88rem;color:var(--ink-2);display:block;margin-bottom:6px">Setup key (manual entry)</label>
+            <code id="twofaSecretKey" style="display:block;word-break:break-all;background:var(--bg-tint);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.92rem;letter-spacing:.02em">—</code>
+          </div>
+        </div>
+        <form class="auth-form" id="twofaForm" novalidate style="margin-top:18px;max-width:280px">
+          <div>
+            <label for="twofaCode">6-digit code</label>
+            <input id="twofaCode" name="code" type="text" inputmode="numeric" autocomplete="one-time-code"
+                   pattern="[0-9]*" maxlength="6" required placeholder="123456" />
+          </div>
+          <div class="account-actions" style="margin-top:4px">
+            <button type="submit" class="btn btn-primary" id="twofaVerifyBtn">Verify &amp; enable</button>
+            <button type="button" class="btn btn-ghost" id="twofaCancelBtn">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="auth-msg" id="twofaMsg" role="status" aria-live="polite" style="text-align:left;margin-top:12px"></div>
+    </div>
+
     <!-- Session -->
     <div class="account-card reveal">
       <h2>Session</h2>
@@ -141,9 +183,17 @@
 <script src="/script.js"></script>
 <script type="module" src="/auth.js"></script>
 
+<!-- Client-side QR-code renderer (for the 2FA setup otpauth:// URL). Non-module,
+     exposes a global `qrcode()` factory. Loaded eagerly; used only when the user
+     opens the 2FA setup panel. -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+
 <!-- Page logic: gate on auth, fill email, wire sign-out -->
 <script type="module">
-  import { auth, onAuthStateChanged, logout, friendlyError, resendVerification } from "/auth.js";
+  import {
+    auth, onAuthStateChanged, logout, friendlyError, resendVerification,
+    enrollTotpStart, enrollTotpFinish, listFactors, unenrollFactor,
+  } from "/auth.js";
   import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   const db      = getFirestore(auth.app);
@@ -165,6 +215,8 @@
     if (vb && user.email && !user.emailVerified) vb.style.display = "block";
     // Read the real Pro entitlement and render the plan card.
     loadPlan(user);
+    // Render the current 2FA state (enrolled factors + set-up affordance).
+    renderTwofa(user);
   });
 
   /* Read licenses/{uid} first (the Worker keys purchases by Firebase UID). If
@@ -213,6 +265,158 @@
       vm.textContent = friendlyError(err);
     } finally {
       setTimeout(() => { resendBtn.disabled = false; }, 4000);
+    }
+  });
+
+  /* ====================== Two-factor (TOTP) ====================== */
+  const twofaState     = document.getElementById("twofaState");
+  const twofaList      = document.getElementById("twofaList");
+  const twofaStartWrap = document.getElementById("twofaStartWrap");
+  const twofaStartBtn  = document.getElementById("twofaStartBtn");
+  const twofaEnroll    = document.getElementById("twofaEnroll");
+  const twofaQr        = document.getElementById("twofaQr");
+  const twofaSecretKey = document.getElementById("twofaSecretKey");
+  const twofaForm      = document.getElementById("twofaForm");
+  const twofaCode      = document.getElementById("twofaCode");
+  const twofaVerifyBtn = document.getElementById("twofaVerifyBtn");
+  const twofaCancelBtn = document.getElementById("twofaCancelBtn");
+  const twofaMsg       = document.getElementById("twofaMsg");
+
+  let pendingSecret = null; // the TotpSecret from enrollTotpStart, awaiting a code
+
+  function setTwofaMsg(text, kind) {
+    twofaMsg.textContent = text || "";
+    twofaMsg.className = "auth-msg" + (kind ? " " + kind : "");
+  }
+
+  function closeEnroll() {
+    pendingSecret = null;
+    twofaEnroll.style.display = "none";
+    twofaQr.innerHTML = "";
+    twofaSecretKey.textContent = "—";
+    twofaCode.value = "";
+  }
+
+  /* Read the enrolled factors and paint the card. Wrapped in try/catch because
+     listFactors touches multiFactor(user), which is a no-op array for accounts
+     on a project that hasn't enabled Identity Platform — but stays defensive. */
+  function renderTwofa(user) {
+    let factors = [];
+    try { factors = listFactors(user) || []; } catch (e) { factors = []; }
+
+    twofaList.innerHTML = "";
+    if (factors.length) {
+      twofaState.textContent = "Two-factor authentication is ON. You'll enter a 6-digit code from your authenticator app when you sign in.";
+      factors.forEach((f) => {
+        const row = document.createElement("div");
+        row.style.cssText = "display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px";
+        const label = document.createElement("div");
+        label.innerHTML = '<strong>' + escapeHtml(f.displayName || "Authenticator app") + '</strong>'
+          + '<div class="muted" style="margin-top:2px">Authenticator app (TOTP)</div>';
+        const rm = document.createElement("button");
+        rm.type = "button";
+        rm.className = "btn btn-ghost";
+        rm.textContent = "Remove";
+        rm.addEventListener("click", () => removeFactor(user, f.uid, rm));
+        row.appendChild(label);
+        row.appendChild(rm);
+        twofaList.appendChild(row);
+      });
+      // Still allow adding another authenticator.
+      twofaStartBtn.textContent = "Add another authenticator app";
+      twofaStartWrap.style.display = "flex";
+    } else {
+      twofaState.textContent = "Add an extra layer of security. When 2FA is on, you'll enter a 6-digit code from your authenticator app each time you sign in.";
+      twofaStartBtn.textContent = "Set up authenticator app";
+      twofaStartWrap.style.display = twofaEnroll.style.display === "block" ? "none" : "flex";
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => (
+      { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+    ));
+  }
+
+  async function removeFactor(user, uid, btn) {
+    if (btn) btn.disabled = true;
+    setTwofaMsg("Removing…", "ok");
+    try {
+      await unenrollFactor(user, uid);
+      setTwofaMsg("Authenticator removed.", "ok");
+      renderTwofa(user);
+    } catch (err) {
+      if (btn) btn.disabled = false;
+      setTwofaMsg(friendlyError(err), "err");
+    }
+  }
+
+  /* Draw the otpauth:// URL into #twofaQr as a QR code using qrcode-generator. */
+  function drawQr(otpauthUrl) {
+    twofaQr.innerHTML = "";
+    try {
+      // typeNumber 0 = auto-fit; "M" = medium error correction.
+      const qr = qrcode(0, "M");
+      qr.addData(otpauthUrl);
+      qr.make();
+      // createSvgTag scales to fit the 180px container.
+      twofaQr.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 4, scalable: true });
+      const svg = twofaQr.querySelector("svg");
+      if (svg) { svg.style.width = "100%"; svg.style.height = "100%"; }
+    } catch (e) {
+      // If the QR lib failed to load, fall back to the manual key only.
+      twofaQr.innerHTML = '<span class="muted" style="padding:10px;text-align:center">QR unavailable — use the setup key.</span>';
+    }
+  }
+
+  twofaStartBtn.addEventListener("click", async () => {
+    const user = auth.currentUser;
+    if (!user) return;
+    twofaStartBtn.disabled = true;
+    setTwofaMsg("Preparing your authenticator setup…", "ok");
+    try {
+      const { secret, qrUrl, secretKey } = await enrollTotpStart(user);
+      pendingSecret = secret;
+      twofaSecretKey.textContent = secretKey;
+      drawQr(qrUrl);
+      twofaEnroll.style.display = "block";
+      twofaStartWrap.style.display = "none";
+      setTwofaMsg("");
+      twofaCode.focus();
+    } catch (err) {
+      if (err && err.code === "auth/requires-recent-login") {
+        setTwofaMsg("For your security, please sign out and sign back in, then set up 2FA again.", "err");
+      } else {
+        setTwofaMsg(friendlyError(err), "err");
+      }
+    } finally {
+      twofaStartBtn.disabled = false;
+    }
+  });
+
+  twofaCancelBtn.addEventListener("click", () => {
+    closeEnroll();
+    setTwofaMsg("");
+    renderTwofa(auth.currentUser);
+  });
+
+  twofaForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const user = auth.currentUser;
+    if (!user || !pendingSecret) return;
+    const code = twofaCode.value.trim();
+    if (!/^\d{6}$/.test(code)) { setTwofaMsg("Enter the 6-digit code from your authenticator app.", "err"); return; }
+    twofaVerifyBtn.disabled = true;
+    setTwofaMsg("Verifying…", "ok");
+    try {
+      await enrollTotpFinish(user, pendingSecret, code, "Authenticator app");
+      closeEnroll();
+      setTwofaMsg("✅ Two-factor authentication is now on.", "ok");
+      renderTwofa(user);
+    } catch (err) {
+      setTwofaMsg(friendlyError(err), "err");
+    } finally {
+      twofaVerifyBtn.disabled = false;
     }
   });
 

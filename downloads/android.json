@@ -1,8 +1,8 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 25,
-  "versionName": "0.24.1",
+  "versionCode": 26,
+  "versionName": "0.24.2",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Sign in with Google + Forgot password. New bottom-tab layout (matches iPhone). Street View is now Pro + more secure.",
+  "notes": "Two-factor authentication (2FA) via authenticator apps, plus Google sign-in + forgot password. New bottom-tab layout. Street View is now Pro + more secure.",
   "size": 49516225
 }
