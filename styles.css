@@ -286,7 +286,7 @@ ul { list-style: none; }
 
 /* ---------- CTA band ---------- */
 .cta-band { background: var(--grad); color: #fff; border-radius: var(--radius-lg); padding: clamp(40px, 6vw, 66px); text-align: center; box-shadow: var(--shadow-brand); position: relative; overflow: hidden; }
-.cta-band::before { content: ""; position: absolute; inset: 0; background: radial-gradient(50% 80% at 50% 0%, rgba(255,255,255,.18), transparent 70%); }
+.cta-band::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(50% 80% at 50% 0%, rgba(255,255,255,.18), transparent 70%); }
 .cta-band h2 { position: relative; font-size: clamp(1.7rem, 4vw, 2.6rem); letter-spacing: -.02em; }
 .cta-band p { position: relative; margin: 12px auto 26px; max-width: 46ch; opacity: .92; font-size: 1.08rem; }
 .cta-band .btn { position: relative; }
