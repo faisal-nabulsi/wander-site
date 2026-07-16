@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Thank you — Wander Pro</title>
+<meta name="description" content="Thanks for going Pro. Activating your Wander Pro access." />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#185FA5" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<style>
+  /* Self-contained (like /auth/action/) so this critical post-purchase flow can't be broken by other CSS. */
+  :root { --brand:#185FA5; --brand-400:#3F8FDC; --grad:linear-gradient(135deg,#2b7fd4 0%,#185FA5 55%,#0f4c86 100%);
+          --grad-soft:linear-gradient(180deg,#f3f7fc 0%,#fff 60%); --ink:#14202b; --ink-2:#4a5763; --line:#e3e9f0;
+          --ok:#1a7f37; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink);
+         background:var(--grad-soft); display:flex; align-items:center; justify-content:center; padding:32px 20px; -webkit-font-smoothing:antialiased; }
+  .card { width:min(460px,100%); background:#fff; border:1px solid var(--line); border-radius:20px;
+          box-shadow:0 24px 60px rgba(24,95,165,.12); padding:clamp(28px,6vw,42px); text-align:center; }
+  .mark { display:grid; place-items:center; margin-bottom:18px; }
+  .mark svg { width:52px; height:52px; border-radius:14px; box-shadow:0 4px 14px rgba(24,95,165,.18); }
+  h1 { font-size:1.55rem; letter-spacing:-.02em; margin:0 0 8px; }
+  .sub { color:var(--ink-2); font-size:1rem; margin:0 0 22px; line-height:1.5; }
+  .spinner { width:30px; height:30px; margin:8px auto 20px; border-radius:50%; border:3px solid rgba(24,95,165,.2);
+          border-top-color:var(--brand); animation:spin .7s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .check { width:64px; height:64px; margin:2px auto 16px; display:none; }
+  .btns { display:flex; flex-direction:column; gap:10px; margin-top:8px; }
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; font:inherit; font-size:1rem;
+         font-weight:700; border-radius:12px; padding:13px 18px; text-decoration:none; cursor:pointer; border:1.5px solid var(--line); color:var(--ink); background:#fff; }
+  .btn.primary { color:#fff; background:var(--grad); border:none; box-shadow:0 12px 30px rgba(24,95,165,.28); }
+  .muted { color:var(--ink-2); font-size:.88rem; margin-top:16px; }
+  .muted a { color:var(--brand); font-weight:600; text-decoration:none; }
+  .link { display:inline-block; margin-top:6px; color:var(--brand); font-weight:600; text-decoration:none; font-size:.92rem; }
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="mark">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="#185FA5"/><path d="M50 22c-11 0-20 9-20 20 0 15 20 36 20 36s20-21 20-36c0-11-9-20-20-20z" fill="#fff"/><circle cx="50" cy="42" r="8" fill="#185FA5"/></svg>
+    </div>
+
+    <svg class="check" id="check" viewBox="0 0 24 24" fill="none" stroke="#1a7f37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#e7f6ec" stroke="#1a7f37"/><path d="M8 12.5l2.5 2.5L16 9"/></svg>
+
+    <h1 id="title">Payment received 🎉</h1>
+    <p class="sub" id="sub">Thanks for going Pro. Activating your account — this takes a few seconds…</p>
+    <div class="spinner" id="spinner"></div>
+
+    <div class="btns" id="btns" style="display:none"></div>
+    <div class="muted" id="muted"></div>
+  </main>
+
+  <script type="module">
+    import { auth } from "/auth.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const db = getFirestore(auth.app);
+    const $ = (id) => document.getElementById(id);
+    const spinner = $("spinner"), title = $("title"), sub = $("sub"), check = $("check"), btns = $("btns"), muted = $("muted");
+
+    function setButtons(html) { btns.innerHTML = html; btns.style.display = "flex"; }
+
+    /** True once the Worker's webhook has written the Pro license for this user. */
+    async function isPro(user) {
+      try {
+        const byUid = await getDoc(doc(db, "licenses", user.uid));
+        if (byUid.exists() && byUid.data().plan === "pro") return true;
+        if (user.email) {
+          const byEmail = await getDoc(doc(db, "licenses", user.email.toLowerCase()));
+          if (byEmail.exists() && byEmail.data().plan === "pro") return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    function showPro() {
+      spinner.style.display = "none";
+      check.style.display = "block";
+      title.textContent = "You're Pro! 🎉";
+      sub.textContent = "Every platform is unlocked with this account — iPhone, Android, Mac and Windows. Just sign in on each device.";
+      setButtons(
+        '<a class="btn primary" href="/download/">Download Wander</a>' +
+        '<a class="btn" href="/account/">Go to your account</a>'
+      );
+      muted.innerHTML = "";
+    }
+
+    function showPending() {
+      spinner.style.display = "none";
+      title.textContent = "Almost there";
+      sub.textContent = "Your payment went through and your purchase is safe — Pro can take a minute to sync. Check your account, or re-check below.";
+      setButtons('<a class="btn primary" href="/account/">Check my account</a>');
+      muted.innerHTML = '<a class="link" href="#" id="recheck">Re-check now</a>';
+      $("recheck")?.addEventListener("click", (e) => { e.preventDefault(); location.reload(); });
+    }
+
+    function showSignedOut() {
+      spinner.style.display = "none";
+      title.textContent = "Thanks for your purchase!";
+      sub.textContent = "Sign in with the account you bought Pro with to activate it on this device.";
+      setButtons('<a class="btn primary" href="/login/">Sign in</a>');
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { showSignedOut(); return; }
+      // Poll the entitlement: the webhook is async, so Pro may not be written the instant we land here.
+      const deadline = Date.now() + 40000; // up to ~40s
+      const tick = async () => {
+        if (await isPro(user)) { showPro(); return; }
+        if (Date.now() >= deadline) { showPending(); return; }
+        setTimeout(tick, 2500);
+      };
+      tick();
+    });
+  </script>
+</body>
+</html>
