@@ -1,7 +1,7 @@
 {
   "_comment": "bump WANDER_VERSION in main.py AND version in desktop.json each release.",
-  "version": "1.14.0",
-  "notes": "Route options picker \u2014 preview 2\u20133 driving routes in Two-Spot mode and pick one. Games mode now has curated 'popular play areas' spots for every game (Monster Hunter Now, Pikmin Bloom, Ingress) plus a link to each game's community tools. Opt-in per-game speed guardrail.",
+  "version": "1.15.0",
+  "notes": "You can now delete your Wander account right from the account card. Plus the route options picker (preview 2\u20133 driving routes in Two-Spot mode), curated 'popular play areas' for every game, and the opt-in per-game speed guardrail.",
   "url_mac": "https://wanderspoofer.com/downloads/Wander-Desktop-mac.zip",
   "url_win": "https://wanderspoofer.com/downloads/Wander-Windows.zip"
 }

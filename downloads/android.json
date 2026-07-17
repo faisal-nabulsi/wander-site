@@ -1,8 +1,8 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 30,
-  "versionName": "0.27.0",
+  "versionCode": 31,
+  "versionName": "0.28.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Automation: fire teleports from Tasker or any app via a broadcast intent (com.wander.spoofer.action.TELEPORT with lat+lng or a place name; .action.STOP to revert). Plus the multi-game curated spots + route picker + speed guardrail.",
+  "notes": "Account: you can now delete your account (and log out) right from the account sheet. Plus the earlier automation (fire teleports from Tasker via a broadcast intent), multi-game curated spots, route picker and speed guardrail.",
   "size": 49520321
 }
