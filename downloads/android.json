@@ -1,8 +1,8 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 29,
-  "versionName": "0.26.0",
+  "versionCode": 30,
+  "versionName": "0.27.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Games now has curated 'popular play areas' spots for every game — Monster Hunter Now, Pikmin Bloom and Ingress get the shared list + game-specific extras + a link to each game's community tools. Plus a 2-3 route options picker and an opt-in per-game speed guardrail.",
+  "notes": "Automation: fire teleports from Tasker or any app via a broadcast intent (com.wander.spoofer.action.TELEPORT with lat+lng or a place name; .action.STOP to revert). Plus the multi-game curated spots + route picker + speed guardrail.",
   "size": 49520321
 }
