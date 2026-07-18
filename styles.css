@@ -738,6 +738,8 @@ ul { list-style: none; }
 #instructions .plat-panel-inner .lead{color:#5b6b7d;font-size:.95rem;margin:0 0 16px;line-height:1.5}
 #instructions .plat-panel-inner ol{margin:0;padding-left:22px;line-height:1.62}
 #instructions .plat-panel-inner ol li{margin-bottom:10px}
+#instructions .plat-panel-inner ol li ul{list-style:none;margin:9px 0 4px;padding-left:2px}
+#instructions .plat-panel-inner ol li ul li{margin:0 0 8px;padding-left:24px;text-indent:-24px}
 #instructions .plat-panel-inner ol li code,#instructions .plat-panel-inner .tip code{background:#eef2f7;padding:1px 6px;border-radius:5px;font-family:ui-monospace,Menlo,monospace;font-size:.86em;white-space:nowrap}
 #instructions .plat-panel-inner .tip{margin-top:16px;font-size:13px;color:#5a6775;background:#f4f8fc;border:1px solid #e3edf6;border-radius:10px;padding:11px 13px;line-height:1.5}
 @media(max-width:520px){#instructions .plat-tab{flex:1 1 40%;justify-content:center}#instructions .plat-panel-inner{padding:20px 18px}}
