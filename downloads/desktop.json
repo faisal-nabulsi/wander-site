@@ -1,7 +1,7 @@
 {
   "_comment": "bump WANDER_VERSION in main.py AND version in desktop.json each release.",
-  "version": "1.16.0",
-  "notes": "Record & replay the exact path you drive (Pro), an auto-stop 'safe zone' that returns your iPhone to its real GPS when a route arrives, background scheduling that keeps running while Wander is open (survives reloads and restarts), and native Google sign-in. Plus important security & stability fixes — Wander now listens only on your own computer.",
+  "version": "1.17.0",
+  "notes": "Recent-teleports history with one-tap undo, and a route-options picker in Two-Spot mode (preview 2–3 alternatives and pick the one you want). Plus the earlier record-replay, geofence auto-stop, and background scheduler.",
   "url_mac": "https://wanderspoofer.com/downloads/Wander-Desktop-mac.zip",
   "url_win": "https://wanderspoofer.com/downloads/Wander-Windows.zip"
 }
