@@ -1,8 +1,8 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 32,
-  "versionName": "0.29.0",
+  "versionCode": 33,
+  "versionName": "0.29.1",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Wear OS controller (beta) — install the companion watch app to Stop spoofing and teleport to your saved spots straight from your wrist. Sideload Wander-Wear.apk to a paired Wear OS watch (ADB). Phone auto-updates as usual.",
-  "size": 49602320
+  "notes": "Stability: schedule/geofence/watch triggers can no longer crash the app when it's backgrounded (Android 12+); the watch now shows the real result of a teleport/stop; misc audit hardening.",
+  "size": 49618704
 }
