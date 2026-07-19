@@ -1,8 +1,8 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 34,
-  "versionName": "0.29.2",
+  "versionCode": 35,
+  "versionName": "0.29.3",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Cross-platform saved-places sync now works with iPhone (field-name mismatch fixed). Plus the earlier background-crash guards.",
+  "notes": "Multi-device sync now covers your saved ROUTES too (builder + recorded), not just places \u2014 turn it on in Settings and your route library merges across your devices. Only ever added, never deleted.",
   "size": 49618704
 }
