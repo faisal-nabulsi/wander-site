@@ -1,8 +1,8 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 33,
-  "versionName": "0.29.1",
+  "versionCode": 34,
+  "versionName": "0.29.2",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Stability: schedule/geofence/watch triggers can no longer crash the app when it's backgrounded (Android 12+); the watch now shows the real result of a teleport/stop; misc audit hardening.",
+  "notes": "Cross-platform saved-places sync now works with iPhone (field-name mismatch fixed). Plus the earlier background-crash guards.",
   "size": 49618704
 }
