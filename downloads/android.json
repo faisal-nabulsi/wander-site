@@ -1,8 +1,8 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 31,
-  "versionName": "0.28.0",
+  "versionCode": 32,
+  "versionName": "0.29.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Account: you can now delete your account (and log out) right from the account sheet. Plus the earlier automation (fire teleports from Tasker via a broadcast intent), multi-game curated spots, route picker and speed guardrail.",
-  "size": 49520321
+  "notes": "Wear OS controller (beta) — install the companion watch app to Stop spoofing and teleport to your saved spots straight from your wrist. Sideload Wander-Wear.apk to a paired Wear OS watch (ADB). Phone auto-updates as usual.",
+  "size": 49602320
 }
