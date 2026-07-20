@@ -1,8 +1,8 @@
 {
   "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
-  "versionCode": 36,
-  "versionName": "0.29.4",
+  "versionCode": 37,
+  "versionName": "0.30.0",
   "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Clearer sign-in errors: Google sign-in now tells you exactly what to do if there's no Google account on the phone, Play Services is outdated, or your email is registered with a password instead \u2014 no more confusing generic failures.",
+  "notes": "Cleaner main screen: the map is now front-and-center. Advanced GPS, Geofence and Schedules are tucked behind a single \u201cMore tools\u201d tap instead of stacking on top of the map \u2014 so you can actually see where you're going.",
   "size": 49618704
 }
