@@ -1,8 +1,8 @@
 {
   "_comment": "Android update manifest. Each release: bump versionCode in build.gradle.kts AND here, then upload the APK with: gh release upload current Wander.apk --repo faisal-nabulsi/wander-site --clobber (binaries are NOT committed to this repo).",
-  "versionCode": 37,
-  "versionName": "0.30.0",
+  "versionCode": 38,
+  "versionName": "0.31.0",
   "url": "https://github.com/faisal-nabulsi/wander-site/releases/download/current/Wander.apk",
-  "notes": "Cleaner main screen: the map is now front-and-center. Advanced GPS, Geofence and Schedules are tucked behind a single “More tools” tap instead of stacking on top of the map — so you can actually see where you're going.",
-  "size": 49618704
+  "notes": "Big anti-ban + stability update: a soft-ban cooldown timer with a live 'safe to catch/spin' countdown; a speed governor that caps movement below ban-triggering speeds; GPS 'breathing' so a parked location looks natural instead of frozen; a one-tap setup checklist that deep-links you to fix Location Accuracy, mock-app and battery settings; and clearer error/tunnel help.",
+  "size": 49630992
 }
