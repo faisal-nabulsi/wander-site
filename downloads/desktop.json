@@ -1,7 +1,7 @@
 {
-  "_comment": "bump WANDER_VERSION in main.py AND version in desktop.json each release.",
+  "_comment": "Each release: bump WANDER_VERSION in main.py AND version here, then upload zips with: gh release upload current Wander-Desktop-mac.zip Wander-Windows.zip --repo faisal-nabulsi/wander-site --clobber (binaries are NOT committed to this repo).",
   "version": "1.17.0",
   "notes": "Recent-teleports history with one-tap undo, and a route-options picker in Two-Spot mode (preview 2–3 alternatives and pick the one you want). Plus the earlier record-replay, geofence auto-stop, and background scheduler.",
-  "url_mac": "https://wanderspoofer.com/downloads/Wander-Desktop-mac.zip",
-  "url_win": "https://wanderspoofer.com/downloads/Wander-Windows.zip"
+  "url_mac": "https://github.com/faisal-nabulsi/wander-site/releases/download/current/Wander-Desktop-mac.zip",
+  "url_win": "https://github.com/faisal-nabulsi/wander-site/releases/download/current/Wander-Windows.zip"
 }

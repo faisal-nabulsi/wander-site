@@ -1,8 +1,8 @@
 {
-  "_comment": "Android update manifest. bump versionCode in build.gradle.kts AND android.json each release.",
+  "_comment": "Android update manifest. Each release: bump versionCode in build.gradle.kts AND here, then upload the APK with: gh release upload current Wander.apk --repo faisal-nabulsi/wander-site --clobber (binaries are NOT committed to this repo).",
   "versionCode": 37,
   "versionName": "0.30.0",
-  "url": "https://wanderspoofer.com/downloads/Wander.apk",
-  "notes": "Cleaner main screen: the map is now front-and-center. Advanced GPS, Geofence and Schedules are tucked behind a single \u201cMore tools\u201d tap instead of stacking on top of the map \u2014 so you can actually see where you're going.",
+  "url": "https://github.com/faisal-nabulsi/wander-site/releases/download/current/Wander.apk",
+  "notes": "Cleaner main screen: the map is now front-and-center. Advanced GPS, Geofence and Schedules are tucked behind a single “More tools” tap instead of stacking on top of the map — so you can actually see where you're going.",
   "size": 49618704
 }
