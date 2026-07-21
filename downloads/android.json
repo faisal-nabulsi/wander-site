@@ -1,8 +1,8 @@
 {
   "_comment": "Android update manifest. Each release: bump versionCode in build.gradle.kts AND here, then upload the APK with: gh release upload current Wander.apk --repo faisal-nabulsi/wander-site --clobber (binaries are NOT committed to this repo).",
-  "versionCode": 39,
-  "versionName": "0.31.1",
+  "versionCode": 40,
+  "versionName": "0.31.2",
   "url": "https://github.com/faisal-nabulsi/wander-site/releases/download/current/Wander.apk",
-  "notes": "Stability fixes: fixes a rare freeze where the location could stick after stopping a route, corrects long-distance teleports that could crawl instead of jumping, makes the soft-ban cooldown survive an app restart, and turns on GPS 'breathing' so a parked location looks more natural.",
-  "size": 49630992
+  "notes": "New: a notification tells you the moment your Pokémon GO cooldown clears; long-distance jumps show a 'log off ~8h' safety tip; and GPS fixes now vary their accuracy/altitude slightly while moving so your location reads like a real device, not a perfect track.",
+  "size": 49651472
 }
