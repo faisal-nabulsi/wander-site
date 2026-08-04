@@ -38,6 +38,10 @@
                    font-size: .8rem; padding: 10px 12px; border: 1px solid rgba(0,0,0,.14);
                    border-radius: 10px; background: #fff; color: #333; }
   .go-note { font-size: .85rem; color: var(--muted, #667); margin-top: 18px; line-height: 1.5; }
+  /* The global reset makes every <a> inherit its colour with no underline — right for nav and cards,
+     but it renders an inline link inside body copy invisible. Same page-scoped fix the pricing FAQ uses. */
+  .go-note a { color: var(--brand); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+  .go-note a:hover { color: var(--brand-600, var(--brand)); }
   .go-bad { display: none; }
   @media (prefers-color-scheme: dark) {
     .go-card { background: #171a1f; border-color: rgba(255,255,255,.1); }
