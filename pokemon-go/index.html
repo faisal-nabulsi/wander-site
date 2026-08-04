@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Play Pokémon GO From Home — PoGo Mode Spoofer | Wander</title>
-<meta name="description" content="Play Pokémon GO from home with Wander's PoGo Mode — jump-teleport with a cooldown timer, joystick walk and realistic movement. No jailbreak, free trial, iPhone, Android, Mac &amp; Windows." />
+<meta name="description" content="Play Pokémon GO from home with Wander — we never modify the game, and anti-cheat games mode answers &quot;Failed to detect location (12)&quot; on iPhone. Cooldown timer, joystick walk, no jailbreak, free trial." />
 <link rel="canonical" href="https://wanderspoofer.com/pokemon-go/" />
 <meta property="og:title" content="Play Pokémon GO From Home — PoGo Mode Spoofer | Wander" />
 <meta property="og:description" content="Play Pokémon GO from anywhere with PoGo Mode — jump-teleport with a cooldown timer, joystick walk and natural movement. No jailbreak, real free trial." />
@@ -43,6 +43,47 @@
   }
 }
 </script>
+<style>
+  /* Page-scoped styles, same pattern as /security/. Two blocks:
+       nm-  → the "we never modify the game" does / never-does columns (shared with the home page)
+       e12- → the Error-12 explainer and its limits panel
+     Both lean on the existing tokens so the cards line up with .feature / .wc-cell on this page. */
+  .nm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .nm-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 24px; box-shadow: var(--shadow-sm); }
+  .nm-card h3 { font-size: 1.12rem; letter-spacing: -.01em; }
+  .nm-card ul { margin-top: 14px; display: grid; gap: 11px; }
+  .nm-card li { position: relative; padding-left: 28px; color: var(--ink-2); font-size: .96rem; line-height: 1.55; }
+  /* The tick/cross IS the message of this section, so it's drawn from the same shapes the security
+     page's checklist uses — a brand check for what Wander does, a muted cross for what it never does. */
+  .nm-card li::before { content: ""; position: absolute; left: 0; top: 4px; width: 18px; height: 18px; border-radius: 50%; }
+  .nm-does li::before { background: var(--bg-tint); box-shadow: inset 0 0 0 2px var(--brand-300); }
+  .nm-does li::after { content: ""; position: absolute; left: 6px; top: 8px; width: 5px; height: 9px; border: solid var(--brand); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  .nm-doesnt li::before { background: #eef1f5; box-shadow: inset 0 0 0 2px #cfd6df; }
+  .nm-doesnt li::after { content: "\2715"; position: absolute; left: 0; top: 4px; width: 18px; height: 18px; display: grid; place-items: center; font-size: 10px; font-weight: 800; color: var(--ink-3); }
+  .nm-note { max-width: 880px; margin: 26px auto 0; background: var(--bg); border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: var(--radius); padding: 20px 22px; color: var(--ink-2); font-size: .98rem; line-height: 1.65; }
+  .nm-note b { color: var(--ink); }
+  .nm-link { color: var(--brand); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
+
+  /* Pro badge inside a .feature heading. Deliberately NOT .dl-beta — that rule is scoped to
+     #download in styles.css, so it renders unstyled anywhere else on the site. */
+  .f-pro { display: inline-block; font-size: .64rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #fff; background: var(--grad); padding: 3px 8px; border-radius: 100px; vertical-align: middle; margin-left: 4px; }
+
+  .e12-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .e12-step { position: relative; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 24px; box-shadow: var(--shadow-sm); }
+  .e12-step h3 { font-size: 1.08rem; letter-spacing: -.01em; margin-top: 12px; }
+  .e12-step p { margin-top: 8px; color: var(--ink-2); font-size: .96rem; line-height: 1.6; }
+  .e12-tag { display: inline-block; font-size: .7rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--brand); background: var(--bg-tint); padding: 4px 10px; border-radius: 100px; }
+  /* The limits panel is deliberately as prominent as the pitch above it. Overselling this mode is
+     what generates refunds, so the caveats get a full-width card rather than small print. */
+  .e12-limits { margin-top: 22px; background: var(--bg); border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: var(--radius); padding: 26px 26px 24px; box-shadow: var(--shadow-sm); }
+  .e12-limits h3 { font-size: 1.08rem; letter-spacing: -.01em; }
+  .e12-limits ul { margin-top: 14px; display: grid; gap: 12px; }
+  .e12-limits li { position: relative; padding-left: 24px; color: var(--ink-2); font-size: .96rem; line-height: 1.6; }
+  .e12-limits li::before { content: ""; position: absolute; left: 2px; top: 9px; width: 7px; height: 7px; border-radius: 50%; background: var(--brand-300); }
+  .e12-limits li b { color: var(--ink); }
+  @media (max-width: 900px) { .e12-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) { .nm-grid { grid-template-columns: 1fr; } }
+</style>
 </head>
 <body>
 
@@ -145,6 +186,7 @@
 <div class="trust">
   <div class="wrap trust-inner reveal">
     <span><b>PoGo Mode</b> for Pokémon GO</span><span class="dot"></span>
+    <span>We <b>never modify the game</b></span><span class="dot"></span>
     <span>Works on <b>cellular</b></span><span class="dot"></span>
     <span><b>No</b> jailbreak</span><span class="dot"></span>
     <span>Movement <b>looks natural</b></span><span class="dot"></span>
@@ -191,6 +233,131 @@
         <h3>No jailbreak, no root</h3>
         <p>Runs on a stock iPhone (just a free Apple ID) or Android — the affordable, safer alternative to iPogo and PGSharp.</p>
       </div>
+
+      <!-- ===== For the grind — already shipped, previously unlisted ===== -->
+      <div class="feature reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21V7"/><path d="M8 11l4-4 4 4"/><circle cx="12" cy="21" r="1.4"/><path d="M4.5 14.5a8 8 0 0115 0"/></svg></div>
+        <h3>Distance goals &amp; heading lock</h3>
+        <p>Eggs and buddy candy pay out on distance, so tell Wander the number: <b>walk until 10 km, then stop</b>, and it stops on the number instead of sailing past it. Lock the heading once and it keeps walking without you holding the stick.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
+        <h3>Cooldown preview before you tap</h3>
+        <p>Every saved spot shows what the jump would cost <em>before</em> you take it, and the ones still inside your cooldown are dimmed. You find out you'd be jumping too soon while you can still pick somewhere else.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2.5" width="14" height="19" rx="2.5"/><circle cx="15.5" cy="16.5" r="4"/><circle cx="15.5" cy="16.5" r="1.3" fill="currentColor"/></svg></div>
+        <h3>Floating joystick on Android <span class="f-pro">Pro</span></h3>
+        <p>On Android the joystick floats <em>on top of</em> Pokémon GO as a draggable puck, so you can walk while you're actually playing — no flipping back to Wander between throws.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 20l3-6 4 2 3-7 4 3"/><path d="M3.5 4v16h17"/></svg></div>
+        <h3>Adventure Sync on Android</h3>
+        <p>Wander mirrors the distance you actually walk in-app into Health Connect as steps and distance — paced over the real time it took, in small segments, never one impossible dump. Off until you turn it on.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="6" width="10" height="12" rx="2.5"/><path d="M9.5 6l.5-3h4l.5 3M9.5 18l.5 3h4l.5-3"/></svg></div>
+        <h3>Wear OS watch controller</h3>
+        <p>A companion app for your Android watch: pick a saved spot and teleport the phone from your wrist, or stop the spoof — phone stays in your pocket.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a4 4 0 006 .5l2.5-2.5a4 4 0 00-5.7-5.7L11.5 6.8"/><path d="M14 11a4 4 0 00-6-.5L5.5 13a4 4 0 005.7 5.7l1.3-1.3"/></svg></div>
+        <h3>Trade spots as links</h3>
+        <!-- Careful wording: the recipient PASTES the link into Wander (iOS "Paste share link",
+             Android search bar). It is not a tap-to-open universal link — iOS has no associated-
+             domains entitlement on a free-sideload build and Android's link verification isn't
+             published yet, so promising "it opens straight into Wander" would be a lie the very
+             first time someone tried it. -->
+        <p>Found a good nest or built a route worth keeping? Share it as one link, no file to pass around. Whoever gets it copies the link and pastes it into Wander — iPhone or Android — and sees a preview of the spot or route before anything moves.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WE NEVER MODIFY THE GAME =====================
+     The single claim PGSharp / iPogo / Global++ structurally cannot make, and the
+     first question this page's reader actually has. Every sentence must stay
+     literally true — no "undetectable", no "ban-proof". The honest claim is
+     narrower and stronger: Wander doesn't do the specific thing that got the
+     modified clients shut down. Mirrors the home-page section. -->
+<section class="section section-soft" id="no-mods">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">The difference that matters</span>
+      <h2>We never modify<br><span class="grad-text">the game.</span></h2>
+      <p>PGSharp, iPogo and the old Global++ apps all work the same way: they hand you a rebuilt copy of Pokémon GO. That modified client is what Niantic detects, and it's what Niantic sues over. Wander doesn't touch the game at all.</p>
+    </div>
+
+    <div class="nm-grid reveal">
+      <div class="nm-card nm-does">
+        <h3>What Wander does</h3>
+        <ul>
+          <li>Changes the location your <b>phone</b> reports, at the system level — over Apple's own developer tunnel on iPhone, and the built-in mock-location developer setting on Android.</li>
+          <li>Leaves you on the <b>real Pokémon GO</b> from the App Store or Play Store — Niantic's build, Niantic's signature, updating on its own.</li>
+          <li>Everything on the phone reads that same system location: maps, weather, the game. Nothing about it is game-specific.</li>
+        </ul>
+      </div>
+      <div class="nm-card nm-doesnt">
+        <h3>What Wander never does</h3>
+        <ul>
+          <li>Never patches, repacks or re-signs Pokémon GO, and never asks you to install a version of it that didn't come from the store.</li>
+          <li>Never injects code into the running game or hooks its internals.</li>
+          <li>Never touches your trainer account or Niantic's servers — no sign-in, no bot, no auto-catching, no IV or spawn data pulled out of the game.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="nm-note reveal"><b>Straight with you:</b> this is not a promise that you can't be banned. Changing your location can break Niantic's terms all on its own, and moving in ways a human couldn't is detectable behaviour no matter how the location got there — which is exactly why Wander ships a cooldown timer, GPS jitter and real walking speeds. What we can say precisely is what Wander <em>doesn't</em> do. Niantic sued Global++ over its modified Pokémon GO, Ingress and Wizards Unite clients; in January 2021 Global++ agreed to a <b>$5 million settlement and a permanent injunction</b>. There is no modified Wander game client to sue over — because there is no Wander game client at all. <a class="nm-link" href="/security/">Read exactly how it works &rarr;</a></p>
+  </div>
+</section>
+
+<!-- ===================== ERROR 12 =====================
+     "Failed to detect location (12)" is the #1 reason an iPhone spoofer gets a refund
+     request, and Wander has a real (if narrow) answer for it. The limits panel below is
+     as prominent as the pitch above it ON PURPOSE: this mode is indoor-only, teleport-
+     shaped, and needs a paid proxy app plus a trusted MITM certificate. A reader who
+     buys expecting outdoor walking is a refund and a bad review. -->
+<section class="section" id="error-12">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Error 12</span>
+      <h2>"Failed to detect<br>location (12)"</h2>
+      <p>The message that stops most iPhone spoofers dead. Here's why it happens, what Wander does about it, and — just as important — where that answer runs out.</p>
+    </div>
+
+    <div class="e12-grid reveal">
+      <div class="e12-step">
+        <span class="e12-tag">The cause</span>
+        <h3>It's a flag, not your setup</h3>
+        <p>The usual way to move an iPhone's location is Apple's developer tunnel. It works fine — but iOS marks every fix that comes out of it as software-simulated, and recent Pokémon GO builds reject fixes carrying that mark. Nothing you can reinstall or re-pair changes it, which is why the same error follows people from tool to tool.</p>
+      </div>
+      <div class="e12-step">
+        <span class="e12-tag">Wander's answer</span>
+        <h3>Anti-cheat games mode</h3>
+        <p>Wander has a second, separate engine on iPhone. Rather than injecting a location, it changes what Apple's Wi-Fi positioning service reports about the networks around you, and lets iOS work out the fix by itself the ordinary way. A fix iOS calculated isn't marked as simulated — so the game accepts it. It's a whole-app switch, not a per-game one: while anti-cheat mode is on, <b>every</b> teleport in Wander goes through this engine, and you run the proxy app's VPN instead of LocalDevVPN (iOS allows only one at a time). Turn it back off for everything else.</p>
+      </div>
+      <div class="e12-step">
+        <span class="e12-tag">The proof</span>
+        <h3>One tap: "Check my spoof"</h3>
+        <p>Wander asks iOS where <em>Wander</em> is — through the exact pipeline the game reads — and compares it to the spot you asked for. Green means it's landing end to end; amber tells you it hasn't taken yet and what to do about it. No squinting at Apple Maps trying to guess.</p>
+      </div>
+    </div>
+
+    <div class="e12-limits reveal">
+      <h3>Where it stops — please read this before you set it up</h3>
+      <ul>
+        <li><b>It steers network positioning, not GPS.</b> A strong real GPS fix overrides it. This mode holds indoors or anywhere GPS is weak — it is not a way to walk around outside under open sky.</li>
+        <li><b>It's for sitting still and hopping between spots, and you switch it off again afterwards.</b> Because it's a whole-app switch, leaving it on sends Find My, Life360, dating apps and multi-stop routes through the same indoor, teleport-only engine — turn it off for those and Wander's regular engine handles them properly, with no proxy and no certificate.</li>
+        <li><b>Setup is real work, and it isn't free.</b> You install a supported proxy app from the App Store (Shadowrocket, Loon, Quantumult X or Stash — all paid; Shadowrocket is the one we've tested end to end), import Wander's config, then install and trust a certificate. Wander walks you through every step, and shows you exactly how to turn it all off again — one tap from the right Settings screen.</li>
+        <li><b>Take the certificate seriously.</b> While it's trusted it can decrypt HTTPS across your whole device, not just for the game. Wander states that plainly during setup and makes you acknowledge it before it hands you the button. If that isn't a trade you want to make, leave this mode off — everything else in Wander works without it.</li>
+        <li><b>Each new spot needs a flush.</b> iOS only picks up the new position after Location Services is toggled off for a full ten seconds or so and back on. Wander puts you one tap from that screen, but no app is allowed to flip that switch for you.</li>
+        <li><b>It's marked experimental in the app</b>, off by default, and Apple can change the behaviour underneath it with any iOS release. We'd rather you knew that now than after you'd paid.</li>
+      </ul>
     </div>
   </div>
 </section>

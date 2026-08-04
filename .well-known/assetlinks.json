@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.wander.spoofer",
+      "sha256_cert_fingerprints": [
+        "04:40:3D:92:76:2E:5C:35:8E:86:A8:F7:6C:A3:82:72:98:04:96:9D:2C:7D:82:3F:EC:31:6B:EF:9C:BA:DF:67"
+      ]
+    }
+  }
+]

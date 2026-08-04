@@ -43,6 +43,32 @@
   }
 }
 </script>
+<style>
+  /* Page-scoped styles for the "we never modify the game" section (nm-). Kept here rather than in
+     styles.css because only this page and /pokemon-go/ use them, and they lean entirely on the
+     existing tokens so the cards sit level with .feature / .wc-cell elsewhere on the page. */
+  .nm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .nm-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 24px; box-shadow: var(--shadow-sm); }
+  .nm-card h3 { font-size: 1.12rem; letter-spacing: -.01em; }
+  .nm-card ul { margin-top: 14px; display: grid; gap: 11px; }
+  .nm-card li { position: relative; padding-left: 28px; color: var(--ink-2); font-size: .96rem; line-height: 1.55; }
+  /* The tick/cross IS the message of this section, so it's drawn from the same shapes the security
+     page's checklist uses — a brand check for what Wander does, a muted cross for what it never does. */
+  .nm-card li::before { content: ""; position: absolute; left: 0; top: 4px; width: 18px; height: 18px; border-radius: 50%; }
+  .nm-does li::before { background: var(--bg-tint); box-shadow: inset 0 0 0 2px var(--brand-300); }
+  .nm-does li::after { content: ""; position: absolute; left: 6px; top: 8px; width: 5px; height: 9px; border: solid var(--brand); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  .nm-doesnt li::before { background: #eef1f5; box-shadow: inset 0 0 0 2px #cfd6df; }
+  .nm-doesnt li::after { content: "\2715"; position: absolute; left: 0; top: 4px; width: 18px; height: 18px; display: grid; place-items: center; font-size: 10px; font-weight: 800; color: var(--ink-3); }
+  .nm-note { max-width: 880px; margin: 26px auto 0; background: var(--bg); border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: var(--radius); padding: 20px 22px; color: var(--ink-2); font-size: .98rem; line-height: 1.65; }
+  .nm-note b { color: var(--ink); }
+  .nm-link { color: var(--brand); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
+  @media (max-width: 760px) { .nm-grid { grid-template-columns: 1fr; } }
+
+  /* Beta badge inside a .feature heading — same shape as the Pro badge on /pokemon-go/, but muted
+     rather than brand-gradient, because it marks a caveat and not a paid perk. Deliberately NOT
+     .dl-beta: that rule is scoped to #download in styles.css and renders unstyled anywhere else. */
+  .f-beta { display: inline-block; font-size: .64rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); background: var(--bg-soft); border: 1px solid var(--line); padding: 2px 8px; border-radius: 100px; vertical-align: middle; margin-left: 4px; }
+</style>
 </head>
 <body>
 
@@ -153,6 +179,47 @@
   </div>
 </div>
 
+<!-- ===================== WE NEVER MODIFY THE GAME =====================
+     Placed directly under the trust strip on purpose: "will this get my account
+     nuked?" is the first question a game player has, and it is the one claim our
+     competitors structurally cannot make. Every sentence here has to stay literally
+     true — no "undetectable", no "ban-proof". The honest claim is narrower and
+     stronger: Wander doesn't do the specific thing that got the modified clients
+     shut down. -->
+<section class="section section-soft" id="no-mods">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">The difference that matters</span>
+      <h2>We never modify<br><span class="grad-text">the game.</span></h2>
+      <p>Tools like PGSharp, iPogo and the old Global++ apps work by handing you a rebuilt copy of the game itself. Wander doesn't touch the game at all — it changes what your <em>phone</em> reports, and the real, unmodified app reads that like any other location.</p>
+    </div>
+
+    <div class="nm-grid reveal">
+      <div class="nm-card nm-does">
+        <h3>What Wander does</h3>
+        <ul>
+          <li>Changes the location your <b>device</b> reports, at the system level — over Apple's own developer tunnel on iPhone, and the built-in mock-location developer setting on Android.</li>
+          <li>Leaves you on the <b>real app</b> you installed from the App Store or Play Store, updating normally, signed by whoever made it.</li>
+          <li>Everything on the phone reads that same system location — maps, weather, your games. There's nothing game-specific about it.</li>
+        </ul>
+      </div>
+      <div class="nm-card nm-doesnt">
+        <h3>What Wander never does</h3>
+        <ul>
+          <li>Never patches, repacks or re-signs an app you didn't get from the store.</li>
+          <li>Never injects code into a running app or hooks its internals.</li>
+          <!-- "your GAME account" is load-bearing: Wander does have its own sign-in for Pro and
+               sync, so an unqualified "no sign-in" would read as "Wander needs no account" and be
+               false. The /pokemon-go/ twin of this bullet says "trainer account" for the same reason. -->
+          <li>Never touches your game account or a game's servers — no game sign-in, no bot, no automated tapping, no reading data out of a game.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="nm-note reveal"><b>Straight with you:</b> this is not a promise that you can't be banned. Changing your location can break an app's terms all on its own, and moving in ways a human couldn't is detectable behaviour no matter how the location got there. What we can say precisely is what Wander <em>doesn't</em> do. Niantic sued Global++ over its modified Pokémon GO, Ingress and Wizards Unite clients; in January 2021 Global++ agreed to a <b>$5 million settlement and a permanent injunction</b>. There is no modified Wander game client to sue over — because there is no Wander game client at all. <a class="nm-link" href="/security/">Read exactly how it works &rarr;</a></p>
+  </div>
+</section>
+
 <!-- ===================== FEATURE HIGHLIGHTS ===================== -->
 <section class="section" id="features">
   <div class="wrap">
@@ -209,6 +276,32 @@
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 3L4 14h6l-1 7 9-11h-6l1-7z"/></svg></div>
         <h3>PoGo Mode</h3>
         <p>Jump-teleport with a cooldown timer and block-until-cooldown lock — plus presets for Pokémon GO, Monster Hunter Now, Pikmin Bloom &amp; Ingress.</p>
+      </div>
+
+      <!-- ===== Shipped for a while, never advertised — the three people ask for most ===== -->
+      <div class="feature reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a4 4 0 006 .5l2.5-2.5a4 4 0 00-5.7-5.7L11.5 6.8"/><path d="M14 11a4 4 0 00-6-.5L5.5 13a4 4 0 005.7 5.7l1.3-1.3"/></svg></div>
+        <h3>Share a Spot as a Link</h3>
+        <!-- Careful wording: this is a paste-in link, not a tap-to-open universal link. iOS has no
+             associated-domains entitlement and Android's link verification isn't published, so the
+             recipient copies the link and imports it ("Paste share link" on iPhone, the search bar
+             on Android). Claiming it opens the app on tap would break on the first real attempt. -->
+        <p>Send a spot — or a whole multi-stop route — as one link, with no export file to pass around. On the other end they copy the link, paste it into Wander on iPhone or Android, and get a preview before anything moves.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21V7"/><path d="M8 11l4-4 4 4"/><circle cx="12" cy="21" r="1.4"/><path d="M4.5 14.5a8 8 0 0115 0"/></svg></div>
+        <h3>Hands-free Walking</h3>
+        <p>Point the joystick once and tap <b>Lock heading</b> — Wander keeps walking that way without you holding anything. Set a distance goal and it stops itself on the number, not past it.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="12" y="4" width="6" height="11" rx="1.5"/><path d="M6.5 17h.01M15 12h.01"/><path d="M20 8v12"/></svg></div>
+        <!-- The badge is not decoration: the desktop app ships this panel labelled BETA, and every
+             other status we surface on this page (Pro, experimental) is marked, so leaving this one
+             bare would be the outlier that reads as more finished than it is. -->
+        <h3>Several iPhones at Once <span class="f-beta">Beta</span></h3>
+        <p>The Mac and Windows apps hold a location across every connected iPhone — set one, set a few, or broadcast to all of them. Connect each phone first, then pick who moves. Handy when a whole household needs to be in the same place.</p>
       </div>
     </div>
 

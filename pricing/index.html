@@ -25,6 +25,13 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="stylesheet" href="/styles.css" />
+<style>
+  /* Page-scoped. The global reset makes every <a> inherit its colour with no underline, which is
+     right for nav and cards but makes a link inside a FAQ answer invisible — and these two answers
+     are the first ones that carry a link out to the detail pages. */
+  .faq-a-inner p a { color: var(--brand); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+  .faq-a-inner p a:hover { color: var(--brand-600); }
+</style>
 </head>
 <body>
 
@@ -219,6 +226,23 @@
             <td data-plan="Free Trial"><span class="cmp-no"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg></span><span class="cmp-sr">No</span></td>
             <td data-plan="Wander Pro"><span class="cmp-yes"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg></span><span class="cmp-sr">Yes</span></td>
           </tr>
+          <!-- Error-12 row. It sits next to "no jailbreak" because both are platform-level
+               facts rather than plan perks — the mode is a free, off-by-default experimental
+               toggle, so it's Yes/Yes. The hint carries the honest limits inline; the full
+               caveats (indoor-only, proxy app + trusted certificate) live on /pokemon-go/. -->
+          <tr>
+            <th scope="row">Anti-cheat games mode <span class="cmp-hint">(the answer to Pokémon GO's "Failed to detect location (12)" on iPhone — indoor / weak-GPS teleporting, needs a proxy app + trusted certificate)</span></th>
+            <td data-plan="Free Trial">
+              <span class="cmp-yes"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg></span>
+              <span class="cmp-note">Experimental</span>
+              <span class="cmp-sr">Yes, included — marked experimental in the app</span>
+            </td>
+            <td data-plan="Wander Pro">
+              <span class="cmp-yes"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg></span>
+              <span class="cmp-note">Experimental</span>
+              <span class="cmp-sr">Yes, included — marked experimental in the app</span>
+            </td>
+          </tr>
           <tr>
             <th scope="row">No jailbreak</th>
             <td data-plan="Free Trial"><span class="cmp-yes"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg></span><span class="cmp-sr">Yes</span></td>
@@ -338,6 +362,25 @@
         <div class="faq-a">
           <div class="faq-a-inner">
             <p>Be honest with yourself here: <strong>spoofing your location can violate a game's Terms of Service</strong>, and that risk is on you. Wander gives you the tools to move realistically — cooldown timers, GPS jitter, walking speeds — but using them sensibly is your call. Play it smart.</p>
+            <p>What we can tell you precisely is what Wander <em>doesn't</em> do. PGSharp, iPogo and the old Global++ apps hand you a rebuilt copy of the game; that modified client is what gets detected, and it's what Niantic sued Global++ over (a $5&nbsp;million settlement and a permanent injunction in January 2021). <strong>Wander never modifies the game.</strong> It changes what your phone reports at the system level and leaves the real store-installed app alone. That isn't a guarantee — it's just the specific thing that ends most spoofers, and Wander doesn't do it. <a href="/pokemon-go/#no-mods">See exactly what that means →</a></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 — sits right after the ban question on purpose: "Failed to detect location (12)"
+           is the objection people actually arrive with, and it's the one competitors quietly
+           don't answer. Kept precise about the LIMITS as well as the fix; overselling this
+           mode is what generates refunds. -->
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" onclick="faqToggle(this)">
+          <span class="faq-q-text">Does Wander fix "Failed to detect location (12)" in Pokémon GO?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            <p><strong>On iPhone, there's a mode for it — with real limits.</strong> Error 12 happens because iOS marks any location set through Apple's developer tunnel as software-simulated, and recent Pokémon GO builds reject those fixes. No reinstall fixes it, which is why the same error follows people from tool to tool.</p>
+            <p>Wander's <strong>anti-cheat games mode</strong> takes a different route: it changes what Apple's Wi-Fi positioning service reports about the networks around you, and lets iOS calculate the fix itself. A fix iOS calculated isn't flagged as simulated. There's also a one-tap <strong>"Check my spoof"</strong> self-test that reads the location iOS hands back and tells you whether it actually landed.</p>
+            <p>The honest limits: it steers network positioning, <strong>not GPS</strong>, so it holds indoors or where GPS is weak and won't work outdoors under open sky. It's built for teleporting between spots, not smooth live walking. Setting it up needs a paid proxy app from the App Store plus a certificate you install and trust, and it's marked experimental in Wander. It's included on every plan, free trial included — <a href="/pokemon-go/#error-12">read the full limits before you buy →</a></p>
           </div>
         </div>
       </div>
