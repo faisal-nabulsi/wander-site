@@ -16,13 +16,27 @@ const PROMO_END = new Date('2026-08-01T23:59:59');
         m = cd.querySelector('[data-m]'), s = cd.querySelector('[data-s]');
   const pad = n => String(n).padStart(2, '0');
 
+  // `timer` MUST be declared (and initialised) before the first tick() call below.
+  //
+  // THIS EXACT LINE IS WHY THE WHOLE SITE WENT BLANK FOR THREE DAYS (2026-08-02 → 08-05).
+  // It used to be `const timer = setInterval(...)` written AFTER the first `tick()`. While the
+  // promo was live that was harmless, because the expired branch — the only place that touches
+  // `timer` — never ran. The instant PROMO_END passed, the first synchronous tick() took that
+  // branch and hit `clearInterval(timer)` with `timer` still in the temporal dead zone:
+  // "ReferenceError: Cannot access 'timer' before initialization". The throw escaped this IIFE
+  // and killed the rest of script.js, so reveal() never ran and all 28 `.reveal` elements stayed
+  // at opacity:0 — a full-height, completely blank page, for every visitor.
+  // A `let` initialised up here cannot be in the TDZ when tick() runs, and clearInterval(null)
+  // is a no-op, so the expired-on-first-tick path is now safe.
+  let timer = null;
+
   function tick() {
     const diff = PROMO_END - new Date();
     if (diff <= 0) {                 // expired → hide the promo bar entirely
       bar.classList.add('expired');
       const p = document.getElementById('promoPrice');
       if (p) p.textContent = '';
-      clearInterval(timer);
+      if (timer) clearInterval(timer);
       return;
     }
     const sec = Math.floor(diff / 1000);
@@ -32,7 +46,9 @@ const PROMO_END = new Date('2026-08-01T23:59:59');
     s.textContent = pad(sec % 60);
   }
   tick();
-  const timer = setInterval(tick, 1000);
+  // Assignment, not a declaration — `timer` is the `let` above. If the first tick() already took
+  // the expired branch this still runs, but tick() will clear it on its next pass; harmless.
+  timer = setInterval(tick, 1000);
 })();
 
 /* ----- 2. DISMISS PROMO (remembers via localStorage) ---------------------- */
@@ -92,8 +108,16 @@ const PROMO_END = new Date('2026-08-01T23:59:59');
 /* ----- 5. REVEAL ON SCROLL ------------------------------------------------ */
 (function reveal() {
   const els = document.querySelectorAll('.reveal');
-  if (!('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('in')); return; }
+  // No observer support → leave the CSS default (visible). The `.js-reveal` opt-in added by the
+  // inline head script is dropped by its own failsafe, so nothing stays hidden.
+  if (!('IntersectionObserver' in window) || !els.length) return;
+
   const obs = new IntersectionObserver((entries, o) => {
+    // The observer has actually reported, so it IS driving the animation — tell the head script's
+    // failsafe to stand down. Set here rather than at setup time on purpose: an observer that is
+    // constructed but never fires (background tab, prerender) must still trip the failsafe, or the
+    // page stays blank exactly the way it did for three days in August 2026.
+    window.__wanderRevealReady = true;
     entries.forEach((e, i) => {
       if (e.isIntersecting) {
         setTimeout(() => e.target.classList.add('in'), (i % 4) * 70);

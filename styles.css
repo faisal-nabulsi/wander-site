@@ -304,8 +304,19 @@ ul { list-style: none; }
 .footer-bottom a:hover { color: #fff; }
 
 /* ---------- Reveal on scroll ---------- */
-.reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
-.reveal.in { opacity: 1; transform: none; }
+/* Scroll-reveal.
+   CONTENT IS VISIBLE BY DEFAULT. The hidden-then-fade-in state is scoped under `.js-reveal`, a
+   class the page only opts into when JavaScript is alive and able to drive the animation.
+   WHY IT IS BUILT THIS WAY: it used to be unscoped — `.reveal { opacity: 0 }` applied always, and
+   only JS could ever turn it back on. On 2026-08-02 a ReferenceError in the promo countdown (see
+   script.js) killed the rest of script.js before the reveal pass ran, so all 28 elements stayed at
+   opacity:0 while keeping their full height. Every one of the 18 pages rendered as a tall, blank
+   white page for three days. Decoration must never be able to hide the product: if anything goes
+   wrong now — a script error, a blocked file, an observer that never fires — the animation is what
+   is lost, not the content. Do NOT move these declarations back out of `.js-reveal`. */
+.reveal { opacity: 1; transform: none; }
+.js-reveal .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+.js-reveal .reveal.in { opacity: 1; transform: none; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {

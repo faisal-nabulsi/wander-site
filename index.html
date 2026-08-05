@@ -69,6 +69,13 @@
      .dl-beta: that rule is scoped to #download in styles.css and renders unstyled anywhere else. */
   .f-beta { display: inline-block; font-size: .64rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); background: var(--bg-soft); border: 1px solid var(--line); padding: 2px 8px; border-radius: 100px; vertical-align: middle; margin-left: 4px; }
 </style>
+<script>/* Reveal opt-in + failsafe. Adding the class here (not in script.js) avoids a flash of
+   visible content before the animation arms. The timeout is the safety net: if the reveal pass has
+   not confirmed a live IntersectionObserver within 2s — script error, blocked file, background tab —
+   the opt-in is dropped and the page renders normally. Without this, one JS failure blanks the page.
+   See styles.css .reveal and the August 2026 outage note in script.js. */
+document.documentElement.classList.add("js-reveal");
+setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.classList.remove("js-reveal");},2000);</script>
 </head>
 <body>
 

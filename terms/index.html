@@ -25,6 +25,13 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="stylesheet" href="/styles.css" />
+<script>/* Reveal opt-in + failsafe. Adding the class here (not in script.js) avoids a flash of
+   visible content before the animation arms. The timeout is the safety net: if the reveal pass has
+   not confirmed a live IntersectionObserver within 2s — script error, blocked file, background tab —
+   the opt-in is dropped and the page renders normally. Without this, one JS failure blanks the page.
+   See styles.css .reveal and the August 2026 outage note in script.js. */
+document.documentElement.classList.add("js-reveal");
+setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.classList.remove("js-reveal");},2000);</script>
 </head>
 <body>
 
