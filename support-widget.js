@@ -5,7 +5,7 @@
        <script src="/support-widget.js" defer></script>
 
    • Floating bubble bottom-right → opens a chat panel.
-   • Talks to the Wander Worker:  POST https://api.wanderspoofer.com/support/chat
+   • Talks to the Wander Worker:  POST https://wander-payments.wanderlocation.workers.dev/support/chat
      Body:  { messages: [ { role, content }, ... ] }   (history capped ~10)
      Reads: { reply: "..." }  (also tolerates { message } / { content } / { text }).
    • Renders replies as light markdown (bold, italic, code, links, line breaks).
