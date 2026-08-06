@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>WFWorkflowClientVersion</key>
+	<string>2038.0.2.3</string>
+	<key>WFWorkflowClientRelease</key>
+	<string>18.0</string>
+	<key>WFWorkflowMinimumClientVersion</key>
+	<integer>900</integer>
+	<key>WFWorkflowMinimumClientVersionString</key>
+	<string>900</string>
+	<key>WFWorkflowTypes</key>
+	<array/>
+	<key>WFWorkflowInputContentItemClasses</key>
+	<array/>
+	<key>WFWorkflowImportQuestions</key>
+	<array/>
+	<key>WFWorkflowIcon</key>
+	<dict>
+		<key>WFWorkflowIconStartColor</key>
+		<integer>4282601983</integer>
+		<key>WFWorkflowIconGlyphNumber</key>
+		<integer>61440</integer>
+	</dict>
+	<key>WFWorkflowActions</key>
+	<array>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.comment</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFCommentActionText</key>
+				<string>Wander: Flush snap. Clears a snapped/stale GPS fix by toggling the Settings-level Wi-Fi switch OFF, waiting, then back ON. That forces iOS to drop its cached Wi-Fi-derived (gs-loc) location; when Wi-Fi returns, Wander's keep-alive re-asserts your target coordinate. NOTE: this uses the real Settings Wi-Fi toggle (not the Control Center button, which does not flush the fix). Run this while the Shadowrocket tunnel is connected + routing so the re-push lands.</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.wifi</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>OnValue</key>
+				<false/>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.delay</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFDelayTime</key>
+				<real>3</real>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.wifi</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>OnValue</key>
+				<true/>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

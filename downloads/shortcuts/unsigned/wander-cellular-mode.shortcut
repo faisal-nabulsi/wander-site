@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>WFQuickActionSurfaces</key>
+	<array/>
+	<key>WFWorkflowActions</key>
+	<array>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.comment</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFCommentActionText</key>
+				<string>Wander Cellular Mode — name this shortcut EXACTLY "Wander Cellular Mode" or Wander's in-app button will not find it.
+
+WHAT IT DOES: on mobile data with no Wi-Fi, iOS refuses to let Wander's developer tunnel CONNECT — but it never re-checks once the tunnel is up. So this turns Airplane Mode on just long enough to connect and set your location, then turns it back off. The spoof holds with cellular back on. On Wi-Fi the Airplane steps are skipped: nothing is blocking the tunnel there, and dropping your connection for nothing would just be rude.
+
+HOW LONG YOU ARE OFFLINE: up to about 30 seconds, usually less. The 4-second wait below, plus however long the tunnel takes to come up (up to 12s) and the teleport takes to land (up to 12s), plus 2 seconds. Calls and data are off for that whole window.
+
+IF THIS RUN IS INTERRUPTED — you force-quit, you cancel it, or iOS stops giving Shortcuts background time — Airplane Mode can be left ON, because the action that turns it back off is near the end. Wander watches for that: reopen Wander and it will tell you, and show you how to switch Airplane Mode back off. You can also just do it yourself in Control Center.
+
+INPUT: this shortcut takes text — "lat, lng". Wander passes the pin you selected when you run it from the app. Run it by hand and the Teleport action will ask you where to go.
+
+YOU MUST ADD TWO ACTIONS BY HAND. Look for the two "ADD THE WANDER ACTION HERE" comments below and replace each with the Wander action it names. They cannot be shipped pre-filled: an App Intent action stores the target app's bundle ID, and your Wander is signed with your own Apple ID, so its bundle ID is unique to you. It is two picks in the editor, once.
+
+WHY APP INTENTS AND NOT wander:// LINKS: the sequence has to WAIT for the tunnel to be up and the location to be set before the radio comes back. An App Intent action blocks until it is genuinely finished; a URL fires and returns immediately, which would have this toggling cellular back on underneath a half-built connection.</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.getwifi</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>C4E1A7D2-0000-4A10-9C31-000000000001</string>
+				<key>WFCellularDetail</key>
+				<string>Carrier Name</string>
+				<key>WFNetworkDetailsNetwork</key>
+				<string>Cellular</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.getwifi</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>UUID</key>
+				<string>C4E1A7D2-0000-4A10-9C31-000000000002</string>
+				<key>WFNetworkDetailsNetwork</key>
+				<string>Wi-Fi</string>
+				<key>WFWiFiDetail</key>
+				<string>Network Name</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.comment</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFCommentActionText</key>
+				<string>THE TWO CHECKS ABOVE decide whether Airplane Mode gets touched at all, and they are built to fail SAFE — if this device cannot tell us what its network is doing, we leave the radio alone rather than guess.
+
+Check 1 (Cellular -&gt; Carrier Name) asks "is there a cellular connection here at all, and can Get Network Details actually answer?". No answer means either no SIM or an action that isn't working, and in both cases an Airplane Mode cycle is the wrong move — so the Otherwise branch just tells you, and nothing is toggled.
+
+Check 2 (Wi-Fi -&gt; Network Name) asks "are we on Wi-Fi?". A network name means yes, and the tunnel will connect without any of this, so the Airplane steps are skipped.</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>C4E1A7D2-0000-4A10-9C31-000000000010</string>
+				<key>WFCondition</key>
+				<integer>100</integer>
+				<key>WFControlFlowMode</key>
+				<integer>0</integer>
+				<key>WFInput</key>
+				<dict>
+					<key>Value</key>
+					<dict>
+						<key>OutputName</key>
+						<string>Network Details</string>
+						<key>OutputUUID</key>
+						<string>C4E1A7D2-0000-4A10-9C31-000000000001</string>
+						<key>Type</key>
+						<string>ActionOutput</string>
+					</dict>
+					<key>WFSerializationType</key>
+					<string>WFTextTokenAttachment</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>C4E1A7D2-0000-4A10-9C31-000000000011</string>
+				<key>WFCondition</key>
+				<integer>101</integer>
+				<key>WFControlFlowMode</key>
+				<integer>0</integer>
+				<key>WFInput</key>
+				<dict>
+					<key>Value</key>
+					<dict>
+						<key>OutputName</key>
+						<string>Network Details</string>
+						<key>OutputUUID</key>
+						<string>C4E1A7D2-0000-4A10-9C31-000000000002</string>
+						<key>Type</key>
+						<string>ActionOutput</string>
+					</dict>
+					<key>WFSerializationType</key>
+					<string>WFTextTokenAttachment</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.airplanemode.set</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>OnValue</key>
+				<true/>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.delay</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFDelayTime</key>
+				<integer>4</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>C4E1A7D2-0000-4A10-9C31-000000000011</string>
+				<key>WFControlFlowMode</key>
+				<integer>2</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>C4E1A7D2-0000-4A10-9C31-000000000010</string>
+				<key>WFControlFlowMode</key>
+				<integer>1</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.notification</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFNotificationActionBody</key>
+				<string>Couldn't read this device's network state, so Airplane Mode was left alone. If the tunnel doesn't come up, connect to Wi-Fi or toggle Airplane Mode yourself and run this again.</string>
+				<key>WFNotificationActionSound</key>
+				<true/>
+				<key>WFNotificationActionTitle</key>
+				<string>Cellular Mode</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.conditional</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>GroupingIdentifier</key>
+				<string>C4E1A7D2-0000-4A10-9C31-000000000010</string>
+				<key>WFControlFlowMode</key>
+				<integer>2</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.comment</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFCommentActionText</key>
+				<string>ADD THE WANDER ACTION HERE (1 of 2) — "Start Wander Tunnel".
+
+Tap +, search for Start Wander Tunnel, add it here, then delete this comment. Nothing to fill in. It brings Wander's own tunnel up and does not finish until the tunnel can actually carry a location, so the next action cannot run too early. Worst case it takes about 12 seconds.
+
+It is also a safe no-op: if the tunnel is already up it returns immediately. If your build has no Network Extension entitlement (a free-Apple-ID sideload), it says so — in that case connect LocalDevVPN by hand while Airplane Mode is on, and use that instead.</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.comment</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFCommentActionText</key>
+				<string>ADD THE WANDER ACTION HERE (2 of 2) — "Teleport to Place".
+
+Tap +, search for Teleport to Place, add it here, then delete this comment. Tap its Place field and choose Shortcut Input — that is how Wander hands it the pin you selected on the map. (It also accepts an address or a place name if you run this by hand.)
+
+This is the action that must finish BEFORE the radio comes back, which is why it goes here and not after the Airplane Mode Off below. The connection that carries the spoof is not established until this action lands — moving Airplane Mode Off above it would put the radio back exactly where iOS refuses the connection.</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.delay</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFDelayTime</key>
+				<integer>2</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.airplanemode.set</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>OnValue</key>
+				<false/>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.comment</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFCommentActionText</key>
+				<string>The last two actions always run, on every path, including the ones where nothing above worked. Turning Airplane Mode off when it was never turned on is a harmless no-op, and that is the point: no branch of this shortcut can leave you in Airplane Mode on purpose.
+
+wander://cellular-done tells Wander the run reached the end. Wander then checks whether anything is actually simulating and, if not, says so and offers to try again — an App Intent's own reply is not shown during an unattended run, so without this a failed run and a working one look identical.</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.openurl</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFInput</key>
+				<dict>
+					<key>Value</key>
+					<dict>
+						<key>attachmentsByRange</key>
+						<dict/>
+						<key>string</key>
+						<string>wander://cellular-done</string>
+					</dict>
+					<key>WFSerializationType</key>
+					<string>WFTextTokenString</string>
+				</dict>
+			</dict>
+		</dict>
+	</array>
+	<key>WFWorkflowClientRelease</key>
+	<string>18.0</string>
+	<key>WFWorkflowClientVersion</key>
+	<string>2038.0.2.3</string>
+	<key>WFWorkflowHasShortcutInputVariables</key>
+	<true/>
+	<key>WFWorkflowIcon</key>
+	<dict>
+		<key>WFWorkflowIconGlyphNumber</key>
+		<integer>61440</integer>
+		<key>WFWorkflowIconStartColor</key>
+		<integer>4282601983</integer>
+	</dict>
+	<key>WFWorkflowImportQuestions</key>
+	<array/>
+	<key>WFWorkflowInputContentItemClasses</key>
+	<array>
+		<string>WFStringContentItem</string>
+	</array>
+	<key>WFWorkflowMinimumClientVersion</key>
+	<integer>900</integer>
+	<key>WFWorkflowMinimumClientVersionString</key>
+	<string>900</string>
+	<key>WFWorkflowOutputContentItemClasses</key>
+	<array/>
+	<key>WFWorkflowTypes</key>
+	<array/>
+</dict>
+</plist>
