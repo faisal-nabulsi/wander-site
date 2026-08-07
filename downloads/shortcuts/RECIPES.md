@@ -214,9 +214,21 @@ Note: when you type shadowrocket://connect into a URL action, iOS will not warn 
 
 
 
-## Wander Airplane  (wander-airplane.shortcut)  — the current Cellular Mode shortcut
+## Wander Cellular Mode  (published as `Wander Cellular Mode.shortcut`)  — the ONLY Cellular Mode shortcut
 
 WHAT IT IS FOR: flipping Airplane Mode, and nothing else. It is the whole of what a Shortcut is needed for now. Everything the old all-in-one file did around those two toggles — bring the tunnel up, teleport, decide whether the airplane cycle is needed at all — Wander does itself in `Wander/Services/CellularModeSequence.swift`, in the foreground, where it has real timeouts, real errors and a progress line.
+
+### THE NAME, AND THE ONE HAZARD IT CREATES (2026-08-06)
+
+This file shipped for a few hours as **Wander Airplane** while the feature it serves was called **Cellular Mode** everywhere in the app. The feature keeps its name and the file takes it, so there is one name in the app, in the Shortcuts library and in these docs.
+
+The name was free because the OLD all-in-one file that held it is retired — but *free* is not *unused*. Anyone who imported the old file during its few hours online still has a shortcut of this exact name, and Shortcuts is invoked **by name**: `shortcuts://x-callback-url/run-shortcut?name=…` matches a string and gives an app no way to read what it matched. A library holding both files gives iOS a choice Wander cannot see, and reaching the old one is genuinely dangerous — it ignores our input, runs its own sequence, turns Airplane Mode on, and `StartTunnelIntent.openAppWhenRun` foregrounds Wander mid-run, so iOS can suspend it before its (real, unconditional) restore step.
+
+**So the file identifies itself.** Its last action opens `wander://airplane-ok`; the retired file's last action opened `wander://cellular-done`. Disjoint, and both fire from *inside* the file — which is the point, because Shortcuts' own `x-success` fires for whatever it ran, so identity routed through `x-success` would be forgeable. Wander will not start a real run until a check has heard `airplane-ok` come back from a shortcut it invoked by name (`ShortcutRunner.cellularModeVerified`), and treats `cellular-done` as positive proof of the collision: it stops, runs the name again with `"off"` to get the radio back, and raises a card naming the shortcut to delete.
+
+Running the name again with `"off"` is safe under **either** file while the radio is down, which is why a recovery exists at all rather than only a card: this file takes its `Otherwise` branch on any input that is not `"on"`, and the retired file gates its Airplane-Mode-ON branch on reading a cellular **Carrier Name**, which does not exist in Airplane Mode — so it falls through to its unconditional `Set Airplane Mode → Off` tail. Neither file can turn the radio on from there. If either is ever edited, re-check that claim before trusting the recovery.
+
+**Do not change `wander://airplane-ok`.** It is a protocol constant shared with `MainTabView.handleURL`. Changing it silently un-recognises every installed copy and sends those users back to the setup card.
 
 WHY THE INVERSION. The two middle actions in the old shortcut (`Start Wander Tunnel`, `Teleport to Place`) were Wander App Intents for exactly one reason: a Shortcut can **wait** on an App Intent, and a `wander://` link returns instantly. But an App Intent action serialises `AppIntentDescriptor = { TeamIdentifier, BundleIdentifier, AppIntentIdentifier, Name }`, and Wander's bundle id differs per install (`app.yellow2173.nadir6666` on the cert build, `com.stik.stikdebug.<TeamID>` after a free re-sign). No single file can carry a per-install value, so those two actions imported greyed and the user had to re-pick them in the editor.
 
@@ -232,122 +244,51 @@ ACTION ORDER AS SHIPPED (all `is.workflow.actions.*`, no app identity anywhere):
 6.   Set Airplane Mode **Off** — `OnValue` = false.
 7. End If — `WFControlFlowMode` 2.
 8. Comment (why the tail exists).
-9. Open URLs -> `wander://open` (literal `WFInput` as a `WFTextTokenString`).
+9. Open URLs -> `wander://airplane-ok` (literal `WFInput` as a `WFTextTokenString`).
 
 WHICH WAY THE `Otherwise` BRANCH POINTS IS A SAFETY DECISION. The `If` tests for `"on"`, so every other input — including no input at all, which is what a hand-run from the Shortcuts app produces — lands in `Otherwise` and turns Airplane Mode **off**. Turning it off when it was already off is a no-op. Turning it *on* because a variable came through empty would take somebody's phone offline by accident.
 
-WHY `wander://open` AND NOT A DEDICATED CALLBACK. `open` is already a documented no-op in Wander's link table ("opening the app is the whole effect"). The sequence does not advance on the *link*; it advances on Wander regaining the foreground and then **checking the actual network path** (`NetworkReachability.isOnCellular` / `hasWiFi`, which read the underlying interface so Wander's own utun cannot fake them). A leg that silently did nothing is therefore caught by looking at the radio, not by trusting a callback — which is the failure mode the old design could never close.
+That ordering also decides how the file **degrades**. If WorkflowKit ever drops the three conditional actions wholesale, what is left runs straight through — `Set Airplane Mode ON → Wait 4 → Set Airplane Mode OFF → open wander://airplane-ok` — ending with the radio back **on**. Inverting the branches would leave a stripped file ending on Airplane Mode ON, i.e. a phone with no signal. Same actions, opposite failure.
+
+WHY A DEDICATED CALLBACK AND NOT `wander://open`. It used to be `open`, a documented no-op in Wander's link table, on the reasoning that the sequence advances on Wander regaining the foreground and then **checking the actual network path** (`NetworkReachability.isOnCellular` / `hasWiFi`, which read the underlying interface so Wander's own utun cannot fake them) rather than on any callback. That reasoning still holds for *completion* and it is still how a leg that silently did nothing gets caught.
+
+It does not hold for **identity**, and identity is now the harder question. The retired all-in-one file also turns the radio off, so "both transports went away" no longer distinguishes the two files — it only says *some* Airplane Mode shortcut ran. `wander://airplane-ok` is the missing half: the radio check answers *did it happen*, this answers *who did it*. Wander requires both before it builds a tunnel.
 
 WHAT WAS VERIFIED, AND WHERE:
 
 - `is.workflow.actions.airplanemode.set`, `.conditional`, `.delay`, `.openurl`, `.comment` — all present as literal strings in the shipping iOS 26.5 WorkflowKit binary. The airplane action is backed by `WFSetAirplaneModeIntent` ("Set Airplane Mode", parameters Operation/State) in `ShortcutsIntents.appex/Base.lproj/Actions.intentdefinition`.
 - `WFCondition` **4** = "is" (text equality) with `WFConditionalActionString` — read out of real conditionals in a live `~/Library/Shortcuts/Shortcuts.sqlite`. Tallied across **47 editor-built If-heads**: `WFCondition` is an `<integer>` in 47/47 (4 = is x44, 5 = is not, 99 = contains, 100 = has any value); it is never a string.
 - The Shortcut Input token — copied from a real `Set Variable` action in that same database. Correct **as a bare token for an ordinary action**; see below for why that is not the whole story on a conditional.
-- `OnValue` — **no longer an open question.** The same database holds an editor-built shortcut ("Open App", not ours) whose `is.workflow.actions.airplanemode.set` carries `OnValue`, and the owner's *imported* copy of `wander-cellular-mode.shortcut` kept `OnValue` true/false intact through the import. `WFDelayTime` likewise survived import unchanged. Both keys are right.
+- `OnValue` — **no longer an open question.** The same database holds an editor-built shortcut ("Open App", not ours) whose `is.workflow.actions.airplanemode.set` carries `OnValue`, and the owner's *imported* copy of the old all-in-one kept `OnValue` true/false intact through the import. `WFDelayTime` likewise survived import unchanged. Both keys are right.
 
 ### THE DEFECT THAT SHIPPED, AND THE FIX (2026-08-06)
 
-Both this file and `wander-cellular-mode.shortcut` imported with their `If` actions showing an **empty condition slot** — the pale `If [Condition]` placeholder, no operator chosen — while every neighbouring action rendered perfectly.
+Both this file and the since-retired all-in-one imported with their `If` actions showing an **empty condition slot** — the pale `If [Condition]` placeholder, no operator chosen — while every neighbouring action rendered perfectly.
 
 **Cause: `WFInput` on a conditional is a VARIABLE-typed parameter.** It takes `{ "Type": "Variable", "Variable": <token> }`, not the bare token. Both files passed the bare token, copied from a `Set Variable` action where a bare token *is* correct. WorkflowKit silently drops a parameter it cannot decode, so the action still imported and still said "If" — it just had no input left to hang a comparison on. A silent drop, not a parse error, which is why the files looked fine on inspection.
 
 **Proof it is a drop:** the owner's imported copy, read back out of `Shortcuts.sqlite` after his iPhone synced it, is missing `WFInput` *and* `WFConditionalActionString` on both If-heads, while `GroupingIdentifier`, `WFCondition` and `WFControlFlowMode` survived and every non-conditional action came through untouched.
 
-**Ground truth:** 47/47 editor-built If-heads use the `{Type: Variable, Variable: {...}}` envelope. 0/47 use a bare token. Fixed in `build-wander-airplane.py` (`variable()` helper) and applied to the cellular file.
+**Ground truth:** 47/47 editor-built If-heads use the `{Type: Variable, Variable: {...}}` envelope. 0/47 use a bare token. Fixed in `build-wander-cellular-mode.py` (`variable()` helper).
 
 **Do NOT also copy an `Aggrandizements` array in.** It looks like a required sibling but is not: 41 of the 47 samples carry a `WFPropertyVariableAggrandizement` naming a property the user picked in the editor, only 2 are coercions, and 1 has none at all. It records a user's choice, not a schema requirement.
 
 **Only these two files were ever affected.** `connect`, `open-location-services`, `reset`, `reteleport` and `teleport-presets` contain no conditionals at all.
 
-## Wander Cellular Mode  (wander-cellular-mode.shortcut)  — FALLBACK, kept for people who already built it
 
-WHAT IT IS FOR: setting a spoof on **mobile data with no Wi-Fi**. `lockdownd` refuses the developer-tunnel connection while the device has cellular and no Wi-Fi **at connect time**, and it does **not** re-evaluate a session that is already established. Confirmed on device (build 139): Airplane Mode ON -> connect -> set location -> Airplane Mode OFF, and the spoof HOLDS with cellular back on. So the toggle is needed for the moment of connection and nothing else. iOS gives apps no Airplane Mode API — Shortcuts is the only thing on the system that can flip it — which is why this exists as a shortcut and not a button.
+### Hand-build in the Shortcuts app (fallback if the file will not import)
 
-HOW LONG THE USER IS OFFLINE — say the real number. 4 s settle + up to 12 s in `WanderTunnel.ensureStarted()` + up to ~12 s in `TeleportIntent` + 2 s = **about 30 seconds worst case**, usually less. The copy in the app, the setup card and the shortcut's own comment all say "up to about 30 seconds". They used to say "a few seconds" / "roughly six to eight seconds", which is not what the code does; a user waiting on a call notices, and a promise we break costs more than a number that sounds bad.
+Six actions, no Wander actions, nothing per-install. This is the only fallback there is now — the old all-in-one shortcut it used to point at is retired, and it is the one file on a phone that can take somebody's signal away by accident, so it is not offered as a remedy for anything.
 
-SHIPS PARTIALLY PRE-BUILT — READ THIS BEFORE PROMOTING IT. Two of the actions **cannot** be shipped in the file: `Start Wander Tunnel` and `Teleport to Place` are Wander App Intents, and an App Intent action stores the target app's bundle ID. Wander's is `com.stik.stikdebug.<AppleTeamID>` (WanderSigner appends the signing team so the install upgrades in place), i.e. unique to whoever signed the copy. A hardcoded id would import as a greyed, broken action. Same wall as the pack's existing "add Open App -> Wander yourself" step. The file therefore imports with two clearly-labelled `ADD THE WANDER ACTION HERE` comments where those two actions go; the user replaces them once. Everything else — both network checks, both Airplane toggles, both waits, the failure notification, the return to Wander — is baked.
+1. New Shortcut. Rename it EXACTLY: `Wander Cellular Mode` — Wander finds it by name, and the name has to match character for character.
+2. Add "If". Set its input to **Shortcut Input**, condition **is**, and type `on` in the value box. (If the value box will not appear, tap the input chip and re-pick Shortcut Input; an If with no typed input silently drops the comparison.)
+3. Inside the If: add "Set Airplane Mode", set to **On**.
+4. Inside the If: add "Wait", **4** seconds. (The action is called Wait; search "Wait", not "Delay".)
+5. Tap **Otherwise** on that If, and inside it add "Set Airplane Mode", set to **Off**.
+6. Below the **End If**: add "Open URLs" and type the literal text `wander://airplane-ok`. It must be plain text, not a blue variable chip.
 
-WHY APP INTENTS AND NOT `wander://` LINKS (this is the load-bearing design choice): the sequence must not turn the radio back on until the tunnel is genuinely up AND the location is genuinely set. An App Intent action blocks until `perform()` returns, and `Start Wander Tunnel` calls `WanderTunnel.ensureStarted()`, which POLLS the loopback endpoint rather than trusting `.connected` — `.connected` only means iOS started the provider, and injecting before the route is installed fails. A `wander://` link returns instantly, so the shortcut would have to guess a delay and would sometimes restore cellular underneath a half-built session. Determinism is the whole point.
+Step 6 is not optional and it is not cosmetic. Wander runs shortcuts by name and cannot see inside one; that URL is how this shortcut says which file it is. Without it Wander's setup check reports "it didn't identify itself" and refuses to arm Cellular Mode — which is the correct answer, because an older Wander shortcut answers to this same name and turns Airplane Mode on by itself.
 
-ACTION ORDER AS SHIPPED:
+If you set Cellular Mode up before August 2026, **delete that older shortcut first**. It is the long one, with `Start Wander Tunnel` and `Teleport to Place` inside it. Two shortcuts sharing one name means iOS picks and Wander cannot tell which it got.
 
-1. Comment (the explanation, in the file).
-2. **Get Network Details -> Cellular -> Carrier Name** — `is.workflow.actions.getwifi`, `WFNetworkDetailsNetwork` = `Cellular`, `WFCellularDetail` = `Carrier Name`, carries `UUID` so the If below can reference it.
-3. **Get Network Details -> Wi-Fi -> Network Name** — same identifier, `WFNetworkDetailsNetwork` = `Wi-Fi`, `WFWiFiDetail` = `Network Name`, own `UUID`.
-4. Comment (what the two checks are for).
-5. `If <carrier name> has any value` — `WFCondition` 100, `WFControlFlowMode` 0, group OUTER.
-6.   `If <Wi-Fi network name> does not have any value` — `WFCondition` 101, `WFControlFlowMode` 0, group INNER.
-7.     Set Airplane Mode **On** — `is.workflow.actions.airplanemode.set`, `OnValue` = true (same `OnValue` key as the Set Wi-Fi / Cellular toggle family).
-8.     Wait **4 seconds** — `is.workflow.actions.delay`. WHY 4: iOS tears the cellular data interface down asynchronously, so `pdp_ip0` lingers for a beat after the switch flips. The community "Offline auto StikDebug" shortcut uses ~3s; the entire discovery hinges on lockdownd seeing **no** cellular interface at connect time, so an under-wait silently reproduces the exact failure this shortcut exists to remove — and it reproduces it as "the tunnel just didn't come up", which looks like the old bug rather than a tuning problem. One extra second buys the margin. Not longer: Airplane Mode also drops Wi-Fi, and every extra second is offline time the user is paying for.
-9.   End If (INNER).
-10. Otherwise (OUTER) — **Show Notification**, `is.workflow.actions.notification`, `WFNotificationActionTitle` / `WFNotificationActionBody` / `WFNotificationActionSound`. Tells the user the network state could not be read and that Airplane Mode was therefore left alone.
-11. End If (OUTER).
-12. **ADD: Start Wander Tunnel** (Wander App Intent, no parameters).
-13. **ADD: Teleport to Place** (Wander App Intent) -> set its **Place** field to **Shortcut Input**.
-14. Wait **2 seconds**. WHY 2, and why any at all when the two intents already blocked: they guarantee the tunnel answered and the inject returned 0. Two seconds is cheap insurance at the one moment where being early is unrecoverable.
-15. Set Airplane Mode **Off** — `OnValue` = false.
-16. Comment (why the tail is unconditional).
-17. Open URLs -> `wander://cellular-done` (literal `WFInput` as a `WFTextTokenString`).
-
-### The Wi-Fi check: what was wrong, what was verified, and how it fails now
-
-**What was wrong.** The shipped file carried `is.workflow.actions.getwifi` with a `UUID` and *no parameters*, and a single `If <that> does not have any value -> Set Airplane Mode On`. That is one determination with two ways to be wrong and one dangerous outcome: if the action returned nothing — wrong/missing parameters, a greyed import, a permission the action needs — the If read it as "no Wi-Fi" and turned Airplane Mode on for a user who was on Wi-Fi and needed none of it.
-
-**What was verified, and how.** The action identifiers and parameter keys below were read out of WorkflowKit's own action definitions in this machine's dyld shared cache (`dyld_shared_cache_arm64e.05`, the `is.workflow.actions.getwifi` record at byte offset 1515902784), not inferred from a community shortcut:
-
-- `is.workflow.actions.getwifi` -> class `WFGetNetworkDetailsAction`, display name **Get Network Details**, default output name **Network Details**.
-- `WFNetworkDetailsNetwork` (a `WFNetworkPickerParameter`) with the two branches **Wi-Fi** and **Cellular** — the parameter summaries in the definition are literally `WFNetworkDetailsNetwork(Wi-Fi),WFWiFiDetail` and `WFNetworkDetailsNetwork(Cellular),WFCellularDetail`.
-- `WFWiFiDetail`: Network Name, BSSID, Wi-Fi Standard, RX Rate, TX Rate, RSSI, Noise, Channel Number, Hardware MAC Address.
-- `WFCellularDetail`: Carrier Name, Radio Technology, Country Code, Is Roaming Abroad, Number of Signal Bars.
-- `is.workflow.actions.notification` -> `WFNotificationAction`, params `WFNotificationActionTitle`, `WFNotificationActionBody`, `WFNotificationActionSound`.
-- `is.workflow.actions.comment` / `.conditional` / `.airplanemode.set` / `.delay` / `.openurl` all present in the same definition table.
-
-So the identifier was right all along; the **parameters were missing**, which is the half that decides whether the action returns a network name or nothing at all. They are now set.
-
-**Still NOT verified, and stated as such:** the integers `WFCondition` 100 ("has any value") and 101 ("does not have any value"). They are not recoverable from the action definitions — the operator table is not string-keyed — and this pack has no other conditional shortcut to compare against. So the structure is built to survive being wrong about them rather than to depend on being right.
-
-**How it fails now.** Two checks instead of one, nested, with the dangerous action in the inner branch:
-
-- *Cannot read the network at all* (action broken, greyed, or returning nothing): the OUTER `has any value` is false, so we take Otherwise, show a notification, and **never touch Airplane Mode**. The run then just tries the tunnel, fails visibly on cellular, and Wander reports "nothing is simulating" and offers a retry.
-- *No SIM / Wi-Fi-only iPad*: same branch, same outcome. An Airplane Mode cycle cannot help a device with no cellular to rescue, so it is not performed.
-- *On Wi-Fi*: outer true, inner `does not have any value` false, Airplane Mode untouched — same as before, and now it also survives the action returning nothing, because that case is caught one level up.
-- *Cellular, no Wi-Fi*: outer true, inner true, airplane cycle runs. The intended path.
-- *If 100/101 turn out to be swapped*: on any device with a carrier the OUTER condition inverts to false, we take Otherwise and touch nothing. The feature does not fire and says so. (The one residue is a carrier-less device on Wi-Fi, where a swap could still fire the cycle — Wander never offers the button there, since its own entry point requires `NetworkReachability.isOnCellular`, and the app-side recovery banner below covers it if someone runs the shortcut by hand.)
-
-In every one of those, the failure is "Cellular Mode didn't fire, and something said so", never "the phone lost signal for no reason".
-
-### Being left in Airplane Mode, and why the OFF cannot move earlier
-
-The Airplane-Mode-Off is at step 15, near the end. If the run is interrupted before it — force-quit, cancelled, or Shortcuts losing background execution while the App Intents foreground Wander — **the phone stays in Airplane Mode**. That is the worst failure this feature has, and the old "the unconditional Off at the end means nothing can strand the phone offline" claim was only true for a run that reaches the end.
-
-**Can the OFF move earlier — say, right after the tunnel is up and before the teleport?** No, and the reason is in the code rather than in the discovery. `Start Wander Tunnel` brings up Wander's own packet tunnel and polls `ip:49152` with a plain bounded TCP probe (`isTunnelSimEndpointReachable`); that probe opens and closes a socket. The session lockdownd will not re-evaluate is the DVT one built inside `_simulate_location` (`tunnel_create_rppairing` -> remote server -> `location_simulation_new`), and that is built by the **teleport**, not by the tunnel step. Restoring cellular between the two would put the radio back exactly where lockdownd refuses the connection, at the moment the connection is made. So the teleport has to land first, which is why the OFF sits where it does.
-
-Trimming the trailing 2 s would shave 2 s off a ~30 s window at the one moment where being early is unrecoverable, which is not a trade worth making. **The exposure window is therefore irreducible in the shortcut, and the recovery had to be built in the app instead:** Wander records a marker when it launches a run (timestamp + the pin), clears it when the run reports completion, and — if the marker is live, the grace period has passed, and the device has no network path of any kind — shows a calm banner explaining that Airplane Mode is still on and how to turn it off. See `Wander/Services/CellularModeRun.swift`. Critically, none of that recovery UI is gated on `NetworkReachability.isOnCellular`, which is *false* in Airplane Mode and is what used to hide the app's only mention of Airplane Mode at exactly the wrong moment.
-
-INPUT: text, `"lat, lng"`. Wander passes the selected pin via `shortcuts://x-callback-url/run-shortcut?...&input=text&text=40.75800,%20-73.98550` (see `ShortcutRunner.runCellularMode`), formatted with `en_US_POSIX` so a comma-decimal locale cannot turn one coordinate into four numbers. `TeleportIntent` already parses `"lat, lng"`, an address, or a place name, so there is no formatting logic in the shortcut to get subtly wrong.
-
-CALLBACKS: `x-success` -> `wander://cellular-done`, `x-error` -> `wander://cellular-missing` (clears the installed flag, so a renamed or deleted shortcut brings the setup card back instead of failing forever, and retires the stranding marker because nothing ran). The shortcut ALSO opens `wander://cellular-done` itself as its last action, so completion is recorded even if the x-callback is lost; the handler is idempotent. `cellular-done` is what tells Wander to stop watching for a stranded phone and to check whether anything is actually simulating.
-
-WHAT THE USER SEES: Shortcuts flashes to the foreground for about a second (unavoidable for a URL-invoked run), the status bar goes to Airplane Mode and calls/data are off for **up to about 30 seconds, usually less**, then it comes back and Wander returns to the front with the pin set. If it did not work, Wander says so and offers to try again.
-
-
-Hand-build in the Shortcuts app (guaranteed fallback if the file will not import):
-
-1. New Shortcut. Rename it EXACTLY: Wander Cellular Mode  (Wander's button finds it by name.)
-2. Add "Comment" and paste anything you like — or skip it.
-3. Add "Get Network Details". Set Network to **Cellular** and the detail to **Carrier Name**.
-4. Add "Get Network Details" again. Set Network to **Wi-Fi** and the detail to **Network Name**.
-5. Add "If". Set its input to the **Carrier Name** variable from step 3, condition **has any value**.
-6. Inside that If, add another "If". Set its input to the **Network Name** variable from step 4, condition **does not have any value**.
-7. Inside the inner If: add "Set Airplane Mode" and set it to **On**.
-8. Inside the inner If: add "Wait" and set it to **4** seconds. (The action is called Wait; search "Wait", not "Delay".)
-9. On the OUTER If, tap "Otherwise" and add "Show Notification" with a body like "Couldn't read this device's network state, so Airplane Mode was left alone."
-10. Below the outer End If: add **Start Wander Tunnel** (search its name; it appears under Wander).
-11. Below that: add **Teleport to Place**. Tap the Place field and pick **Shortcut Input**.
-12. Add "Wait", **2** seconds.
-13. Add "Set Airplane Mode", **Off**.
-14. Add "Open URLs" and type the literal text `wander://cellular-done` into it. Make sure it is literal text, not a blue variable chip.
-
-Steps 12-14 must sit OUTSIDE every If, so they run on every path.
-
-To use: teleport from Wander's map — on mobile data with no Wi-Fi the Teleport panel offers "Simulate — Cellular Mode", which runs this with the pin you selected. Running it by hand works too; it will ask you where to go. It is a paid feature on the same footing as the ordinary Simulate button: a free account gets its one teleport a day through this path too, not an unlimited side door.
+To use: teleport from Wander's map — on mobile data with no Wi-Fi the Teleport panel offers "Simulate — Cellular Mode", which runs this with the pin you selected. Running it by hand works too: with no input it turns Airplane Mode **off**, which is exactly what you would want it to do by hand. It is a paid feature on the same footing as the ordinary Simulate button: a free account gets its one teleport a day through this path too, not an unlimited side door.

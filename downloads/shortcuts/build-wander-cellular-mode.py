@@ -1,5 +1,26 @@
 #!/usr/bin/env python3
-"""Build wander-airplane.shortcut — the ONLY shortcut Cellular Mode needs.
+"""Build wander-cellular-mode.shortcut — the ONLY shortcut Cellular Mode needs.
+
+IT IS CALLED "WANDER CELLULAR MODE" NOW, AND THAT NAME USED TO BELONG TO SOMETHING ELSE
+───────────────────────────────────────────────────────────────────────────────────────
+This file shipped for a few hours as "Wander Airplane" while the feature it serves was called
+Cellular Mode in every part of the app — the button, the setup card, the failure messages. The
+feature keeps its name and the file takes it, so there is exactly one name in the app, in the
+Shortcuts library and in the docs.
+
+The name was free because the OLD all-in-one shortcut that held it is retired (see below), and
+because it was only ever downloadable for a few hours on 2026-08-06 from a URL nothing on the site
+links to. But "free" is not "unused": somebody who imported it in that window still has a file of
+this name sitting in their library, and Shortcuts is invoked BY NAME. So this file now identifies
+itself — its last action opens `wander://airplane-ok`, where the old file's last action opened
+`wander://cellular-done`. Wander refuses to run Cellular Mode until it has heard `airplane-ok` come
+back from a run it invoked by name. See ShortcutRunner.swift and CellularModeSequence.swift.
+
+⚠️ THE CALLBACK IS LOAD-BEARING, NOT DECORATION. Change `RETURN_URL` below and every installed copy
+stops being recognised — users are sent back to the setup card and told to re-add the shortcut. It
+must stay disjoint from `wander://cellular-done`, and it must stay INSIDE the file: Shortcuts fires
+its own x-success callback for whatever it ran, including the old file, so identity routed through
+x-success would be forgeable.
 
 WHY THIS FILE EXISTS AT ALL, AND WHY IT IS SO SMALL
 ───────────────────────────────────────────────────
@@ -91,7 +112,7 @@ That ordering also decides how the file DEGRADES, which is why the ON branch is 
 `If` and the OFF branch is the one in `Otherwise`, and not the other way round. If WorkflowKit ever
 drops the three conditional actions wholesale, what is left executes straight through —
 
-    Set Airplane Mode ON → Wait 4 → Set Airplane Mode OFF → open wander://open
+    Set Airplane Mode ON → Wait 4 → Set Airplane Mode OFF → open wander://airplane-ok
 
 — which ends with the radio back ON. Inverting the branches would leave a stripped file ending on
 Airplane Mode ON, i.e. a phone with no signal. Same actions, opposite failure.
@@ -110,8 +131,8 @@ Every file currently in this directory has that problem — they all start with 
 publishing, on a Mac, signed in to your Apple Account:
 
     /usr/bin/shortcuts sign --mode anyone \
-        --input  unsigned/wander-airplane.shortcut \
-        --output "Wander Airplane.shortcut"
+        --input  unsigned/wander-cellular-mode.shortcut \
+        --output "Wander Cellular Mode.shortcut"
 
 `--mode anyone` is required for public distribution; the CLI default is `people-who-know-me`, which
 binds the file to the signer's contacts and fails for strangers. A correctly signed file starts with
@@ -120,10 +141,16 @@ the magic `AEA1`, not `<?xm`.
 PUBLISH IT UNDER THE DISPLAY NAME — note the output filename above. A .shortcut carries NO name of
 its own: its authenticated header holds only a certificate chain, and the payload's single entry is
 always called `Shortcut.wflow`. So iOS has exactly one thing to name an import after — the
-downloaded file's name, minus the extension. Ship `wander-airplane.shortcut` and it imports as
-"wander-airplane", which is NOT the name Wander runs, and every user is quietly required to rename
-it by hand. Ship it as `Wander Airplane.shortcut` and it imports correct. The filename is not part
-of the signed bytes, so this costs nothing and invalidates nothing.
+downloaded file's name, minus the extension. Ship `wander-cellular-mode.shortcut` and it imports as
+"wander-cellular-mode", which is NOT the name Wander runs, and every user is quietly required to
+rename it by hand. Ship it as `Wander Cellular Mode.shortcut` and it imports correct. The filename
+is not part of the signed bytes, so this costs nothing and invalidates nothing.
+
+AND SIGN IT TO ALL FOUR PUBLISHED NAMES. The two spellings of this name, plus the two spellings of
+the old "Wander Airplane" name, all serve THIS file. The old names are not left behind out of
+tidiness: builds shipped before the rename link to `Wander%20Airplane.shortcut`, and what those users
+must not be handed is the retired all-in-one file. Same bytes at every path means every stale link in
+every shipped build lands on something that cannot take somebody's signal away.
 
 Signing does NOT make the shortcut "trusted" — that is a separate gate. On current iOS the setting
 is Settings → Apps → Shortcuts → **Private Sharing** (Apple renamed it from "Allow Untrusted
@@ -134,11 +161,11 @@ Shortcuts has run at least one shortcut. Wander's setup card says all of this.
 import plistlib
 import pathlib
 
-# Writes the SOURCE, never the published file. This used to point at the sibling
-# `wander-airplane.shortcut` — the published, SIGNED copy — so a plain rebuild silently replaced a
-# signed AEA1 file with unsigned XML, which iOS refuses outright. Per DISTRIBUTION.md the editable
-# sources live in `unsigned/` and signing is what promotes one to the published name.
-OUT = pathlib.Path(__file__).with_name("unsigned") / "wander-airplane.shortcut"
+# Writes the SOURCE, never the published file. This used to point at the published, SIGNED sibling,
+# so a plain rebuild silently replaced a signed AEA1 file with unsigned XML, which iOS refuses
+# outright. Per DISTRIBUTION.md the editable sources live in `unsigned/` and signing is what promotes
+# one to a published name.
+OUT = pathlib.Path(__file__).with_name("unsigned") / "wander-cellular-mode.shortcut"
 
 # Stable UUIDs. Fixed rather than random so that rebuilding the file twice produces byte-identical
 # output and a diff of two builds shows only what actually changed.
@@ -160,6 +187,14 @@ MODE_ENDIF = 2
 # a head start rather than the whole guarantee — but starting the check from zero would mean burning
 # the first seconds of a 12-second tunnel timeout on a radio that is still up.
 SETTLE_SECONDS = 4
+
+# ⚠️ THE FILE'S OWN SIGNATURE, IN THE PROTOCOL SENSE. Wander runs shortcuts by name and cannot read
+# one, so this URL is how the file says "I am the one-action Cellular Mode shortcut, not the retired
+# all-in-one that answered to this same name". It MUST stay different from `wander://cellular-done`,
+# which is the retired file's last action and is now treated by the app as proof of a name collision.
+# Changing this string invalidates every installed copy: `CellularModeSequence` will stop recognising
+# them and send those users back to the setup card.
+RETURN_URL = "wander://airplane-ok"
 
 
 def comment(text):
@@ -270,13 +305,17 @@ WHY WANDER NEEDS YOU FOR THIS: iOS gives an app no way to touch Airplane Mode. S
 
 WHY IT MATTERS: on mobile data with no Wi-Fi, iOS refuses to let Wander's developer tunnel CONNECT — but it never re-checks once the tunnel is up. So the radio only has to be off for the moment the connection is made.
 
-THERE IS NOTHING TO EDIT AND NOTHING TO RENAME. Every action below is a built-in Shortcuts action. Unlike the older "Wander Cellular Mode" shortcut, this one contains no Wander actions, so nothing in it is tied to your copy of the app and nothing imports greyed out.
+THERE IS NOTHING TO EDIT AND NOTHING TO RENAME. Every action below is a built-in Shortcuts action. There are no Wander actions in here at all, so nothing in it is tied to your copy of the app and nothing imports greyed out.
+
+IF YOU SET CELLULAR MODE UP BEFORE AUGUST 2026, DELETE THE OLD SHORTCUT. There was an earlier shortcut of this same name that did the whole sequence itself and needed two Wander actions added by hand. It is retired. Keeping both means iOS decides which one runs and Wander cannot tell which it got — so delete the long one, the one with Wander actions inside it.
 
 INPUT: text. "on" turns Airplane Mode on and waits for the radio to settle. ANYTHING ELSE — including running this by hand with no input — turns Airplane Mode off. That default is deliberate: an empty variable should never be able to take your phone offline, and running this by hand is exactly what you would do to get your signal back."""
 
-TAIL = """wander://open just brings Wander back to the front. It is a plain URL, not an app action, so it carries no app identity and works on every copy of Wander.
+TAIL = """wander://airplane-ok brings Wander back to the front AND tells it which shortcut just ran. It is a plain URL, not an app action, so it carries no app identity and works on every copy of Wander.
 
-Wander is also told separately, by the callback it attached when it ran this shortcut. The two arrive moments apart and Wander ignores the second — belt and braces, because a run that finished but never got back to Wander would leave the sequence half-done."""
+THAT SECOND JOB IS THE IMPORTANT ONE. Wander can run a shortcut by name but cannot see inside it, and an older Wander shortcut answers to this same name. The older one ends with wander://cellular-done instead, so whichever URL arrives tells Wander which file iOS chose. Wander will not switch Airplane Mode on for a real run until it has heard this one, and if it hears the other it stops, gets your signal back, and tells you which shortcut to delete.
+
+Shortcuts also tells Wander separately, through the callback it attached when it ran this file. That one only says "something finished" — it fires for any shortcut — so it is the belt and this URL is the braces."""
 
 
 def build():
@@ -289,7 +328,7 @@ def build():
         airplane(U_OFF, False),
         branch(MODE_ENDIF),
         comment(TAIL),
-        open_url(U_RETURN, "wander://open"),
+        open_url(U_RETURN, RETURN_URL),
     ]
     return {
         "WFQuickActionSurfaces": [],
@@ -314,4 +353,4 @@ if __name__ == "__main__":
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_bytes(plistlib.dumps(build(), fmt=plistlib.FMT_XML))
     print(f"wrote {OUT} ({OUT.stat().st_size} bytes)")
-    print('REMEMBER: sign it to "Wander Airplane.shortcut" — see the module docstring.')
+    print('REMEMBER: sign it to ALL FOUR published names — see the module docstring.')
