@@ -12,9 +12,7 @@
 			<key>WFWorkflowActionParameters</key>
 			<dict>
 				<key>WFCommentActionText</key>
-				<string>Wander Cellular Mode — name this shortcut EXACTLY "Wander Cellular Mode" or Wander's in-app button will not find it.
-
-WHAT IT DOES: on mobile data with no Wi-Fi, iOS refuses to let Wander's developer tunnel CONNECT — but it never re-checks once the tunnel is up. So this turns Airplane Mode on just long enough to connect and set your location, then turns it back off. The spoof holds with cellular back on. On Wi-Fi the Airplane steps are skipped: nothing is blocking the tunnel there, and dropping your connection for nothing would just be rude.
+				<string>WHAT IT DOES: on mobile data with no Wi-Fi, iOS refuses to let Wander's developer tunnel CONNECT — but it never re-checks once the tunnel is up. So this turns Airplane Mode on just long enough to connect and set your location, then turns it back off. The spoof holds with cellular back on. On Wi-Fi the Airplane steps are skipped: nothing is blocking the tunnel there, and dropping your connection for nothing would just be rude.
 
 HOW LONG YOU ARE OFFLINE: up to about 30 seconds, usually less. The 4-second wait below, plus however long the tunnel takes to come up (up to 12s) and the teleport takes to land (up to 12s), plus 2 seconds. Calls and data are off for that whole window.
 
@@ -79,17 +77,22 @@ Check 2 (Wi-Fi -&gt; Network Name) asks "are we on Wi-Fi?". A network name means
 				<integer>0</integer>
 				<key>WFInput</key>
 				<dict>
-					<key>Value</key>
+					<key>Type</key>
+					<string>Variable</string>
+					<key>Variable</key>
 					<dict>
-						<key>OutputName</key>
-						<string>Network Details</string>
-						<key>OutputUUID</key>
-						<string>C4E1A7D2-0000-4A10-9C31-000000000001</string>
-						<key>Type</key>
-						<string>ActionOutput</string>
+						<key>Value</key>
+						<dict>
+							<key>OutputName</key>
+							<string>Network Details</string>
+							<key>OutputUUID</key>
+							<string>C4E1A7D2-0000-4A10-9C31-000000000001</string>
+							<key>Type</key>
+							<string>ActionOutput</string>
+						</dict>
+						<key>WFSerializationType</key>
+						<string>WFTextTokenAttachment</string>
 					</dict>
-					<key>WFSerializationType</key>
-					<string>WFTextTokenAttachment</string>
 				</dict>
 			</dict>
 		</dict>
@@ -106,17 +109,22 @@ Check 2 (Wi-Fi -&gt; Network Name) asks "are we on Wi-Fi?". A network name means
 				<integer>0</integer>
 				<key>WFInput</key>
 				<dict>
-					<key>Value</key>
+					<key>Type</key>
+					<string>Variable</string>
+					<key>Variable</key>
 					<dict>
-						<key>OutputName</key>
-						<string>Network Details</string>
-						<key>OutputUUID</key>
-						<string>C4E1A7D2-0000-4A10-9C31-000000000002</string>
-						<key>Type</key>
-						<string>ActionOutput</string>
+						<key>Value</key>
+						<dict>
+							<key>OutputName</key>
+							<string>Network Details</string>
+							<key>OutputUUID</key>
+							<string>C4E1A7D2-0000-4A10-9C31-000000000002</string>
+							<key>Type</key>
+							<string>ActionOutput</string>
+						</dict>
+						<key>WFSerializationType</key>
+						<string>WFTextTokenAttachment</string>
 					</dict>
-					<key>WFSerializationType</key>
-					<string>WFTextTokenAttachment</string>
 				</dict>
 			</dict>
 		</dict>

@@ -8,7 +8,6 @@ All six are self-contained: they call fixed URLs/schemes only, so they import an
 |---|---|
 | **Wander: Teleport** | Prompts for (or accepts) lat/lng, then `Get Contents of URL` GET → `http://wander.gsloc/set?latitude={LAT}&longitude={LNG}`. Pushes one coordinate to the active tunnel. |
 | **Wander: Teleport to preset** | Same call, but lat/lng come from a hardcoded `Dictionary`/menu of saved spots (user edits the list once). One tap → pick a spot → teleport. |
-| **Wander: Flush snap** | Set Wi-Fi **Off**, wait ~2s, Set Wi-Fi **On**. Forces iOS to re-query network location to clear a snapped/stuck fix. *(Depends on TEST 2 — see §5.)* |
 | **Wander: Reset to real location** | GET → `http://wander.gsloc/set?reset=1`. Drops the spoof, returns to real GPS. |
 | **Wander: Open Location Services** | Opens `prefs:root=Privacy&path=LOCATION`. Convenience jump to the pane the user needs during setup/troubleshooting. |
 | **Wander: Connect proxy** | `shadowrocket://connect` then `shadowrocket://route/config`. Brings the tunnel up and sets routing so `wander.gsloc` calls will fire. |
@@ -23,9 +22,25 @@ A correctly signed file is an Apple Encrypted Archive and starts with the magic 
 
 **This was live for two weeks.** Every file here shipped unsigned from 2026-07-22 until 2026-08-06, so nobody who followed our own instructions could import any of them. Fixed at the same time as the 404 on `wander-cellular-mode.shortcut`, which had never been deployed at all. If someone in Discord said the shortcuts "didn't work", they were right and it was not their device.
 
-**Layout.** The published `.shortcut` files in this directory are the SIGNED ones. Their editable sources live in `unsigned/` under the same names. Edit the source, re-sign, replace the published copy — never publish out of `unsigned/`.
+**Layout.** The published `.shortcut` files in this directory are the SIGNED ones. Their editable sources live in `unsigned/` under kebab-case names. Edit the source, re-sign, replace the published copy — never publish out of `unsigned/`.
 
-Release step, on a Mac, signed in to your Apple Account:
+### 1a-bis. PUBLISH UNDER THE DISPLAY NAME — the filename IS the shortcut's name
+
+A `.shortcut` file carries **no name of its own.** Its authenticated header is a bplist whose only key is `SigningCertificateChain`, and the payload is an Apple Archive containing exactly one entry, always called `Shortcut.wflow`. There is nowhere for a name to live. So iOS has exactly one thing to name an import after: **the downloaded file's name, minus the extension.**
+
+Everything here was published kebab-cased, so `wander-cellular-mode.shortcut` imported as a shortcut called **"wander-cellular-mode"** — which is not a name Wander ever asks for. `ShortcutRunner` invokes BY NAME and matches exactly, so every user was silently required to rename the file by hand before anything worked. That was never their job.
+
+**The filename is not part of the signed bytes** (verified: signing byte-identical content from `Wander Airplane.shortcut` and from `wander-airplane.shortcut` produces byte-identical inner payloads). So publishing under the display name costs nothing and invalidates nothing — sign straight to the display name:
+
+```
+/usr/bin/shortcuts sign --mode anyone --input unsigned/wander-airplane.shortcut --output "Wander Airplane.shortcut"
+```
+
+A space survives end to end: this tree has `.nojekyll` so Pages serves it raw, GitHub sends no `Content-Disposition`, and Safari therefore names the download from the last path component percent-decoded — `Wander%20Airplane.shortcut` lands in Files as `Wander Airplane.shortcut`. In-app URL constants must be written **pre-encoded** (`%20`), because `URL(string:)` returns nil on a raw space and the button would silently do nothing.
+
+**Keep the kebab paths live as copies, not redirects,** so already-shipped app builds and any pasted links keep resolving. Wander also retries a failed run under the kebab spelling (`ShortcutRunner.retryUnderFilenameSpelling`), so libraries that already hold the old name keep working with no action from the user.
+
+Generic release step for a file whose name has no space:
 
 ```
 /usr/bin/shortcuts sign --mode anyone --input unsigned/NAME.shortcut --output NAME.shortcut
@@ -41,7 +56,7 @@ Every line must read `41454131`. Anything reading `3c3f786d` is unsigned and wil
 
 `--mode anyone` is mandatory for public distribution. The CLI default is `people-who-know-me`, which binds validation to the signer's contacts and fails for a stranger downloading from the site.
 
-**Signing is not trusting.** They are two independent gates with two separate error strings in the same framework. A correctly signed, publicly distributed Wander shortcut *still* needs Settings → Apps → Shortcuts → Advanced → Allow Untrusted Shortcuts, because "trusted" means "from Apple's Gallery". The in-app setup card already asks for that; it did not, until now, know about the signing gate.
+**Signing is not trusting.** They are two independent gates with two separate error strings in the same framework. A correctly signed, publicly distributed Wander shortcut *still* needs **Settings → Apps → Shortcuts → Private Sharing**, because "trusted" means "from Apple's Gallery". Apple renamed that setting — older iOS calls it "Allow Untrusted Shortcuts" under Advanced — and **the row is hidden entirely until Shortcuts has run at least one shortcut**, which is the single most common reason someone reports that our instructions are wrong. The in-app setup card says all of this.
 
 ### 1b. Wander Airplane (`wander-airplane.shortcut`) — the only one Cellular Mode needs
 
@@ -51,7 +66,9 @@ Input `"on"` turns Airplane Mode on and waits 4 s for the radio to settle. **Any
 
 **Why it replaced the all-in-one shortcut.** Wander is the conductor now (`Wander/Services/CellularModeSequence.swift`): it runs this with `"on"`, waits for the cellular and Wi-Fi interfaces to actually disappear, brings the tunnel up and teleports **in-process**, then runs this again with `"off"`. Nothing forced the Shortcut to be the conductor — it only had to be, because it was the thing that could *wait*. Inverting that deletes the two App Intent actions, and with them the setup step that told people to open the Shortcuts editor (see §1c), which is the step that ended most setups. It also means a failure is now something Wander can put on screen: while a Shortcut ran the sequence unattended, an App Intent's return value was never surfaced at all, so a failed run and a working one looked identical.
 
-Rebuild it with `build-wander-airplane.py` in this directory. That script's docstring records which action identifier and parameter key was verified where.
+Rebuild it with `build-wander-airplane.py` in this directory. That script's docstring records which action identifier and parameter key was verified where. (The script writes to `unsigned/`. It used to write over the published, signed sibling — a plain rebuild silently replaced an AEA1 file with unsigned XML, which iOS refuses outright.)
+
+**BOTH CONDITIONAL FILES WERE BROKEN UNTIL 2026-08-06 AND MUST BE RE-SIGNED.** `WFInput` on an `is.workflow.actions.conditional` is a VARIABLE-typed parameter — `{ "Type": "Variable", "Variable": <token> }` — and both this file and `wander-cellular-mode.shortcut` shipped the bare token. WorkflowKit dropped the parameter silently, so both imported with an **empty condition slot** while every other action rendered fine. Ground truth: 47/47 editor-built If-heads in a real `Shortcuts.sqlite` use the envelope, 0/47 use a bare token. Full write-up in `RECIPES.md`. The other six published files contain no conditionals and are unaffected.
 
 ### 1c. Wander Cellular Mode (`wander-cellular-mode.shortcut`) — now the documented FALLBACK
 
@@ -73,7 +90,7 @@ It is the only file here that is not self-contained. It is the older one-tap ans
 
 Full action-by-action breakdown, the reasoning behind the 4 s and 2 s waits, and the hand-build fallback are in `RECIPES.md`. **Verified since the first draft:** `is.workflow.actions.getwifi` is real and is "Get Network Details" — but it needs `WFNetworkDetailsNetwork` plus `WFWiFiDetail` / `WFCellularDetail`, which the first file omitted; without them the action returns nothing and the old single `If` read that as "no Wi-Fi" and cycled the radio for a user on Wi-Fi. Keys read from WorkflowKit's own action definitions (see RECIPES). **Still wants on-device confirmation:** `WFCondition` 100 / 101. The check is now two nested `If`s arranged so that a wrong integer, a broken action, or a device with no cellular all land in a branch that touches nothing and notifies — the failure is "Cellular Mode didn't fire and said so", not "the phone lost signal for no reason".
 
-**Every teleport/reset/flush shortcut carries a hard dependency line in its comment block:** the `wander.gsloc` GET only works while Shadowrocket is **connected and routing**. Ship "Connect proxy" as a prerequisite, and have Teleport optionally chain it first.
+**Every teleport/reset shortcut carries a hard dependency line in its comment block:** the `wander.gsloc` GET only works while Shadowrocket is **connected and routing**. Ship "Connect proxy" as a prerequisite, and have Teleport optionally chain it first.
 
 ## 2. Recipe-only shortcuts (cannot ship as files)
 
@@ -105,7 +122,7 @@ General iOS 26 note: personal automations set to **Run Immediately** skip the co
 ## 4. Distribution — three options
 
 **Option A — Host `.shortcut` files at `wanderspoofer.com/shortcuts/`.**
-Direct download links. **Requires** the user to enable Settings › Shortcuts › **Allow Untrusted Shortcuts** first (only available after they've run at least one shortcut). Cheapest to ship, but the "untrusted" toggle is a real drop-off point and a scary label for non-technical users.
+Direct download links. **Requires** the user to enable Settings › Apps › Shortcuts › **Private Sharing** first (the row is hidden until they've run at least one shortcut). Cheapest to ship, but that toggle is a real drop-off point — and on older iOS its "Allow Untrusted Shortcuts" label alarms non-technical users.
 
 **Option B — Signed iCloud share links, built on-device.**
 Open each shortcut on your iPhone, Share → Copy iCloud Link. These import **without** the untrusted toggle and show a clean preview. More trusted, but every link is **manually generated on your device** and iCloud links can rot/expire — higher maintenance.
@@ -114,15 +131,17 @@ Open each shortcut on your iPhone, Share → Copy iCloud Link. These import **wi
 A screen in Wander listing each shortcut with an **Add** button that opens the iCloud import link (or the hosted file). Combines discovery + one-tap import in-context, and lets you show the untrusted-toggle instructions *right where the user hits them*.
 
 **Recommendation: Option C, backed by Option B links.**
-Build the in-app Automations screen and point its Add buttons at **signed iCloud links** (Option B). Reasoning: iCloud links dodge the "Allow Untrusted Shortcuts" wall entirely, so the scariest step disappears — because that toggle is the single biggest install-drop risk and the label alarms non-technical users. The in-app screen gives you a place to render the §2 recipes and §3 automation setup that files can't carry. Keep the `wanderspoofer.com/shortcuts/` hosted files as a **fallback** for users importing on a device that isn't signed into your iCloud share, and document the untrusted toggle only on that fallback page.
+Build the in-app Automations screen and point its Add buttons at **signed iCloud links** (Option B). Reasoning: iCloud links dodge the Private Sharing wall entirely, so the scariest step disappears — because that toggle is the single biggest install-drop risk and the label alarms non-technical users. The in-app screen gives you a place to render the §2 recipes and §3 automation setup that files can't carry. Keep the `wanderspoofer.com/shortcuts/` hosted files as a **fallback** for users importing on a device that isn't signed into your iCloud share, and document the Private Sharing toggle only on that fallback page.
 
 ## 5. Blocked on testing — verify before promoting
 
 **TEST 1 — does `Get Contents of URL` GET to `http://wander.gsloc/set` fire through the live Shadowrocket tunnel and move the fix?**
 Shortcuts is historically balky with plain-HTTP *local* URLs. **Blocks: Wander: Teleport, Wander: Teleport to preset, Wander: Reset to real location** (and any automation that calls them). Do **not** promote these until confirmed on-device. If the GET won't fire from Shortcuts, the fallback is `Open URLs` with a `shadowrocket://`-style handoff or launching the request from within Wander.
 
-**TEST 2 — does Set Wi-Fi Off→On actually flush the snapped fix?**
-**Blocks: Wander: Flush snap.** Confirm the toggle clears a stuck gs-loc snap (consistent with the reboot-priming-as-cache-flush behavior we've documented) before we tell users it works.
+**TEST 2 — RESOLVED, NEGATIVE. Set Wi-Fi Off→On does NOT flush a snapped gs-loc fix.**
+Confirmed on-device by the owner, 2026-08-06. The Wi-Fi cycle was published for two weeks as the snap fix and it never was one. **The fix is the Location Services toggle**, and no shortcut can perform it: iOS 26.5's WorkflowKit ships eighteen `is.workflow.actions.*.set` toggle actions (airplanemode, wifi, bluetooth, cellulardata, dnd, lowpowermode, vpn, hotspot, nightshift, truetone, orientationlock, stagemanager, wallpaper, listeningmode, announcenotifications, silenceunknowncallers, cellular.rat, personalhotspot.password) and Location Services is not among them. Every location action is a read. So `Wander: Open Location Services` — a single `openurl` to the pane — is the most any shortcut can do here, and that is the shape to keep.
+
+`wander-flush.shortcut` and its in-app onboarding were deleted rather than left to keep telling people a wrong thing.
 
 Everything else — **Open Location Services** (pure `prefs:` deep link) and **Connect proxy** (pure `shadowrocket://` schemes) — is safe to ship now.
 

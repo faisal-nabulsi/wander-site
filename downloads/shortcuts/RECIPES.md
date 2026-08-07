@@ -1,6 +1,6 @@
 # Wander Shortcuts — hand-build recipes
 
-Each .shortcut file imports directly (needs Settings > Shortcuts > Allow Untrusted Shortcuts ON). If a file wont import, build it by hand from these steps.
+Each .shortcut file imports directly (needs Settings > Apps > Shortcuts > Private Sharing ON). If a file wont import, build it by hand from these steps.
 
 
 ## Wander: Teleport  ()
@@ -15,7 +15,7 @@ Per-check results:
 (e) Required top-level keys: ALL PRESENT — WFWorkflowActions, WFWorkflowClientVersion, WFWorkflowMinimumClientVersion(+String), WFWorkflowTypes, WFWorkflowInputContentItemClasses, WFWorkflowImportQuestions, WFWorkflowIcon.
 
 CAVEATS / non-schema gotchas (import & run are two different things):
-1. IMPORT GATE: This is an unsigned shortcut, so it imports ONLY with Settings > Shortcuts > "Allow Untrusted Shortcuts" ON. That toggle is greyed out until the user has run at least one shortcut on the device. Must be documented in the download instructions.
+1. IMPORT GATE: This is an unsigned shortcut, so it imports ONLY with Settings > Apps > Shortcuts > "Private Sharing" ON. That toggle is greyed out until the user has run at least one shortcut on the device. Must be documented in the download instructions.
 2. Number-typed input coercion: WFInputType=Number returns an NSDecimalNumber. Shortcuts coerces it to text fine when embedded in the Text token, so lat/lng render correctly. Edge risk: locale decimal separators — a device set to a comma-decimal locale could emit "40,6892" and break the URL. Low risk but worth a beta note. If it bites, switch WFInputType to Text.
 3. RUNTIME UNVERIFIED (needs on-device TEST 1): schema validity does NOT prove the GET fires through the Shadowrocket tunnel. Shortcuts is historically balky with plain-HTTP local/non-routable hosts, and http://wander.gsloc only resolves while the VPN is connected + routing=config. This plist is correct; whether the fix actually moves is the open on-device test. downloadurl gives no explicit failure UI, so a silent no-op here is a real possibility to check for.
 4. Wander app bundle id is DYNAMIC (com.stik.stikdebug.<TeamID>) so it correctly is NOT referenced here — this shortcut only hits the gsloc HTTP endpoint and needs no "Open App" action. Good.
@@ -59,7 +59,7 @@ WHAT WAS ALREADY CORRECT (checked, no change needed):
 
 VERIFIED MECHANICALLY: ran `plutil -lint` on the corrected file → "OK" (well-formed XML plist). Ran `plutil -extract WFWorkflowActions.3.WFWorkflowActionParameters.WFURLActionURL` → returns "http://wander.gsloc/set?latitude=40.7580&longitude=-73.9855" (key present, value populated, &amp; correctly un-escapes to literal &).
 
-IMPORT PREREQ (unchanged, user-side): unsigned .shortcut imports only with Settings > Shortcuts > "Allow Untrusted Shortcuts" ON.
+IMPORT PREREQ (unchanged, user-side): unsigned .shortcut imports only with Settings > Apps > Shortcuts > "Private Sharing" ON.
 
 RUNTIME CAVEATS (not plist bugs, but gate whether it actually teleports):
 - Shadowrocket VPN must be CONNECTED and routing = config, or the GET to http://wander.gsloc never reaches Wander. The Comment action states this.
@@ -95,31 +95,6 @@ Hand-build in the Shortcuts app (guaranteed fallback if the file will not import
 Notes on typing the URL: type the ampersand as a normal "&" in the Shortcuts editor (the XML file escapes it as &amp; only because it is XML — do NOT type &amp; into the app). Latitude first, then longitude, comma-free, no spaces.
 
 
-## Wander: Flush snap  ()
-
-VALID — imports and runs on iOS 26 as authored; NO corrections needed. Item-by-item: (a) well-formed XML plist, balanced nesting, correctly typed nodes. (b) all three action identifiers are real: is.workflow.actions.comment, is.workflow.actions.wifi (the genuine "Set Wi-Fi" id — NOT setwifi), is.workflow.actions.delay (the genuine "Wait" action; app label is "Wait" but id is delay). (c) parameter keys correct: WFCommentActionText (string), OnValue (boolean — this is the load-bearing check: the Set Wi-Fi/Bluetooth/Airplane/Cellular toggle family all use OnValue, NOT WFWiFi/WFState; false=off, true=on — authored plist is right), WFDelayTime (real). (d) no output-chaining needed — linear side-effect flow, no action consumes another's output, so no magic variables/WFInput attachments, correctly absent. (e) all required top-level keys present (WFWorkflowActions, client-version keys, Types, InputContentItemClasses, ImportQuestions, Icon).
-
-CAVEATS: (1) Unsigned file — will only import with Settings > Shortcuts > "Allow Untrusted Shortcuts" ON. (2) TEST 2 UNVERIFIED: whether Settings-level Wi-Fi Off->On actually flushes the snapped gs-loc fix still needs on-device confirmation — the plist mechanics are sound but the flush-effect is a behavioral claim, not a plist guarantee. (3) 3s delay is a guess; may need tuning on-device so iOS fully drops the cached Wi-Fi location before re-enabling. (4) Not applicable here but relevant across the shortcut set: Wander's dynamic bundle id (com.stik.stikdebug.<TeamID>) can't be hardcoded in an Open App action — this shortcut avoids that trap by touching no app, so it's clean.
-
-
-Hand-build fallback (Shortcuts app), guaranteed to work if the .shortcut file will not import:
-
-1. Open Shortcuts -> tap + (new shortcut) -> tap the name at the top and rename it to "Wander: Flush snap".
-
-2. Add action: search "Comment" -> tap Comment. In its text box type:
-   "Wander: Flush snap. Toggles Settings Wi-Fi OFF, waits, then ON so iOS drops its cached gs-loc fix and Wander's keep-alive re-asserts the target. Use the real Settings Wi-Fi toggle, not Control Center. Keep the Shadowrocket tunnel connected + routing."
-
-3. Add action: search "Wi-Fi" -> tap "Set Wi-Fi". It defaults to "Turn Wi-Fi On" — tap the word "On" and change it to "Off". (Reads: Set Wi-Fi Off.)
-
-4. Add action: search "Wait" -> tap "Wait". Tap the number and set it to 3. (Reads: Wait 3 Seconds.)
-
-5. Add action: search "Wi-Fi" -> tap "Set Wi-Fi" again. Leave it as "On". (Reads: Set Wi-Fi On.)
-
-Final order top-to-bottom: Comment -> Set Wi-Fi Off -> Wait 3 Seconds -> Set Wi-Fi On. Tap to run.
-
-NOTE: the user-facing action is called "Wait" but its internal identifier is is.workflow.actions.delay — search "Wait" in the app, not "Delay".
-
-
 ## Wander: Reset to real location  ()
 
 VERDICT: The authored plist was WELL-FORMED XML and would IMPORT, but had ONE defect that would make it silently half-fail at RUN time. Corrected plist above passes `plutil -lint` (OK).
@@ -141,7 +116,7 @@ UNCHANGED CAVEATS that still hold and are NOT fixable in the plist:
 - STILL NEEDS ON-DEVICE TEST 1: whether a Get Contents of URL GET to the plain-HTTP http://wander.gsloc/ actually fires through the live Shadowrocket tunnel from within Shortcuts. Shortcuts is historically balky with plain-HTTP local hostnames; if it fails, the fallback is to confirm the ping in Safari first, or wrap the URL fetch so a failure does not abort the subsequent Open URLs step.
 
 
-Hand-build in the Shortcuts app (guaranteed fallback if the .shortcut file will not import). Prereq: Settings > Shortcuts > Advanced > "Allow Untrusted Shortcuts" must be ON to import any unsigned .shortcut file at all.
+Hand-build in the Shortcuts app (guaranteed fallback if the .shortcut file will not import). Prereq: Settings > Apps > Shortcuts > "Private Sharing" must be ON (older iOS: Advanced > "Allow Untrusted Shortcuts") to import any unsigned .shortcut file at all.
 
 1. Open Shortcuts -> tap + (top right). Tap the name field at top -> rename to: Wander: Reset to real location
 
@@ -173,11 +148,11 @@ Per-criterion audit of the ORIGINAL:
 (d) Output chaining: FAIL - this is the real, silent-failure bug. Shortcuts actions do NOT implicitly chain. The authored Open URLs action has an EMPTY WFWorkflowActionParameters dict, so it has no WFInput and opens nothing. The URL action's output is never wired into Open URLs. To chain the two-action way you would need a UUID on the URL action plus a WFInput on Open URLs whose Value is a WFTextTokenAttachment with Type=ActionOutput / OutputUUID / OutputName. Rather than ship that fragile link (the magic-variable "invisible character" breaks on import constantly), the CORRECTION collapses to a single Open URLs action with the literal URL inlined as WFInput -> WFSerializationType=WFTextTokenString, string="prefs:root=Privacy&path=LOCATION", empty attachmentsByRange. This is the correct key (WFInput, not WFURLActionURL, for openurl) and removes the chaining dependency entirely. The now-orphan URL action was deleted.
 (e) Required top-level WFWorkflow keys: PASS. WFWorkflowActions, WFWorkflowClientVersion, WFWorkflowMinimumClientVersion, WFWorkflowTypes, WFWorkflowInputContentItemClasses, WFWorkflowIcon, WFWorkflowImportQuestions all present. Kept as-is.
 
-IMPORT PREREQUISITE (unchanged, applies to both versions): unsigned .shortcut imports only with Settings > Shortcuts > "Allow Untrusted Shortcuts" ON. That toggle itself only appears after the user has run at least one shortcut. Ship this instruction alongside the file.
+IMPORT PREREQUISITE (unchanged, applies to both versions): unsigned .shortcut imports only with Settings > Apps > Shortcuts > "Private Sharing" ON. That toggle itself only appears after the user has run at least one shortcut. Ship this instruction alongside the file.
 
 RUNTIME CAVEAT: whether prefs:root=Privacy&path=LOCATION still deep-links to the Location Services pane on iOS 26.x is an Apple-controlled behavior that has shifted across releases and is NOT guaranteed - needs on-device confirmation. If the exact path stops resolving, prefs:root=Privacy still lands on Privacy & Security. This is independent of the plist being correct.
 
-SCOPE: this shortcut only OPENS the pane. The Location Services master toggle is a documented hard wall (not automatable), correctly stated in the Comment. TEST 2 (does Wi-Fi Off->On flush the snapped fix) belongs to a different shortcut and is not exercised here.
+SCOPE: this shortcut only OPENS the pane. The Location Services master toggle is a documented hard wall (not automatable), correctly stated in the Comment. This is the ONLY thing any shortcut can do about a snapped fix: iOS ships no Location Services toggle action, only reads.
 
 
 Hand-build fallback (guaranteed to work if the file will not import):
@@ -201,7 +176,7 @@ Note: This one-action build (literal URL typed directly into Open URLs) is delib
 
 ## Wander: Connect proxy  ()
 
-VERDICT: The authored plist is VALID as-is. It will import (with "Allow Untrusted Shortcuts" ON) and run on iOS 26. No corrections were required; the plistXml above is the authored plist returned verbatim (only re-emitted after linting).
+VERDICT: The authored plist is VALID as-is. It will import (with "Private Sharing" ON) and run on iOS 26. No corrections were required; the plistXml above is the authored plist returned verbatim (only re-emitted after linting).
 
 Checks performed:
 (a) Well-formed XML plist: PASS. plutil -lint returns OK on the full structure.
@@ -216,7 +191,7 @@ Checks performed:
 
 CAVEATS / gotchas that are correctly out-of-plist by design (not defects):
 - Open App -> Wander CANNOT be baked into the plist: bundle id is DYNAMIC (com.stik.stikdebug.<TeamID>). Correctly deferred to a manual step in both the comment action and the recipe. Do NOT try to hardcode an Open App action with a guessed bundle id -- it would import as a broken/greyed action.
-- Import requires Settings > Shortcuts > "Allow Untrusted Shortcuts" ON (file is unsigned). Flag this in shipping docs.
+- Import requires Settings > Apps > Shortcuts > "Private Sharing" ON (file is unsigned). Flag this in shipping docs.
 - shadowrocket://connect and shadowrocket://route/config are custom schemes -- valid to place in a URL action; iOS shows no scheme warning (expected). These only do anything if Shadowrocket is installed.
 - FUNCTIONAL (not plist) risk to still verify on-device, unrelated to import validity: whether Shadowrocket honors shadowrocket://route/config to force Global Routing = Configuration in the installed build, and the 1s Wait may be too short between connect and route on a cold VPN spin-up -- consider bumping WFDelayTime to 2-3 during TEST. This does not affect whether the shortcut imports/runs; it affects whether the routing flip lands.
 - This shortcut does NOT itself exercise TEST 1 (the http://wander.gsloc GET through the tunnel) -- that lives in the teleport shortcut, not this one.
@@ -250,7 +225,7 @@ Generating the file on-device with the *right* identity does not rescue it: a `.
 ACTION ORDER AS SHIPPED (all `is.workflow.actions.*`, no app identity anywhere):
 
 1. Comment (the explanation, in the file).
-2. `If <Shortcut Input> is "on"` — `is.workflow.actions.conditional`, `WFCondition` **4** (text equality), `WFConditionalActionString` = `on`, `WFControlFlowMode` 0. `WFInput` is `{ Value = { Type = "ExtensionInput" }, WFSerializationType = "WFTextTokenAttachment" }`.
+2. `If <Shortcut Input> is "on"` — `is.workflow.actions.conditional`, `WFCondition` **4** (text equality), `WFConditionalActionString` = `on`, `WFControlFlowMode` 0. `WFInput` is `{ Type = "Variable", Variable = { Value = { Type = "ExtensionInput" }, WFSerializationType = "WFTextTokenAttachment" } }` — **the `Variable` envelope is mandatory, see the defect note below**.
 3.   Set Airplane Mode **On** — `is.workflow.actions.airplanemode.set`, `OnValue` = true.
 4.   Wait **4 seconds** — `is.workflow.actions.delay`, `WFDelayTime` = 4. Same reasoning as the old file: iOS tears the cellular data interface down asynchronously, so `pdp_ip0` lingers for a beat. Wander re-checks the interfaces itself when it regains the foreground, so this is a head start rather than the whole guarantee.
 5. Otherwise — `WFControlFlowMode` 1.
@@ -266,9 +241,23 @@ WHY `wander://open` AND NOT A DEDICATED CALLBACK. `open` is already a documented
 WHAT WAS VERIFIED, AND WHERE:
 
 - `is.workflow.actions.airplanemode.set`, `.conditional`, `.delay`, `.openurl`, `.comment` — all present as literal strings in the shipping iOS 26.5 WorkflowKit binary. The airplane action is backed by `WFSetAirplaneModeIntent` ("Set Airplane Mode", parameters Operation/State) in `ShortcutsIntents.appex/Base.lproj/Actions.intentdefinition`.
-- `WFCondition` **4** = "is" (text equality) with `WFConditionalActionString` — read out of real conditionals in a live `~/Library/Shortcuts/Shortcuts.sqlite`, many samples.
-- The Shortcut Input token — copied from a real `Set Variable` action in that same database.
-- `OnValue` / `WFDelayTime` — the legacy Shortcuts keys, matching `wander-cellular-mode.shortcut`. Neither appears in WorkflowKit's string table, but neither does `WFDelayTime`, which is unquestionably the current key for the Wait action — so absence there proves nothing about either. **This is the one residual uncertainty in the file** and it is the same uncertainty the previous file already shipped with.
+- `WFCondition` **4** = "is" (text equality) with `WFConditionalActionString` — read out of real conditionals in a live `~/Library/Shortcuts/Shortcuts.sqlite`. Tallied across **47 editor-built If-heads**: `WFCondition` is an `<integer>` in 47/47 (4 = is x44, 5 = is not, 99 = contains, 100 = has any value); it is never a string.
+- The Shortcut Input token — copied from a real `Set Variable` action in that same database. Correct **as a bare token for an ordinary action**; see below for why that is not the whole story on a conditional.
+- `OnValue` — **no longer an open question.** The same database holds an editor-built shortcut ("Open App", not ours) whose `is.workflow.actions.airplanemode.set` carries `OnValue`, and the owner's *imported* copy of `wander-cellular-mode.shortcut` kept `OnValue` true/false intact through the import. `WFDelayTime` likewise survived import unchanged. Both keys are right.
+
+### THE DEFECT THAT SHIPPED, AND THE FIX (2026-08-06)
+
+Both this file and `wander-cellular-mode.shortcut` imported with their `If` actions showing an **empty condition slot** — the pale `If [Condition]` placeholder, no operator chosen — while every neighbouring action rendered perfectly.
+
+**Cause: `WFInput` on a conditional is a VARIABLE-typed parameter.** It takes `{ "Type": "Variable", "Variable": <token> }`, not the bare token. Both files passed the bare token, copied from a `Set Variable` action where a bare token *is* correct. WorkflowKit silently drops a parameter it cannot decode, so the action still imported and still said "If" — it just had no input left to hang a comparison on. A silent drop, not a parse error, which is why the files looked fine on inspection.
+
+**Proof it is a drop:** the owner's imported copy, read back out of `Shortcuts.sqlite` after his iPhone synced it, is missing `WFInput` *and* `WFConditionalActionString` on both If-heads, while `GroupingIdentifier`, `WFCondition` and `WFControlFlowMode` survived and every non-conditional action came through untouched.
+
+**Ground truth:** 47/47 editor-built If-heads use the `{Type: Variable, Variable: {...}}` envelope. 0/47 use a bare token. Fixed in `build-wander-airplane.py` (`variable()` helper) and applied to the cellular file.
+
+**Do NOT also copy an `Aggrandizements` array in.** It looks like a required sibling but is not: 41 of the 47 samples carry a `WFPropertyVariableAggrandizement` naming a property the user picked in the editor, only 2 are coercions, and 1 has none at all. It records a user's choice, not a schema requirement.
+
+**Only these two files were ever affected.** `connect`, `open-location-services`, `reset`, `reteleport` and `teleport-presets` contain no conditionals at all.
 
 ## Wander Cellular Mode  (wander-cellular-mode.shortcut)  — FALLBACK, kept for people who already built it
 

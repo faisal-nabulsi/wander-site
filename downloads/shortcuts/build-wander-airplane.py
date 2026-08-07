@@ -43,13 +43,42 @@ WHAT WAS VERIFIED, AND HOW (nothing here is guessed)
                                          this Mac's ~/Library/Shortcuts/Shortcuts.sqlite. Control
                                          flow modes 0/1/2 = If / Otherwise / End If, matching the
                                          already-shipped wander-cellular-mode.shortcut.
+  WFInput on a conditional               `{ Type = "Variable", Variable = <token> }`. THE ENVELOPE IS
+                                         MANDATORY — see the section below. 47 of 47 editor-built
+                                         If-heads in that database use it; 0 of 47 use a bare token.
   Shortcut Input                         `{ Value = { Type = "ExtensionInput" },
                                             WFSerializationType = "WFTextTokenAttachment" }` —
                                          copied from a real Set Variable action in that same
-                                         database.
+                                         database. Correct for ORDINARY actions as a bare token;
+                                         on a conditional it must go inside the Variable envelope.
   is.workflow.actions.delay              WFDelayTime, as in every shipped Wander shortcut.
   is.workflow.actions.openurl            WFTextTokenString shape, copied verbatim from the shipped
                                          wander-cellular-mode.shortcut.
+  OnValue (airplanemode.set)             No longer a guess. The same database contains an
+                                         editor-built shortcut ("Open App", not ours) whose
+                                         `is.workflow.actions.airplanemode.set` carries `OnValue`,
+                                         and the owner's IMPORTED copy of wander-cellular-mode kept
+                                         `OnValue` true/false intact through the import. The key is
+                                         right; it was never part of this bug.
+
+THE BUG THIS FILE SHIPPED WITH, AND WHY IT LOOKED FINE
+──────────────────────────────────────────────────────
+`WFInput` on a CONDITIONAL is a variable-typed parameter. It takes
+
+    { "Type": "Variable", "Variable": { …token… } }
+
+and NOT the bare token. This file used to pass the bare token, copied from a Set Variable action —
+where a bare token is correct. WorkflowKit silently drops a parameter it cannot decode, so the
+action still imported, still said "If", and simply had no input left to hang a comparison on: the
+editor rendered a pale, empty `If [Condition]` and every neighbouring action looked perfect.
+
+That is why nobody caught it by reading the file. Proof it is a silent DROP and not a parse error:
+the owner's imported copy of wander-cellular-mode.shortcut, read back out of Shortcuts.sqlite after
+his iPhone synced it, has `WFInput` AND `WFConditionalActionString` missing from both If-heads while
+`GroupingIdentifier`, `WFCondition` and `WFControlFlowMode` survived — and every non-conditional
+action in the same file, including both `airplanemode.set` actions, came through untouched.
+
+An `If` with no condition is not a working shortcut, so this mattered on both files.
 
 WHICH WAY THE `Otherwise` BRANCH POINTS IS A SAFETY DECISION
 ────────────────────────────────────────────────────────────
@@ -58,6 +87,22 @@ somebody runs this by hand out of the Shortcuts app — lands in Otherwise and t
 OFF. Turning it off when it was already off is a no-op; turning it ON because a variable was empty
 would take somebody's phone offline by accident. The safe outcome has to be the default one.
 
+That ordering also decides how the file DEGRADES, which is why the ON branch is the one inside the
+`If` and the OFF branch is the one in `Otherwise`, and not the other way round. If WorkflowKit ever
+drops the three conditional actions wholesale, what is left executes straight through —
+
+    Set Airplane Mode ON → Wait 4 → Set Airplane Mode OFF → open wander://open
+
+— which ends with the radio back ON. Inverting the branches would leave a stripped file ending on
+Airplane Mode ON, i.e. a phone with no signal. Same actions, opposite failure.
+
+The one case no single-input toggle can defend against is a condition that survives but always
+evaluates TRUE, which would take the ON branch even for input "off". Nothing inside a Shortcut can
+catch that, because the branch choice IS the information. Wander covers it from outside instead:
+`CellularModeRun.airplaneModeLeftOn` is persisted the moment the radio actually goes off and only
+cleared when it comes back, and it raises a recovery banner telling the user how to switch Airplane
+Mode off by hand. That net does not depend on this file being correct.
+
 RELEASE STEP YOU CANNOT SKIP
 ────────────────────────────
 The output of this script is an unsigned XML plist and iOS WILL refuse it (see the string above).
@@ -65,20 +110,35 @@ Every file currently in this directory has that problem — they all start with 
 publishing, on a Mac, signed in to your Apple Account:
 
     /usr/bin/shortcuts sign --mode anyone \
-        --input  wander-airplane.shortcut \
-        --output wander-airplane.signed.shortcut
+        --input  unsigned/wander-airplane.shortcut \
+        --output "Wander Airplane.shortcut"
 
 `--mode anyone` is required for public distribution; the CLI default is `people-who-know-me`, which
 binds the file to the signer's contacts and fails for strangers. A correctly signed file starts with
-the magic `AEA1`, not `<?xm`. Signing does NOT make the shortcut "trusted" — that is a separate gate,
-and the user still has to switch on Settings → Apps → Shortcuts → Advanced → Allow Untrusted
-Shortcuts. Wander's setup card already asks for that.
+the magic `AEA1`, not `<?xm`.
+
+PUBLISH IT UNDER THE DISPLAY NAME — note the output filename above. A .shortcut carries NO name of
+its own: its authenticated header holds only a certificate chain, and the payload's single entry is
+always called `Shortcut.wflow`. So iOS has exactly one thing to name an import after — the
+downloaded file's name, minus the extension. Ship `wander-airplane.shortcut` and it imports as
+"wander-airplane", which is NOT the name Wander runs, and every user is quietly required to rename
+it by hand. Ship it as `Wander Airplane.shortcut` and it imports correct. The filename is not part
+of the signed bytes, so this costs nothing and invalidates nothing.
+
+Signing does NOT make the shortcut "trusted" — that is a separate gate. On current iOS the setting
+is Settings → Apps → Shortcuts → **Private Sharing** (Apple renamed it from "Allow Untrusted
+Shortcuts", which is what older iOS still calls it, under Advanced). The row stays hidden until
+Shortcuts has run at least one shortcut. Wander's setup card says all of this.
 """
 
 import plistlib
 import pathlib
 
-OUT = pathlib.Path(__file__).with_name("wander-airplane.shortcut")
+# Writes the SOURCE, never the published file. This used to point at the sibling
+# `wander-airplane.shortcut` — the published, SIGNED copy — so a plain rebuild silently replaced a
+# signed AEA1 file with unsigned XML, which iOS refuses outright. Per DISTRIBUTION.md the editable
+# sources live in `unsigned/` and signing is what promotes one to the published name.
+OUT = pathlib.Path(__file__).with_name("unsigned") / "wander-airplane.shortcut"
 
 # Stable UUIDs. Fixed rather than random so that rebuilding the file twice produces byte-identical
 # output and a diff of two builds shows only what actually changed.
@@ -110,11 +170,29 @@ def comment(text):
 
 
 def shortcut_input():
-    """The `Shortcut Input` token, exactly as a real Set Variable action serialises it."""
+    """The bare `Shortcut Input` token, as an ORDINARY action serialises it.
+
+    Correct as-is for actions that take a value directly — Set Variable, Open URL, Text. It is NOT
+    correct on a conditional, which needs `variable(...)` around it. Reading this docstring as
+    "this is how you reference Shortcut Input anywhere" is precisely what shipped two broken files:
+    the token was always right, the envelope around it was missing.
+    """
     return {
         "Value": {"Type": "ExtensionInput"},
         "WFSerializationType": "WFTextTokenAttachment",
     }
+
+
+def variable(token):
+    """Wrap a token for a VARIABLE-typed parameter, which is what `WFInput` is on a conditional.
+
+    47 of 47 editor-built If-heads in ~/Library/Shortcuts/Shortcuts.sqlite carry exactly this shape;
+    0 of 47 carry a bare token. Deliberately NOT adding an `Aggrandizements` entry alongside: 41 of
+    those 47 carry a `WFPropertyVariableAggrandizement` naming a property the user picked in the
+    editor, only 2 are coercions, and 1 has none at all — so it is a record of a user's choice, not
+    a required key, and copying one in would be cargo-culting someone else's shortcut.
+    """
+    return {"Type": "Variable", "Variable": token}
 
 
 def if_input_is(uuid, text):
@@ -126,7 +204,7 @@ def if_input_is(uuid, text):
             "WFCondition": COND_IS,
             "WFConditionalActionString": text,
             "WFControlFlowMode": MODE_IF,
-            "WFInput": shortcut_input(),
+            "WFInput": variable(shortcut_input()),
         },
     }
 
@@ -168,15 +246,13 @@ def open_url(uuid, url):
     }
 
 
-HEADER = """Wander Airplane — name this shortcut EXACTLY "Wander Airplane" or Wander's Cellular Mode button will not find it. Shortcuts are called by name.
-
-WHAT IT DOES: flips Airplane Mode, and nothing else. Wander runs it twice — once with "on" before it brings its tunnel up, once with "off" afterwards — and does all the real work itself in between, where it can show you progress and tell you if something failed.
+HEADER = """WHAT IT DOES: flips Airplane Mode, and nothing else. Wander runs it twice — once with "on" before it brings its tunnel up, once with "off" afterwards — and does all the real work itself in between, where it can show you progress and tell you if something failed.
 
 WHY WANDER NEEDS YOU FOR THIS: iOS gives an app no way to touch Airplane Mode. Shortcuts is the only thing on the system that can. That is the whole reason this file exists.
 
 WHY IT MATTERS: on mobile data with no Wi-Fi, iOS refuses to let Wander's developer tunnel CONNECT — but it never re-checks once the tunnel is up. So the radio only has to be off for the moment the connection is made.
 
-THERE IS NOTHING TO EDIT. Every action below is a built-in Shortcuts action. Unlike the older "Wander Cellular Mode" shortcut, this one contains no Wander actions, so nothing in it is tied to your copy of the app and nothing imports greyed out.
+THERE IS NOTHING TO EDIT AND NOTHING TO RENAME. Every action below is a built-in Shortcuts action. Unlike the older "Wander Cellular Mode" shortcut, this one contains no Wander actions, so nothing in it is tied to your copy of the app and nothing imports greyed out.
 
 INPUT: text. "on" turns Airplane Mode on and waits for the radio to settle. ANYTHING ELSE — including running this by hand with no input — turns Airplane Mode off. That default is deliberate: an empty variable should never be able to take your phone offline, and running this by hand is exactly what you would do to get your signal back."""
 
@@ -217,6 +293,7 @@ def build():
 
 
 if __name__ == "__main__":
+    OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_bytes(plistlib.dumps(build(), fmt=plistlib.FMT_XML))
     print(f"wrote {OUT} ({OUT.stat().st_size} bytes)")
-    print("REMEMBER: sign it before publishing — see the module docstring.")
+    print('REMEMBER: sign it to "Wander Airplane.shortcut" — see the module docstring.')

@@ -12,15 +12,13 @@
 			<key>WFWorkflowActionParameters</key>
 			<dict>
 				<key>WFCommentActionText</key>
-				<string>Wander Airplane — name this shortcut EXACTLY "Wander Airplane" or Wander's Cellular Mode button will not find it. Shortcuts are called by name.
-
-WHAT IT DOES: flips Airplane Mode, and nothing else. Wander runs it twice — once with "on" before it brings its tunnel up, once with "off" afterwards — and does all the real work itself in between, where it can show you progress and tell you if something failed.
+				<string>WHAT IT DOES: flips Airplane Mode, and nothing else. Wander runs it twice — once with "on" before it brings its tunnel up, once with "off" afterwards — and does all the real work itself in between, where it can show you progress and tell you if something failed.
 
 WHY WANDER NEEDS YOU FOR THIS: iOS gives an app no way to touch Airplane Mode. Shortcuts is the only thing on the system that can. That is the whole reason this file exists.
 
 WHY IT MATTERS: on mobile data with no Wi-Fi, iOS refuses to let Wander's developer tunnel CONNECT — but it never re-checks once the tunnel is up. So the radio only has to be off for the moment the connection is made.
 
-THERE IS NOTHING TO EDIT. Every action below is a built-in Shortcuts action. Unlike the older "Wander Cellular Mode" shortcut, this one contains no Wander actions, so nothing in it is tied to your copy of the app and nothing imports greyed out.
+THERE IS NOTHING TO EDIT AND NOTHING TO RENAME. Every action below is a built-in Shortcuts action. Unlike the older "Wander Cellular Mode" shortcut, this one contains no Wander actions, so nothing in it is tied to your copy of the app and nothing imports greyed out.
 
 INPUT: text. "on" turns Airplane Mode on and waits for the radio to settle. ANYTHING ELSE — including running this by hand with no input — turns Airplane Mode off. That default is deliberate: an empty variable should never be able to take your phone offline, and running this by hand is exactly what you would do to get your signal back.</string>
 			</dict>
@@ -42,13 +40,18 @@ INPUT: text. "on" turns Airplane Mode on and waits for the radio to settle. ANYT
 				<integer>0</integer>
 				<key>WFInput</key>
 				<dict>
-					<key>Value</key>
+					<key>Type</key>
+					<string>Variable</string>
+					<key>Variable</key>
 					<dict>
-						<key>Type</key>
-						<string>ExtensionInput</string>
+						<key>Value</key>
+						<dict>
+							<key>Type</key>
+							<string>ExtensionInput</string>
+						</dict>
+						<key>WFSerializationType</key>
+						<string>WFTextTokenAttachment</string>
 					</dict>
-					<key>WFSerializationType</key>
-					<string>WFTextTokenAttachment</string>
 				</dict>
 			</dict>
 		</dict>
