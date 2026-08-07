@@ -178,7 +178,22 @@ def shortcut_input():
     the token was always right, the envelope around it was missing.
     """
     return {
-        "Value": {"Type": "ExtensionInput"},
+        "Value": {
+            "Type": "ExtensionInput",
+            # A conditional compares a TYPED value. Without this coercion the input has no declared
+            # type, WorkflowKit cannot type the comparison, and it drops `WFConditionalActionString`
+            # on import — which renders as an `If` with a RED "is" and no value box beside it.
+            # 44 of 44 real text-equality If-heads in a genuine library carry an Aggrandizements
+            # entry; NONE carry zero. (43 of those are WFPropertyVariableAggrandizement, which is a
+            # user picking a property — but "always a property" is not "optional", and reading it as
+            # optional is what shipped the second broken file.)
+            "Aggrandizements": [
+                {
+                    "Type": "WFCoercionVariableAggrandizement",
+                    "CoercionItemClass": "WFStringContentItem",
+                }
+            ],
+        },
         "WFSerializationType": "WFTextTokenAttachment",
     }
 
@@ -187,10 +202,13 @@ def variable(token):
     """Wrap a token for a VARIABLE-typed parameter, which is what `WFInput` is on a conditional.
 
     47 of 47 editor-built If-heads in ~/Library/Shortcuts/Shortcuts.sqlite carry exactly this shape;
-    0 of 47 carry a bare token. Deliberately NOT adding an `Aggrandizements` entry alongside: 41 of
-    those 47 carry a `WFPropertyVariableAggrandizement` naming a property the user picked in the
-    editor, only 2 are coercions, and 1 has none at all — so it is a record of a user's choice, not
-    a required key, and copying one in would be cargo-culting someone else's shortcut.
+    0 of 47 carry a bare token.
+
+    The coercion that belongs INSIDE the token lives in `shortcut_input()`. An earlier pass left it
+    out, reasoning that most real samples carry a *property* aggrandizement rather than a coercion
+    and that copying one in would be cargo-culting. The envelope alone got the input and the
+    operator to render — and the comparison value still vanished, on device. Re-counted: 44 of 44
+    text-equality heads carry an Aggrandizements entry and none carry zero.
     """
     return {"Type": "Variable", "Variable": token}
 
