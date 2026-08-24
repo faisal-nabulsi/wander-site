@@ -293,7 +293,7 @@ ul { list-style: none; }
 
 /* ---------- Footer ---------- */
 .footer { background: var(--ink); color: #b9c6d6; padding: 54px 0 30px; }
-.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 34px; padding-bottom: 34px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr; gap: 34px; padding-bottom: 34px; border-bottom: 1px solid rgba(255,255,255,.08); }
 .footer .brand { color: #fff; }
 .footer p { margin-top: 12px; font-size: .92rem; max-width: 34ch; }
 .footer h4 { color: #fff; font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; }

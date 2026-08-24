@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Wander Pause — freeze my location where it is right now.
+
+  WHY THIS FILE EXISTS AT ALL. Wander cannot ship a widget or a Live Activity: a free-Apple-ID
+  re-sign STRIPS app extensions, so WidgetKit is off the table permanently. A user-installed
+  Shortcut that opens a wander:// URL is the replacement, and it reaches four surfaces that a
+  widget would have reached:
+
+    * Control Centre (iOS 18+) — Edit → Add a Control → Shortcut → choose this one. The Shortcut
+      control is provided by the Shortcuts app itself, not by any extension of ours.
+    * Lock Screen (iOS 18+) — the same control can replace the flashlight/camera button.
+      CAVEAT, and it must stay in the setup copy: a shortcut whose actions OPEN AN APP requires
+      the device to be unlocked, so iOS asks for Face ID first. In practice that is
+      "wake, glance, tap" — one biometric — but it is NOT a true locked-device action, and
+      promising one would be promising something the OS breaks.
+    * Action Button (15 Pro and later) — Settings → Action Button → Shortcut.
+    * Back Tap — Settings → Accessibility → Touch → Back Tap → double or triple tap.
+    * Siri — a shortcut's NAME is its invocation phrase, with no extra setup.
+
+  ONLY is.workflow.actions.* BUILT-INS IN HERE, deliberately. An App Intent action would serialise
+  an AppIntentDescriptor carrying a per-install bundle id, and Wander's bundle id differs on every
+  sideload install — so a single published file would import with its actions greyed out for
+  everybody who did not build it. Opening a URL scheme has no such problem: the scheme survives
+  re-signing.
+
+  NO CONDITIONALS IN HERE EITHER, and that is a decision rather than an omission. `wander://pause`
+  is deliberately TOGGLE-AWARE on the app side (bare = freeze, or unfreeze if already frozen), so
+  one direction-less file serves both directions with no `is.workflow.actions.conditional` at all.
+  That matters because conditionals are a known way to ship a broken file here: `WFInput` on a
+  conditional needs a variable envelope ({"Type":"Variable","Variable":TOKEN}) and the compared
+  token needs an Aggrandizements coercion, and without both the Shortcuts editor SILENTLY DROPS
+  the condition. Not having one cannot get that wrong.
+
+  If you ever want an explicit direction instead, the app also accepts:
+      wander://pause?state=on     — always freeze
+      wander://pause?state=off    — always unfreeze (stop → real GPS)
+
+  SIGNING — this file is UNSIGNED and iOS will refuse to import it as-is (it checks for the AEA1
+  magic, and an XML plist starts "<?xm"). Sign it on a Mac before publishing:
+
+      shortcuts sign --mode anyone \
+        -i unsigned/wander-pause.shortcut \
+        -o "wander-pause.shortcut"
+
+  Signing ignores the filename, so it can be renamed freely afterwards without re-signing — but
+  note that the name iOS gives the IMPORTED shortcut is the filename minus its last extension,
+  verbatim. The signing certificate Apple issues EXPIRES 2027-08-31; when the rest of the pack is
+  re-signed, this file goes with it or its download silently stops importing.
+-->
+<plist version="1.0">
+<dict>
+	<key>WFWorkflowClientVersion</key>
+	<string>2038.0.2.3</string>
+	<key>WFWorkflowClientRelease</key>
+	<string>18.0</string>
+	<key>WFWorkflowMinimumClientVersion</key>
+	<integer>900</integer>
+	<key>WFWorkflowMinimumClientVersionString</key>
+	<string>900</string>
+	<key>WFWorkflowTypes</key>
+	<array/>
+	<key>WFWorkflowInputContentItemClasses</key>
+	<array/>
+	<key>WFWorkflowImportQuestions</key>
+	<array/>
+	<key>WFWorkflowIcon</key>
+	<dict>
+		<key>WFWorkflowIconStartColor</key>
+		<integer>4282601983</integer>
+		<key>WFWorkflowIconGlyphNumber</key>
+		<integer>61440</integer>
+	</dict>
+	<key>WFWorkflowActions</key>
+	<array>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.comment</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFCommentActionText</key>
+				<string>Wander: Pause (freeze) my location. Freezes you at the spot you are at right now, so anyone you share location with keeps seeing you there after you leave. Run it again to unfreeze. Wander opens and confirms — if it cannot get a fix it is sure of, it asks rather than freezing you somewhere you are not. Add this to Control Centre, the Action Button or Back Tap. On the Lock Screen iOS will ask for Face ID first, because the shortcut opens an app.</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.url</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFURLActionURL</key>
+				<string>wander://pause</string>
+				<key>UUID</key>
+				<string>DDDDDDDD-1111-2222-3333-555555555555</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>WFWorkflowActionIdentifier</key>
+			<string>is.workflow.actions.openurl</string>
+			<key>WFWorkflowActionParameters</key>
+			<dict>
+				<key>WFInput</key>
+				<dict>
+					<key>Value</key>
+					<dict>
+						<key>OutputName</key>
+						<string>URL</string>
+						<key>OutputUUID</key>
+						<string>DDDDDDDD-1111-2222-3333-555555555555</string>
+						<key>Type</key>
+						<string>ActionOutput</string>
+					</dict>
+					<key>WFSerializationType</key>
+					<string>WFTextTokenAttachment</string>
+				</dict>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

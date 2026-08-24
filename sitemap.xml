@@ -2,52 +2,97 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://wanderspoofer.com/</loc>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-08-22</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://wanderspoofer.com/features/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://wanderspoofer.com/pricing/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://wanderspoofer.com/download/</loc>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-08-22</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://wanderspoofer.com/contact/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://wanderspoofer.com/pricing/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://wanderspoofer.com/life360/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://wanderspoofer.com/features/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wanderspoofer.com/find-my/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://wanderspoofer.com/iphone/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://wanderspoofer.com/dating/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://wanderspoofer.com/android/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://wanderspoofer.com/imyfone-anyto-alternative/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wanderspoofer.com/pokemon-go/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wanderspoofer.com/find-my/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wanderspoofer.com/life360/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wanderspoofer.com/dating/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wanderspoofer.com/vpn/</loc>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-08-22</lastmod>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://wanderspoofer.com/security/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://wanderspoofer.com/changelog/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://wanderspoofer.com/globe/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://wanderspoofer.com/contact/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://wanderspoofer.com/privacy/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://wanderspoofer.com/terms/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://wanderspoofer.com/refund/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.3</priority>
   </url>
 </urlset>
