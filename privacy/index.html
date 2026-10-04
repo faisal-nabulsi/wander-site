@@ -98,7 +98,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
     </div>
 
     <div class="prose reveal">
-      <p><strong>Effective date:</strong> 16 July 2026</p>
+      <p><strong>Effective date:</strong> 1 October 2026</p>
 
       <p>Wander is a GPS location changer for iPhone, Android, Mac, and Windows, plus a website account system. It's built and run as an independent indie project. This policy explains what happens to your data in plain terms. It isn't legal advice, but it's honest and it describes what the software and website actually do.</p>
 
@@ -125,6 +125,15 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
 
       <p><strong>Aggregate analytics (Cloudflare Web Analytics).</strong> Our website uses Cloudflare Web Analytics, which gives us privacy-friendly, aggregate numbers — things like how many people visited a page. It does not use cross-site tracking cookies and does not build an advertising profile of you.</p>
 
+      <p><strong>App usage statistics (not linked to you).</strong> When you open the Wander app, or switch back to it, the app sends us a small check-in, at most once every 30 minutes. We use these check-ins only to count how many people use Wander each day and how often they use it. Each check-in contains:</p>
+      <ul>
+        <li>a random install ID, created the first time the app runs and kept in the app's own storage on your device (like other app data, it can be included in your device's normal backups);</li>
+        <li>your platform (iPhone, Android, Mac, or Windows) and the app version;</li>
+        <li>whether you're on Free or Pro;</li>
+        <li>the time we received it.</li>
+      </ul>
+      <p>The install ID is random. It isn't made from, or connected to, your name, email, Wander account, Apple ID, or any device or advertising ID, so it doesn't tell us who you are. We don't store your location or your IP address with these check-ins. They are kept in Cloudflare's analytics service for about 90 days and then deleted automatically. We never sell them or use them for advertising.</p>
+
       <p><strong>Support messages.</strong> If you email us or reach out on Discord, we obviously see what you send, so we can help you. We keep those messages as long as needed to support you and keep records straight.</p>
 
       <h2>What we do NOT collect</h2>
@@ -137,7 +146,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
       </ul>
 
       <h2>Where your data lives</h2>
-      <p>Account data and any synced saved places live in <strong>Firebase / Firestore</strong> (Google Cloud infrastructure). Website analytics run through <strong>Cloudflare</strong>. Payments and payment records live with <strong>Lemon Squeezy</strong>. These providers host the data on our behalf and are bound by their own security and privacy commitments.</p>
+      <p>Account data and any synced saved places live in <strong>Firebase / Firestore</strong> (Google Cloud infrastructure). Website analytics and app usage statistics run through <strong>Cloudflare</strong>. Payments and payment records live with <strong>Lemon Squeezy</strong>. These providers host the data on our behalf and are bound by their own security and privacy commitments.</p>
 
       <h2>API keys stay server-side</h2>
       <p>Sensitive API keys — for example the Google Maps key used for Street View and the Anthropic key used for the AI routine feature — live <strong>only</strong> on our server-side Cloudflare Worker. They are never shipped inside the apps. When an app needs one of those features, it asks our Worker, which checks your plan and talks to the third-party service. This keeps the keys out of reach and lets us enforce Pro limits without exposing anything in the app binaries.</p>
@@ -149,7 +158,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
         <li>To sync your saved places across devices, if you enable it.</li>
         <li>To process payments and issue refunds.</li>
         <li>To answer your support questions.</li>
-        <li>To understand, in aggregate, how the site is used so we can improve it.</li>
+        <li>To understand, in aggregate, how the site and apps are used so we can improve them.</li>
       </ul>
 
       <h2>How to delete your account and data</h2>
@@ -159,6 +168,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
         <li>Email <a href="mailto:faisalnab25@gmail.com">faisalnab25@gmail.com</a> from your account email and ask us to delete your account.</li>
       </ul>
       <p>When you delete your account, we remove your Firebase Authentication record, your Firestore plan flag, and any synced saved places. Some records may persist briefly in encrypted backups before they age out, and Lemon Squeezy may retain payment records it's legally required to keep. If you just want to stop syncing places, you can turn Places sync off in the app and clear the synced copy without deleting your whole account.</p>
+      <p>App usage check-ins aren't linked to your account, so we can't single yours out to delete them. They expire automatically after about 90 days.</p>
 
       <h2>Children</h2>
       <p>Wander is intended for people <strong>16 and older</strong>. It isn't designed for or directed at children, and we don't knowingly collect data from anyone under 16. If you believe a child has created an account, email us and we'll remove it.</p>
