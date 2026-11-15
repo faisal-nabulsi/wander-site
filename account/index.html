@@ -158,7 +158,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
     <!-- Danger zone: irreversible account deletion, visually separated. -->
     <div class="account-card reveal" id="dangerZone" style="border:1px solid #E5484D;background:#fff5f5">
       <h2 style="color:#C62828">Danger zone</h2>
-      <p class="muted">Permanently delete your Wander account and all its data — your license, trial history, and saved places. This can't be undone. If you have Pro, deleting here does not cancel a subscription in Lemon Squeezy; <a href="https://app.lemonsqueezy.com/my-orders" target="_blank" rel="noopener">cancel that separately first</a> if it's still active.</p>
+      <p class="muted">Permanently delete your Wander account and all its data — your license, trial history, and saved places. This can't be undone. If you have Pro, deleting here does not cancel a subscription in Lemon Squeezy; <a href="https://wanderapp.lemonsqueezy.com/billing" target="_blank" rel="noopener">cancel that separately first</a> if it's still active.</p>
       <div class="account-actions" style="margin-top:16px">
         <button type="button" class="btn btn-ghost" id="deleteAccountBtn" style="border-color:#E5484D;color:#C62828">Delete my account</button>
       </div>
@@ -286,8 +286,8 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
       badge.innerHTML = 'Pro <span class="chip">Active</span>';
       desc.textContent = "You're on Wander Pro — everything's unlocked on iOS, Android, and desktop. Thanks for supporting Wander 💙";
       actions.innerHTML = '<a href="/download/" class="btn btn-primary">Open the apps</a>' +
-        ' <a href="https://app.lemonsqueezy.com/my-orders" class="btn btn-ghost" target="_blank" rel="noopener">Manage subscription</a>' +
-        '<p class="muted" style="margin-top:10px">Cancel, change your card, or get receipts in Lemon Squeezy — sign in with the email you paid with.</p>';
+        ' <a href="https://wanderapp.lemonsqueezy.com/billing" class="btn btn-ghost" target="_blank" rel="noopener">Manage subscription</a>' +
+        '<p class="muted" style="margin-top:10px">Pause, cancel, switch plans or change your card. Enter the email you paid with and Lemon Squeezy emails you a sign-in link.</p>';
     } else {
       badge.innerHTML = 'Free <span class="chip">Trial</span>';
       desc.textContent = "You're on the free trial. Upgrade to Wander Pro for unlimited teleports, joystick, and routes.";
