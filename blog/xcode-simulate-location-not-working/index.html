@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Xcode Simulate Location Not Working? 5 Fixes | Wander</title>
+<meta name="description" content="Xcode&#x27;s Simulate Location greyed out, your GPX file missing, or the iPhone snapping back when the debugger stops? Causes and fixes for Simulator and device." />
+<link rel="canonical" href="https://wanderspoofer.com/blog/xcode-simulate-location-not-working/" />
+<meta property="og:title" content="Xcode Simulate Location Not Working? 5 Fixes" />
+<meta property="og:description" content="Xcode&#x27;s Simulate Location greyed out, your GPX file missing, or the iPhone snapping back when the debugger stops? Causes and fixes for Simulator and device." />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Wander" />
+<meta property="og:url" content="https://wanderspoofer.com/blog/xcode-simulate-location-not-working/" />
+<meta property="og:image" content="https://wanderspoofer.com/og-image.png" />
+<meta property="og:image:width" content="1600" />
+<meta property="og:image:height" content="900" />
+<meta property="article:published_time" content="2026-11-15" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Xcode Simulate Location Not Working? 5 Fixes" />
+<meta name="twitter:description" content="Xcode&#x27;s Simulate Location greyed out, your GPX file missing, or the iPhone snapping back when the debugger stops? Causes and fixes for Simulator and device." />
+<meta name="twitter:image" content="https://wanderspoofer.com/og-image.png" />
+<meta name="theme-color" content="#185FA5" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/blog/blog.css" />
+<link rel="alternate" type="application/rss+xml" title="Wander blog" href="https://wanderspoofer.com/blog/feed.xml" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Xcode Simulate Location Not Working? 5 Fixes",
+  "description": "Xcode's Simulate Location greyed out, your GPX file missing, or the iPhone snapping back when the debugger stops? Causes and fixes for Simulator and device.",
+  "datePublished": "2026-11-15",
+  "dateModified": "2026-11-15",
+  "mainEntityOfPage": "https://wanderspoofer.com/blog/xcode-simulate-location-not-working/",
+  "image": "https://wanderspoofer.com/og-image.png",
+  "author": { "@type": "Organization", "name": "Wander", "url": "https://wanderspoofer.com/" },
+  "publisher": { "@type": "Organization", "name": "Wander", "logo": { "@type": "ImageObject", "url": "https://wanderspoofer.com/wander-logo.png" } }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wanderspoofer.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://wanderspoofer.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Xcode Simulate Location Not Working? 5 Fixes", "item": "https://wanderspoofer.com/blog/xcode-simulate-location-not-working/" }
+  ]
+}
+</script>
+<!-- OPTIONAL: a FAQPage JSON-LD block may go here ONLY if the article has a visible FAQ section whose questions/answers match it word for word. -->
+</head>
+
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="/" class="brand" aria-label="Wander home">
+      <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
+      Wander
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="/">Home</a>
+      <a href="/features/">Features</a>
+      <a href="/download/">Download</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/contact/">Contact</a>
+      <a href="/login/" id="navAuthLink">Log in</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost btn-star" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+      <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-discord" target="_blank" rel="noopener" aria-label="Join the Wander Discord">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 5.3A17 17 0 0015.7 4l-.2.4a12 12 0 016.9 0zM8.5 4.4A17 17 0 004 5.3 15.7 15.7 0 001 17a17 17 0 005.2 2.6l.6-1a11 11 0 01-1.7-.8l.4-.3a11.9 11.9 0 0010.2 0l.4.3-1.7.8.6 1A16.6 16.6 0 0023 17 15.7 15.7 0 0020 5.3zM9 14.4c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8zm6 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8z"/></svg>
+        Discord
+      </a>
+      <a href="/pricing/" class="btn btn-primary btn-pro">Get Pro</a>
+      <a href="/download/" class="btn btn-ghost">Download</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="nav-mobile" id="navMobile">
+  <a href="/">Home</a>
+  <a href="/features/">Features</a>
+  <a href="/download/">Download</a>
+  <a href="/pricing/">Pricing</a>
+  <a href="/contact/">Contact</a>
+  <a href="/login/" id="navAuthLinkMobile">Log in</a>
+  <a href="/pricing/" class="btn btn-primary btn-pro nav-mobile-pro">Get Pro</a>
+  <div class="nav-mobile-social">
+    <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost btn-star" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+    <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-discord" target="_blank" rel="noopener">Discord</a>
+  </div>
+</nav>
+
+<main class="post">
+  <article class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Blog</a></nav>
+    <h1>Xcode Simulate Location Not Working? How to Fix It in the Simulator and on a Real iPhone</h1>
+    <p class="lede">Xcode's Simulate Location usually breaks for one of four reasons: no debug session is attached, the GPX file is greyed out or missing, the GPX file uses tracks instead of waypoints, or the fake location lingers after you stop. Here is how to spot and fix each one, in the Simulator and on a real iPhone.</p>
+    <p class="post-meta">Published 15 November 2026 · 13 min read</p>
+    <div class="post-body">
+      <div class="toc">
+        <strong>On this page</strong>
+        <ul>
+          <li><a href="#quick-answer">Quick answer</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#fix-gpx-missing">Fix 1: Greyed out or GPX file missing</a></li>
+          <li><a href="#fix-gpx-structure">Fix 2: The location doesn't move</a></li>
+          <li><a href="#fix-device">Fix 3: Not working on the iPhone</a></li>
+          <li><a href="#fix-stops">Fix 4: Stops when debugging stops</a></li>
+          <li><a href="#fix-no-updates">Fix 5: No location updates in your code</a></li>
+          <li><a href="#beyond-xcode">When Xcode isn't enough</a></li>
+          <li><a href="#checklist">Summary checklist</a></li>
+        </ul>
+      </div>
+
+      <h2 id="quick-answer">Quick answer: the four usual causes</h2>
+      <ol>
+        <li><strong>No debug session on a real iPhone.</strong> A debug session is the live link between Xcode's debugger and your running app. Xcode's Simulate Location menu works through that link. Fix: start the app with Run, debugger on, and pick the location again. To set a location without the debugger, see <code>devicectl</code> in Fix 4.</li>
+        <li><strong>The GPX file is greyed out or missing.</strong> GPX (GPS Exchange Format) is the XML file type Xcode reads for fake locations. Fix: add the file to your project, tick Allow Location Simulation in the scheme, and move other copies of Xcode out of the way.</li>
+        <li><strong>The GPX file has the wrong elements.</strong> Xcode plays waypoints (<code>&lt;wpt&gt;</code>), not tracks (<code>&lt;trk&gt;</code>). Fix: turn track points into waypoints and give each one a timestamp.</li>
+        <li><strong>The location lingers after you stop.</strong> Fix: restart the iPhone, or reconnect and choose Don't Simulate Location.</li>
+      </ol>
+      <p>Menu, command and message names below come from Xcode 27.2 (27B52), in November 2026. Menus move between versions, so yours may differ slightly.</p>
+
+      <h2 id="how-it-works">How Xcode location simulation works</h2>
+      <p><strong>In a simulator.</strong> In Xcode 27, simulators run inside Device Hub instead of the old Simulator app. Select the simulator and change its location in the Settings inspector. In Xcode 27.2 the location menu includes Custom Coordinates and Import GPX File. Older Xcode versions put the same controls under Features &gt; Location in the Simulator app. From Terminal, <code>xcrun simctl location booted set 51.5007,-0.1246</code> moves a running simulator and <code>xcrun simctl location booted clear</code> resets it.</p>
+      <p><strong>While debugging.</strong> On a simulator or an iPhone, choose Debug &gt; Simulate Location while your app runs under the debugger, or click the location arrow in the debug bar (the row of buttons at the top of Xcode's debug area). The menu lists built-in places plus the GPX files in your project.</p>
+      <p><strong>Without the debugger.</strong> Xcode 27.2 also includes a Terminal command, <code>xcrun devicectl device simulate location</code>, that runs without a debug session. Fix 4 covers it, including what we couldn't test.</p>
+      <p><strong>In the scheme.</strong> A scheme is Xcode's saved recipe for building and running a target. Open Product &gt; Scheme &gt; Edit Scheme, choose Run, then Options. Under the Core Location heading, tick Allow Location Simulation. Core Location is Apple's location framework. You can also set a Default Location that Xcode applies on every run.</p>
+      <p><strong>In tests.</strong> Test plans have a Simulated Location setting, and UI tests can set <code>XCUIDevice.shared.location</code>. Apple notes that the test plan's location only reaches code in the test bundle. In UI tests your app runs as a separate process and doesn't get it, so set <code>XCUIDevice.shared.location</code> there instead.</p>
+
+      <h2 id="fix-gpx-missing">Fix 1: Simulate Location greyed out or your GPX file missing</h2>
+      <p>Apple's forums have threads on this for Xcode 9, 12.5.1 and 15.4. In the 15.4 thread, custom GPX files vanished from the menu, and Add GPX File to Workspace showed them all greyed out. Work through these steps in order.</p>
+      <ol>
+        <li><strong>Check the scheme.</strong> Make sure Allow Location Simulation is ticked.</li>
+        <li><strong>Put the file in the project.</strong> Drag the .gpx file into the Project navigator and tick your app target when asked. You can also choose the file as the scheme's Default Location.</li>
+        <li><strong>Try a fresh project.</strong> If the file works in a new project, the old project is the problem. If not, your Mac is.</li>
+        <li><strong>Check the file type and the default app.</strong> macOS tags every file with a content type, called a UTI (Uniform Type Identifier). Xcode expects <code>com.topografix.gpx</code>, the type Xcode 27.2's own Info.plist declares for .gpx. Run:
+          <pre><code>mdls -name kMDItemContentType ~/Desktop/Route.gpx</code></pre>
+          These are two separate problems with two separate fixes.
+          <ul>
+            <li><strong>The type is wrong.</strong> Another app on your Mac has declared its own type for .gpx. Remove or update that app, move other copies of Xcode out of the way (next step), then run <code>mdls</code> again. Finder's Change All (below) only sets which app opens the file, so it won't fix this.</li>
+            <li><strong>The type is right, but Finder shows another app's icon on the file.</strong> That was the case in the 15.4 thread. Reset which app opens .gpx files: select the file in Finder, choose File &gt; Get Info, pick Xcode under Open with and click Change All.</li>
+          </ul>
+          A correct type doesn't prove all is well: in the 15.4 thread the type was right and the menu was still broken.</li>
+        <li><strong>Move other copies of Xcode out of the way.</strong> Older and newer copies both count. This lists every Xcode on your Mac:
+          <pre><code>mdfind "kMDItemCFBundleIdentifier == 'com.apple.dt.Xcode'"</code></pre>
+          In the 15.4 thread, old Xcode versions had come along when a developer migrated to a new Mac. Removing them and restarting Xcode 15.4 brought the GPX files back. In the 12.5.1 thread the extra copy was newer: one poster using Xcode 12 only had to move Xcode 13 to the Trash, without emptying it.</li>
+        <li><strong>Try a safe mode restart (unconfirmed).</strong> One developer said starting the Mac in safe mode, then restarting normally, fixed it. Nobody else confirmed it.</li>
+      </ol>
+      <div class="note">Reinstalling Xcode did not help the original poster in the 15.4 thread. Try the steps above before a long download.</div>
+
+      <h2 id="fix-gpx-structure">Fix 2: The GPX loads, but the location doesn't move or jumps</h2>
+      <p>Xcode plays waypoints. A waypoint is one <code>&lt;wpt&gt;</code> element with a latitude and longitude. Apple's older Simulator guide, quoted on Stack Overflow, says route (<code>&lt;rte&gt;</code>) and track (<code>&lt;trk&gt;</code>) tags are not supported. That is the trap, since GPX can also describe a path as a track. Xcode 27.2's GPX error messages still mention only waypoints.</p>
+      <p>Timestamps set the speed. Xcode works out the speed from the time between waypoints, and uses a fixed speed when there are no times. It moves in a straight line between points, so add waypoints wherever your path turns.</p>
+      <p>Going by its error messages, Xcode 27.2 treats the whole file as invalid if any waypoint:</p>
+      <ul>
+        <li>is missing its latitude or longitude;</li>
+        <li>has a time with milliseconds (write <code>09:00:00Z</code>, not <code>09:00:00.000Z</code>);</li>
+        <li>has a time no later than the waypoint before it;</li>
+        <li>has more than one <code>&lt;time&gt;</code> element.</li>
+      </ul>
+      <p>This small file follows all of those rules. It moves about 1.2 km across central London in 15 minutes, roughly walking pace.</p>
+      <pre><code>&lt;?xml version="1.0"?&gt;
+&lt;gpx version="1.1" creator="Xcode"&gt;
+    &lt;wpt lat="51.5007" lon="-0.1246"&gt;
+        &lt;name&gt;Start&lt;/name&gt;
+        &lt;time&gt;2026-01-01T09:00:00Z&lt;/time&gt;
+    &lt;/wpt&gt;
+    &lt;wpt lat="51.5014" lon="-0.1419"&gt;
+        &lt;name&gt;End&lt;/name&gt;
+        &lt;time&gt;2026-01-01T09:15:00Z&lt;/time&gt;
+    &lt;/wpt&gt;
+&lt;/gpx&gt;</code></pre>
+      <p>Save it as a .gpx file, add it to your project, and pick it from Debug &gt; Simulate Location. For one fixed spot, use a single waypoint with no time.</p>
+      <h3>Converting a track you already have</h3>
+      <p>Delete the <code>&lt;trk&gt;</code> and <code>&lt;trkseg&gt;</code> wrapper tags, then rename every <code>trkpt</code> to <code>wpt</code>. One Stack Overflow answer suggests the free GPSBabel tool instead:</p>
+      <pre><code>gpsbabel -i gpx -f track.gpx -x transform,wpt=trk,del -o gpx -F converted.gpx</code></pre>
+      <p>Then check that every waypoint kept its <code>&lt;time&gt;</code>, without milliseconds.</p>
+
+      <h2 id="fix-device">Fix 3: It works in the Simulator but not on the iPhone</h2>
+      <p>A real iPhone needs three things.</p>
+      <ol>
+        <li><strong>A running debug session.</strong> Start the app with Product &gt; Run. Apple notes that turning off Debug executable in the scheme's Info tab runs the app without the debugger. Leave it on, because Xcode's Simulate Location menu works through the debug session.</li>
+        <li><strong>Developer Mode.</strong> This iOS switch lets you run apps from Xcode on the phone. Turn it on in Settings &gt; Privacy &amp; Security &gt; Developer Mode and tap Restart. After the restart, swipe up, tap Enable and enter your passcode. Apple says the switch only appears once you start pairing with a Mac, or if the phone was paired before. If it's missing, read <a href="/blog/iphone-developer-mode-not-showing/">Developer Mode not showing on iPhone</a>.</li>
+        <li><strong>A paired, trusted phone.</strong> In Xcode 27 you pair devices in Device Hub, then tap Trust on the phone. Apple says wireless pairing needs iOS or iPadOS 27 or later. On older versions, pair over a cable first. After that you can unplug and run over Wi-Fi, with IPv6 turned on, on the same network as your Mac.</li>
+      </ol>
+      <p>Then pick a location from the debug bar.</p>
+
+      <h2 id="fix-stops">Fix 4: It stopped when I stopped debugging (or it won't stop)</h2>
+      <p>If the fake location vanished when you pressed Stop, nothing is broken. A location set from the debug bar belongs to the debug session, and ending the session can hand location back to the phone's real sensors. One developer on iOS 17 reported the phone returning to real GPS after disconnecting from Xcode.</p>
+      <h3>Keeping a location without the debugger: devicectl</h3>
+      <p>If you want the location to stay after you stop, try <code>devicectl</code>, the device command-line tool that comes with Xcode. In Xcode 27.2 it has a <code>simulate location</code> command with <code>coordinate</code>, <code>route</code>, <code>scenario</code>, <code>list</code> and <code>clear</code> subcommands. Its built-in help says a <code>coordinate</code> simulation continues until you clear it, and doesn't mention the debugger. For <code>--device</code>, pass your phone's name or its UDID.</p>
+      <pre><code>xcrun devicectl device simulate location coordinate --device "My iPhone" --latitude 51.5007 --longitude -0.1246
+xcrun devicectl device simulate location clear --device "My iPhone"</code></pre>
+      <p>We haven't tested <code>devicectl</code> on a physical iPhone. Before you rely on it, check that the location holds after you quit Xcode and unplug. Run <code>xcrun devicectl help device simulate location</code> to see the options your Xcode version has. It still needs a Mac with Xcode and a terminal.</p>
+      <h3>When the location won't go away</h3>
+      <p>Older reports show the opposite problem. In a 2014 Stack Overflow question, an unplugged iPhone stayed at the simulated spot in Google Maps. In another from the same month, a phone stayed stuck in New York. What to try:</p>
+      <ol>
+        <li>Restart the iPhone. That's what cleared the New York phone.</li>
+        <li>Reconnect, run the app, open the location menu in the debug bar and choose Don't Simulate Location. Then stop. This was the top answer to the Google Maps question.</li>
+        <li>As a last resort, use Settings &gt; General &gt; Transfer or Reset iPhone &gt; Reset &gt; Reset Location &amp; Privacy. Apple says this returns location and privacy settings to their defaults without erasing your content.</li>
+      </ol>
+      <p>To stop the next run applying the spot again, set the scheme's Default Location to None, or untick Allow Location Simulation if you don't need it. On their own, these don't free a phone that's already stuck. Both 2014 askers had tried them, and the New York phone only came free after a restart.</p>
+      <p>For more ways back, see <a href="/blog/get-real-location-back/">how to get your real location back</a>.</p>
+
+      <h2 id="fix-no-updates">Fix 5: CLLocationManager never delivers updates</h2>
+      <p>Sometimes the simulation seems set up but your code hears nothing. <code>CLLocationManager</code> is the Core Location class your app uses to ask for location. Check four things.</p>
+      <ul>
+        <li><strong>An error with kCLErrorDomain Code=0.</strong> Code 0 is <code>CLError.Code.locationUnknown</code>, which Apple describes as the location manager being unable to get a location right now. In a simulator, the top Stack Overflow answer on this error traces it to Allow Location Simulation being ticked with no Default Location set. Make sure a location is actually set: pick one in the simulator's Settings inspector in Device Hub, or choose a Default Location in the scheme.</li>
+        <li><strong>The usage string.</strong> Info.plist, your app's settings file, must contain <code>NSLocationWhenInUseUsageDescription</code>: a sentence explaining why you need location. Apple says the key is required when you call <code>requestWhenInUseAuthorization()</code>, and its text appears in the prompt.</li>
+        <li><strong>The permission request.</strong> Call <code>requestWhenInUseAuthorization()</code> or <code>requestAlwaysAuthorization()</code> before expecting any location, with the app in the foreground. Once permission is decided, the call does nothing, so an old "Don't Allow" sticks. Change it in Settings &gt; Privacy &amp; Security &gt; Location Services. On a simulator, reset just your app's location permission from Terminal, using your app's bundle ID:
+          <pre><code>xcrun simctl privacy booted reset location com.example.app</code></pre>
+          As a last resort, shut the simulator down and choose Device &gt; Reset Content and Settings in Device Hub, which erases the whole simulator.</li>
+        <li><strong>Reduced accuracy.</strong> If Precise Location is off for your app, it only gets an approximate location. Apple says <code>desiredAccuracy</code> then has no effect, and the app can't use region monitoring or beacon ranging (measuring the distance to nearby Bluetooth beacons). Region monitoring is Core Location's geofencing, so geofence tests won't work while Precise Location is off. Check <code>accuracyAuthorization</code>. See <a href="/blog/precise-vs-approximate-location/">precise vs approximate location</a> and <a href="/blog/test-geofencing-without-driving/">how to test geofencing without driving</a>.</li>
+      </ul>
+
+      <h2 id="beyond-xcode">When Xcode isn't enough</h2>
+      <p>Xcode is the right free tool while you debug, and its fake location even reaches other apps (one of the 2014 questions saw it in Google Maps). The debugger's Simulate Location ends with the debug session, and <code>devicectl</code> (Fix 4) needs a Mac with Xcode and a terminal. Sometimes you need a location on a real iPhone without those: from a Windows or Linux computer, for a tester who doesn't use Xcode, or with no computer nearby. For automated tests and CI (continuous integration: automated builds that run your tests on a server), stick with Xcode's own tools.</p>
+      <h3>Free option: pymobiledevice3</h3>
+      <p>pymobiledevice3 is an open-source Python tool (GPL 3.0) for working with iPhones from macOS, Windows or Linux. Its location commands use DVT, the developer-tools service Xcode uses, and need Developer Mode. On iOS 17 and later:</p>
+      <pre><code>pymobiledevice3 developer dvt simulate-location set -- 51.5007 -0.1246
+pymobiledevice3 developer dvt simulate-location play route.gpx
+pymobiledevice3 developer dvt simulate-location clear</code></pre>
+      <p>On iOS 17 and later, <code>set</code> keeps its session open until you press Ctrl+C, so the computer stays connected. You need a terminal, but no Xcode and no debugger.</p>
+      <p>Unlike Xcode, pymobiledevice3's <code>play</code> reads only track points (<code>&lt;trkpt&gt;</code>) and ignores waypoints, so keep your original track file for it. A waypoint-only file, like the sample in Fix 2, gives no movement. It also jumps from point to point without filling in the gaps, so use a dense track.</p>
+      <h3>Wander: one location for the whole iPhone</h3>
+      <p>Wander changes the location your iPhone reports at the system level, over Apple's own developer tunnel. Everything on the phone reads it: maps, weather and your own build. Our <a href="/iphone/">iPhone page</a> lists geo-feature testing for developers as a use. You can run it two ways.</p>
+      <ul>
+        <li><strong>The iPhone app.</strong> A one-time setup on a Mac or Windows PC installs it with a free Apple ID (the Windows installer is in beta and needs Apple's free Apple Devices app). You turn on Developer Mode and add LocalDevVPN, a free tunnel app from the App Store. After that, you don't need the computer. The <a href="/download/">download page</a> has every step.</li>
+        <li><strong>Wander Desktop for Mac.</strong> It drives a tethered iPhone (one connected to the Mac by cable or on the same Wi-Fi) with nothing installed on the phone, on Apple Silicon and Intel Macs. It is an unsigned build: it isn't signed with a paid code-signing certificate, so macOS may warn you the first time you open it. It also asks for your Mac password once because it needs admin rights to open the secure tunnel to your iPhone. Plug the phone in (or join the same Wi-Fi), click Connect Device, then teleport or run a route. On a PC, see <a href="/blog/change-iphone-location-from-windows/">changing iPhone location from Windows</a>.</li>
+      </ul>
+      <p>For testing: search by coordinates is free, multi-stop routes snap to roads at a realistic speed, GPX import lets you bring your own GPX files, and the Panic Button snaps you back to real GPS. Multi-stop routes and GPX import need Pro; the free trial includes 1 teleport a day and 3 two-stop routes a month (see <a href="/pricing/">pricing</a> and <a href="/features/">features</a>). The iPhone app is open source (GNU AGPL v3), as is the desktop app (GNU GPL v3); see our <a href="/security/">security page</a>.</p>
+      <div class="note"><strong>Developer-tunnel locations count as simulated.</strong> iOS marks any location set through Apple's developer tunnel as software-simulated. Core Location reports it as <code>isSimulatedBySoftware</code> in a location's <code>sourceInformation</code>, and Apple's docs give GPX playback in the Xcode debugger as an example. An app that reads that flag treats Xcode, pymobiledevice3 and Wander's developer-tunnel mode (the one described above) the same way. If your app rejects simulated fixes outside testing, as Apple suggests apps may, test that path on purpose with Xcode or a developer-tunnel tool.</div>
+      <p>Some apps' terms forbid changing your location. If you use a location tool with someone else's app, following its rules is up to you.</p>
+
+      <h2 id="checklist">Summary checklist</h2>
+      <table>
+        <thead>
+          <tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Simulate Location greyed out</td><td>Allow Location Simulation off, or no debug session</td><td>Tick it in the scheme, run with the debugger on</td></tr>
+          <tr><td>GPX file missing or greyed out</td><td>File not in the project, wrong file type, or old Xcode copies</td><td>Add it to the project, check the type with <code>mdls</code>, move other Xcode copies out of the way</td></tr>
+          <tr><td>Location never moves</td><td>Tracks instead of waypoints</td><td>Rename <code>trkpt</code> to <code>wpt</code> and drop the wrapper tags</td></tr>
+          <tr><td>Wrong speed, or "invalid" GPX alert</td><td>Missing, out-of-order or millisecond timestamps</td><td>One time per waypoint, always later, no milliseconds</td></tr>
+          <tr><td>Works in a simulator, not on the iPhone</td><td>No debug session, Developer Mode off, or not paired</td><td>Run from Xcode, turn on Developer Mode, pair and tap Trust</td></tr>
+          <tr><td>Location ends when debugging ends</td><td>Expected: the debugger's simulation belongs to the debug session</td><td>Try <code>devicectl</code>, or another tool that doesn't need a debug session</td></tr>
+          <tr><td>iPhone stuck at the fake spot</td><td>Leftover simulation</td><td>Restart the iPhone, or reconnect and choose Don't Simulate Location; set Default Location to None so it doesn't come back</td></tr>
+          <tr><td>kCLErrorDomain Code=0 in a simulator</td><td>No location actually set</td><td>Pick a location in Device Hub's Settings inspector, or set a Default Location</td></tr>
+          <tr><td>No location updates in your code</td><td>No usage string, permission denied, or reduced accuracy</td><td>Add the Info.plist key, request permission, check accuracy</td></tr>
+          <tr><td>UI test ignores the test plan's location</td><td>The test plan's location only reaches the test bundle</td><td>Set <code>XCUIDevice.shared.location</code> in the UI test</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <aside class="post-cta">
+      <h2>Need a location without Xcode or a terminal?</h2>
+      <p>Wander sets the location for the whole iPhone from an app, so every app on it, your own build included, reads the same spot. After setup, the iPhone app doesn't need a computer. Try it with the free trial: 1 teleport a day, no card.</p>
+      <div class="hero-cta">
+        <a href="/download/" class="btn btn-primary">Download Wander free</a>
+        <a href="/features/" class="btn btn-ghost">See all features</a>
+      </div>
+    </aside>
+
+    <section class="post-sources">
+      <h2>Sources</h2>
+      <ol>
+        <li><a href="https://developer.apple.com/forums/thread/761688" rel="noopener" target="_blank">xcode 15.4 [Debug] -&gt; [Simulate Location] with custom gpx is broken</a> - Apple Developer Forums</li>
+        <li><a href="https://developer.apple.com/forums/thread/686875" rel="noopener" target="_blank">Xcode 12.5.1 (12E507) Unable to add GPS Exchange to project</a> - Apple Developer Forums</li>
+        <li><a href="https://developer.apple.com/forums/thread/87672" rel="noopener" target="_blank">Cant add gpx file in Xcode 9, I do all the steps but the file won't show up as a option in "simulate location"</a> - Apple Developer Forums</li>
+        <li><a href="https://developer.apple.com/documentation/xcode/simulating-location-in-tests" rel="noopener" target="_blank">Simulating location in tests</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/xcode/configuring-the-environment-of-a-simulated-device" rel="noopener" target="_blank">Configuring the environment of a simulated device</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/xcode/running-your-app-on-simulated-or-physical-devices" rel="noopener" target="_blank">Running your app on simulated or physical devices</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/xcode/managing-your-simulated-and-physical-devices-in-device-hub" rel="noopener" target="_blank">Managing your simulated and physical devices in Device Hub</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device" rel="noopener" target="_blank">Enabling Developer Mode on a device</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/corelocation/cllocationmanager/requestwheninuseauthorization()" rel="noopener" target="_blank">requestWhenInUseAuthorization()</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/bundleresources/information-property-list/nslocationwheninuseusagedescription" rel="noopener" target="_blank">NSLocationWhenInUseUsageDescription</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/corelocation/cllocationmanager/accuracyauthorization" rel="noopener" target="_blank">accuracyAuthorization</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/corelocation/monitoring-the-user-s-proximity-to-geographic-regions" rel="noopener" target="_blank">Monitoring the user's proximity to geographic regions</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/corelocation/cllocationsourceinformation/issimulatedbysoftware" rel="noopener" target="_blank">isSimulatedBySoftware</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/corelocation/cllocation/sourceinformation" rel="noopener" target="_blank">sourceInformation</a> - Apple Developer Documentation</li>
+        <li><a href="https://support.apple.com/guide/mac-help/choose-an-app-to-open-a-file-on-mac-mh35597/mac" rel="noopener" target="_blank">Choose an app to open a file on Mac</a> - Apple Support</li>
+        <li><a href="https://support.apple.com/en-us/116946" rel="noopener" target="_blank">Start up your Mac in safe mode</a> - Apple Support</li>
+        <li><a href="https://support.apple.com/guide/iphone/return-iphone-settings-to-their-defaults-iphea1c2fe48/ios" rel="noopener" target="_blank">Reset iPhone settings to their defaults</a> - Apple Support</li>
+        <li><a href="https://support.apple.com/guide/iphone/control-the-location-information-you-share-iph3dd5f9be/ios" rel="noopener" target="_blank">Control the location information you share on iPhone</a> - Apple Support</li>
+        <li><a href="https://sarunw.com/posts/how-to-simulate-location-in-xcode-and-simulator/" rel="noopener" target="_blank">How to simulate location in Xcode and Simulator</a> - Sarunw</li>
+        <li><a href="https://medium.com/bpxl-craft/simulating-locations-with-xcode-revisited-2e1b1c13c3bc" rel="noopener" target="_blank">Simulating Locations With Xcode, Revisited</a> - BPXL Craft (Medium)</li>
+        <li><a href="https://stackoverflow.com/questions/43428073" rel="noopener" target="_blank">GPX File does not load iOS Xcode</a> - Stack Overflow</li>
+        <li><a href="https://stackoverflow.com/questions/42476792" rel="noopener" target="_blank">GPX track doesn't work in Xcode</a> - Stack Overflow</li>
+        <li><a href="https://stackoverflow.com/questions/11388003/testing-custom-location-with-simulator" rel="noopener" target="_blank">Testing custom location with simulator</a> - Stack Overflow</li>
+        <li><a href="https://stackoverflow.com/questions/26261248" rel="noopener" target="_blank">Accidentally overwrote iPhone device location via Xcode</a> - Stack Overflow</li>
+        <li><a href="https://stackoverflow.com/questions/26219978" rel="noopener" target="_blank">"Simulate Location" seems to get stuck</a> - Stack Overflow</li>
+        <li><a href="https://stackoverflow.com/questions/77165058" rel="noopener" target="_blank">Updated to iOS 17. iPhone resets GPS location after disconnecting from Xcode</a> - Stack Overflow</li>
+        <li><a href="https://github.com/doronz88/pymobiledevice3" rel="noopener" target="_blank">doronz88/pymobiledevice3</a> - GitHub</li>
+        <li><a href="https://doronz88.github.io/pymobiledevice3/latest/guides/cli-recipes/" rel="noopener" target="_blank">CLI recipes</a> - pymobiledevice3 documentation</li>
+        <li><a href="https://doronz88.github.io/pymobiledevice3/latest/cli/developer/" rel="noopener" target="_blank">developer command reference</a> - pymobiledevice3 documentation</li>
+        <li><a href="https://github.com/doronz88/pymobiledevice3/blob/master/pymobiledevice3/services/dvt/instruments/location_simulation_base.py" rel="noopener" target="_blank">location_simulation_base.py (GPX playback source)</a> - pymobiledevice3 on GitHub</li>
+        <li><a href="https://stackoverflow.com/questions/1409141/location-manager-error-kclerrordomain-error-0" rel="noopener" target="_blank">Location Manager Error : (KCLErrorDomain error 0)</a> - Stack Overflow</li>
+        <li><a href="https://developer.apple.com/documentation/corelocation/clerror-swift.struct/code/locationunknown" rel="noopener" target="_blank">CLError.Code.locationUnknown</a> - Apple Developer Documentation</li>
+        <li>Built-in help for <code>xcrun devicectl</code> and <code>xcrun simctl</code>, Xcode's Info.plist and Xcode's GPX error messages, all in Xcode 27.2 (27B52) - Apple (run <code>xcrun devicectl help device simulate location</code> to check your own copy)</li>
+      </ol>
+    </section>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="brand">
+          <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
+          Wander
+        </a>
+        <p>Your location, anywhere. A clean, affordable location changer for iPhone, Android, Mac &amp; Windows, with a free trial.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="/iphone/">iPhone</a></li>
+          <li><a href="/android/">Android</a></li>
+          <li><a href="/imyfone-anyto-alternative/">vs iMyFone AnyTo</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/life360/">Fake Life360 location</a></li>
+          <li><a href="/find-my/">Change Find My location</a></li>
+          <li><a href="/dating/">Change dating app location</a></li>
+          <li><a href="/pokemon-go/">Play Pokémon GO from home</a></li>
+          <li><a href="/vpn/">Match IP to spoofed location</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Use cases</h4>
+        <ul>
+          <li><a href="/pokemon-go/">Pokémon GO spoofing</a></li>
+          <li><a href="/find-my/">Change Find My location</a></li>
+          <li><a href="/life360/">Fake Life360 location</a></li>
+          <li><a href="/dating/">Dating app location</a></li>
+          <li><a href="/vpn/">Match IP to GPS</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:faisalnab25@gmail.com">Email</a></li>
+          <li><a href="https://github.com/faisal-nabulsi/Wander" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://discord.gg/gfHdsRXUVA" target="_blank" rel="noopener">Discord</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Wander.</span>
+      <span>For personal &amp; testing use — you're responsible for the terms of the apps you use it with.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/script.js"></script>
+<script type="module" src="/auth.js"></script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a52c69fd55864ba897a82f7afe24df6c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
+

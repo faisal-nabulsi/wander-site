@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Test Geofencing Without Driving: iOS &amp; Android | Wander</title>
+<meta name="description" content="Test geofence enter, exit and dwell events without leaving your desk: start in the Simulator or emulator, then test on a real phone with the app in background." />
+<link rel="canonical" href="https://wanderspoofer.com/blog/test-geofencing-without-driving/" />
+<meta property="og:title" content="Test Geofencing Without Driving: iOS &amp; Android" />
+<meta property="og:description" content="Test geofence enter, exit and dwell events without leaving your desk: start in the Simulator or emulator, then test on a real phone with the app in background." />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Wander" />
+<meta property="og:url" content="https://wanderspoofer.com/blog/test-geofencing-without-driving/" />
+<meta property="og:image" content="https://wanderspoofer.com/og-image.png" />
+<meta property="og:image:width" content="1600" />
+<meta property="og:image:height" content="900" />
+<meta property="article:published_time" content="2026-11-15" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Test Geofencing Without Driving: iOS &amp; Android" />
+<meta name="twitter:description" content="Test geofence enter, exit and dwell events without leaving your desk: start in the Simulator or emulator, then test on a real phone with the app in background." />
+<meta name="twitter:image" content="https://wanderspoofer.com/og-image.png" />
+<meta name="theme-color" content="#185FA5" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/blog/blog.css" />
+<link rel="alternate" type="application/rss+xml" title="Wander blog" href="https://wanderspoofer.com/blog/feed.xml" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Test Geofencing Without Driving: iOS & Android",
+  "description": "Test geofence enter, exit and dwell events without leaving your desk: start in the Simulator or emulator, then test on a real phone with the app in background.",
+  "datePublished": "2026-11-15",
+  "dateModified": "2026-11-15",
+  "mainEntityOfPage": "https://wanderspoofer.com/blog/test-geofencing-without-driving/",
+  "image": "https://wanderspoofer.com/og-image.png",
+  "author": { "@type": "Organization", "name": "Wander", "url": "https://wanderspoofer.com/" },
+  "publisher": { "@type": "Organization", "name": "Wander", "logo": { "@type": "ImageObject", "url": "https://wanderspoofer.com/wander-logo.png" } }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wanderspoofer.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://wanderspoofer.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Test Geofencing Without Driving: iOS & Android", "item": "https://wanderspoofer.com/blog/test-geofencing-without-driving/" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why is didEnterRegion not called in the Simulator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Check permission first. Request the same authorization in the Simulator as on the phone, and make sure the app has precise location. Then check that the route goes about 200 metres past the boundary and stays there for at least 20 seconds, as Apple's archived testing guide advises, and wait a few minutes. If the location was already inside the region when you registered it, iOS sends no enter event, so call requestState(for:) to check."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why isn't my geofence triggered with a mock location on Android?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On most devices the geofence service uses network location, so we would expect that a mock which only feeds the GPS provider might not reach it. That is our inference, not something Google states. Google does say the fused location provider's mock mode affects geofencing, so the most direct test is a debug app that calls setMockMode(true) and setMockLocation(). Test any other mock tool against a known fence first."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I test geofencing with the app killed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Partly. Swipe the app away, move the simulated location across the fence and log whether the app wakes. On iOS this needs Always permission. Confirm the result with one real walk."
+      }
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="/" class="brand" aria-label="Wander home">
+      <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
+      Wander
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="/">Home</a>
+      <a href="/features/">Features</a>
+      <a href="/download/">Download</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/contact/">Contact</a>
+      <a href="/login/" id="navAuthLink">Log in</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost btn-star" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+      <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-discord" target="_blank" rel="noopener" aria-label="Join the Wander Discord">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 5.3A17 17 0 0015.7 4l-.2.4a12 12 0 016.9 0zM8.5 4.4A17 17 0 004 5.3 15.7 15.7 0 001 17a17 17 0 005.2 2.6l.6-1a11 11 0 01-1.7-.8l.4-.3a11.9 11.9 0 0010.2 0l.4.3-1.7.8.6 1A16.6 16.6 0 0023 17 15.7 15.7 0 0020 5.3zM9 14.4c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8zm6 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8z"/></svg>
+        Discord
+      </a>
+      <a href="/pricing/" class="btn btn-primary btn-pro">Get Pro</a>
+      <a href="/download/" class="btn btn-ghost">Download</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="nav-mobile" id="navMobile">
+  <a href="/">Home</a>
+  <a href="/features/">Features</a>
+  <a href="/download/">Download</a>
+  <a href="/pricing/">Pricing</a>
+  <a href="/contact/">Contact</a>
+  <a href="/login/" id="navAuthLinkMobile">Log in</a>
+  <a href="/pricing/" class="btn btn-primary btn-pro nav-mobile-pro">Get Pro</a>
+  <div class="nav-mobile-social">
+    <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost btn-star" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+    <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-discord" target="_blank" rel="noopener">Discord</a>
+  </div>
+</nav>
+
+<main class="post">
+  <article class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Blog</a></nav>
+    <h1>How to Test Geofencing Without Driving Around: iOS and Android, From Simulator to Real Device</h1>
+    <p class="lede">To test geofencing without driving, climb a ladder: unit-test the fence logic, replay a route in the iOS Simulator or Android emulator, move a simulated location on a real phone while your app runs in the background, then confirm with one short real walk. Often a geofence that doesn't fire is following a documented platform rule, so check those first.</p>
+    <p class="post-meta">Published 15 November 2026 · 13 min read</p>
+    <div class="post-body">
+      <p>You don't need a car to test a geofence. You need a ladder of tests, from cheap to realistic:</p>
+      <ol>
+        <li><strong>Logic tests</strong> with hard-coded coordinates.</li>
+        <li><strong>The iOS Simulator or Android emulator</strong>, replaying a route that crosses the fence.</li>
+        <li><strong>A real phone with a simulated location</strong>, while your app sits in the background.</li>
+        <li><strong>One real walk</strong> to confirm what simulation can't show.</li>
+      </ol>
+
+      <div class="toc">
+        <strong>In this guide</strong>
+        <ol>
+          <li><a href="#what-you-test">What you're testing</a></li>
+          <li><a href="#why-not-firing">Why geofences don't fire</a></li>
+          <li><a href="#logic-tests">Logic tests</a></li>
+          <li><a href="#ios-simulator">The iOS Simulator</a></li>
+          <li><a href="#android-emulator">The Android emulator</a></li>
+          <li><a href="#real-device">A real phone</a></li>
+          <li><a href="#test-routes">Test routes</a></li>
+          <li><a href="#edge-cases">Edge cases</a></li>
+          <li><a href="#field-test">The real walk</a></li>
+          <li><a href="#checklist">Checklist</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what-you-test">What you're actually testing</h2>
+      <p>A <strong>geofence</strong> is a virtual circle on the map: a centre point plus a radius. Your app asks the operating system to watch it and report when the phone crosses the edge. Apple calls this <strong>region monitoring</strong>. Its newer CLMonitor API calls it condition monitoring, "also known as geofencing".</p>
+      <p>There are three events:</p>
+      <ul>
+        <li><strong>Enter:</strong> the phone moves from outside the circle to inside.</li>
+        <li><strong>Exit:</strong> the phone moves from inside to outside.</li>
+        <li><strong>Dwell:</strong> the phone stays inside for a set time. Android has a dwell transition with a "loitering delay" you choose. The iOS pages cited here describe only enter and exit, so on iPhone you time the dwell yourself.</li>
+      </ul>
+      <p>Test each event in four app states: foreground, background, terminated (swiped away) and after a reboot. That is twelve cases before permissions and network problems. Driving doesn't scale.</p>
+
+      <h2 id="why-not-firing">Why geofences don't fire: the platform rules</h2>
+      <h3>Android (Google Play services)</h3>
+      <p>Google's geofencing guide lists these rules:</p>
+      <ul>
+        <li><strong>Network location, not GPS.</strong> On most devices the geofence service uses only network location (position from Wi-Fi and cell signals).</li>
+        <li><strong>Wi-Fi off can mean no alerts</strong>, depending on the radius, device model and Android version.</li>
+        <li><strong>No data connection, maybe no alerts.</strong> Without a reliable one, alerts might not be generated, because network location needs it.</li>
+        <li><strong>Alerts are late.</strong> Usually under 2 minutes, about 2 to 3 minutes under background location limits, and up to 6 minutes if the device has been still for a long time.</li>
+        <li><strong>Small fences are unreliable.</strong> For best results, Google recommends a minimum radius of 100 to 150 metres.</li>
+        <li><strong>Already inside fires at once.</strong> With <code>INITIAL_TRIGGER_ENTER</code> (set through <code>setInitialTrigger</code>), the service sends an enter event when the fence is added if the device is already inside it.</li>
+        <li><strong>100 geofences per app</strong>, per device user.</li>
+        <li><strong>Re-register when needed.</strong> After a reboot, a reinstall, cleared app data, cleared Google Play services data, or a <code>GEOFENCE_NOT_AVAILABLE</code> alert.</li>
+        <li><strong>Permissions.</strong> <code>ACCESS_FINE_LOCATION</code>, plus <code>ACCESS_BACKGROUND_LOCATION</code> when targeting Android 10 or higher.</li>
+      </ul>
+      <h3>iOS (Core Location)</h3>
+      <ul>
+        <li><strong>20 at a time.</strong> No app can monitor more than 20 conditions at once.</li>
+        <li><strong>Approximate location turns it off.</strong> With reduced accuracy, your app can't use region monitoring. See <a href="/blog/precise-vs-approximate-location/">precise vs approximate location</a>.</li>
+        <li><strong>Relaunch needs Always.</strong> iOS tries to launch a non-running app when a condition is met. But it doesn't launch an app that only has When In Use permission to deliver new updates.</li>
+        <li><strong>Recreate the monitor</strong> with the same identifier after a relaunch.</li>
+        <li><strong>Reboots are ambiguous.</strong> Apple says the system monitors conditions "until the device reboots", and also that monitoring can only happen after the user unlocks the device following a reboot. Don't rely on either reading: recreate your monitors at every launch, then check them after a reboot and unlock.</li>
+        <li><strong>Already inside doesn't count.</strong> Apple's archived guide says that if the device is already inside a region when you register it, iOS sends no event. Call <code>requestState(for:)</code> to check. This is the opposite of Android's initial enter trigger.</li>
+        <li><strong>Cross with a margin, then stay.</strong> The same guide says iOS reports a crossing only after the location has moved a minimum distance past the boundary and stayed there for at least 20 seconds. For testing, it says, you can assume that distance is about 200 metres.</li>
+        <li><strong>Network and time.</strong> Apple's older <code>startMonitoring(for:)</code> reference says timely reports need network connectivity. In a note written for iOS 6 on iPhone 4S or later, it quotes 3 to 5 minutes on average, if not sooner.</li>
+      </ul>
+
+      <h2 id="logic-tests">Rung 1: logic tests</h2>
+      <p>Apple's guide to simulating location in tests says you don't need a location manager to test location logic. Build coordinates with known values and pass them straight to your code. Do the same on Android: test your "inside, and for how long?" function with points inside, outside and on the edge.</p>
+
+      <h2 id="ios-simulator">Rung 2 on iPhone: the iOS Simulator</h2>
+      <p>Use the Simulator to check that callbacks are wired up. Feed it a GPX file (a standard XML format for GPS tracks) that starts outside the fence, crosses it and leaves. Apple's archived testing guide says that, for testing, you can assume iOS waits until the location is about 200 metres past the boundary for at least 20 seconds. So for a 150-metre fence on the middle point, the route starts and ends about 445 metres from the centre (150 + 200 metres, plus some spare). It pauses for a minute at the centre, because a 150-metre fence has no point 200 metres inside it, and it holds the final point for five minutes so the exit has time to arrive:</p>
+      <pre><code>&lt;?xml version="1.0"?&gt;
+&lt;gpx version="1.1" creator="geofence-test"&gt;
+  &lt;wpt lat="37.3280" lon="-122.0300"&gt;&lt;time&gt;2026-01-01T10:00:00Z&lt;/time&gt;&lt;/wpt&gt;
+  &lt;wpt lat="37.3320" lon="-122.0300"&gt;&lt;time&gt;2026-01-01T10:05:00Z&lt;/time&gt;&lt;/wpt&gt;
+  &lt;wpt lat="37.3320" lon="-122.0300"&gt;&lt;time&gt;2026-01-01T10:06:00Z&lt;/time&gt;&lt;/wpt&gt;
+  &lt;wpt lat="37.3360" lon="-122.0300"&gt;&lt;time&gt;2026-01-01T10:11:00Z&lt;/time&gt;&lt;/wpt&gt;
+  &lt;wpt lat="37.3360" lon="-122.0300"&gt;&lt;time&gt;2026-01-01T10:16:00Z&lt;/time&gt;&lt;/wpt&gt;
+&lt;/gpx&gt;</code></pre>
+      <p>TELUS Digital's guide explains the timing: Xcode moves at the speed implied by the gaps between waypoint times, and waypoints must be in time order. Here, about 445 metres every 5 minutes is walking pace.</p>
+      <ul>
+        <li><strong>While debugging:</strong> turn on Allow Location Simulation in your scheme's Run options, then pick the file from Xcode's Simulate Location menu. Menu names move between Xcode versions.</li>
+        <li><strong>In test plans:</strong> set a Simulated Location or GPX file in the test plan's configuration. Xcode replays location, elevation and speed. In UI tests, use <code>XCUIDevice</code> instead.</li>
+        <li><strong>From the command line:</strong> <code>xcrun simctl location booted set 37.3320,-122.0300</code> sets a point and <code>xcrun simctl location booted clear</code> resets it. Since Xcode 14, simctl can also play routes; <code>xcrun simctl help location</code> lists the options.</li>
+      </ul>
+      <p>Two gotchas from Stack Overflow. One developer's <code>didEnterRegion</code> never fired because their code requested When In Use in the Simulator but Always on the phone. And if nothing fires, set a custom location right at the region's centre to prove the wiring. If the Simulator ignores your GPX file, see <a href="/blog/xcode-simulate-location-not-working/">Xcode simulate location not working</a>.</p>
+
+      <h2 id="android-emulator">Rung 2 on Android: the emulator</h2>
+      <p>Open <strong>Extended controls</strong> (the More button in the emulator panel) and choose <strong>Location</strong>:</p>
+      <ul>
+        <li><strong>Single points:</strong> search or click the map, then press <strong>Set location</strong>.</li>
+        <li><strong>Routes:</strong> build and save a route, then press <strong>Play route</strong>. You can turn on <strong>Repeat playback</strong> and change the <strong>Playback speed</strong>.</li>
+        <li><strong>Load GPX/KML:</strong> play a track file at 1X speed or faster.</li>
+        <li><strong>From the command line:</strong> <code>adb emu geo fix -122.0300 37.3320</code> sends a GPS fix to the running emulator. Longitude comes first. Because it is one shell command, you can script a route as a series of fixes with pauses between them.</li>
+      </ul>
+      <p>If the map is blank, update the emulator. Versions before 34.2.13 ship an old Chromium that breaks it (see Google's troubleshooting page and issue 228201899). Also, geofences are kept in a Google Play services process, so use a system image (the Android build the emulator runs) that includes Google Play services.</p>
+
+      <h2 id="real-device">Rung 3: a real phone with a simulated location</h2>
+      <p>Simulators don't behave like a phone in a pocket. Some limits do show up in an emulator: Google says Android's background location limits apply to all apps on devices running Android 8.0 (API 26) or higher, so an emulator on API 26 or later has them too, and background geofence events arrive about every couple of minutes. But a real phone adds real hardware, the maker's own battery settings and a real reboot-and-unlock cycle. The goal here is to move the phone's location while your app sits in the background, with no debugger attached.</p>
+      <div class="note">Use simulated locations on your own apps and test devices. Some apps' terms forbid changing your location, and following them is your responsibility.</div>
+      <h3>Android</h3>
+      <p>Turn on Developer options and choose an app under <strong>Select mock location app</strong>. If yours is missing, see <a href="/blog/android-mock-location-app-not-showing/">Android mock location app not showing</a>.</p>
+      <p>One catch matters for geofences. The geofence service mostly uses network location, so we'd expect that a mock which only feeds the GPS provider might not reach it. That's our inference from Google's guide, not something Google states. What Google does state is that the fused location provider's mock mode reaches geofencing. (The fused location provider is the Google Play services API that apps call to get the device's position.) Its <code>FusedLocationProviderClient</code> reference says mock mode affects every app that uses it, and other location features, including geofencing.</p>
+      <p>So the most direct free route is to feed the fused location provider yourself, from a debug build or a small helper app:</p>
+      <ol>
+        <li>Declare <code>android.permission.ACCESS_MOCK_LOCATION</code> in your debug build's manifest.</li>
+        <li>Install the app and choose it under <strong>Select mock location app</strong>. Google says both steps are required on Android 6.0 and later.</li>
+        <li>Call <code>setMockMode(true)</code> on <code>FusedLocationProviderClient</code>.</li>
+        <li>Send <code>setMockLocation()</code> fixes along your route. Give each one a later timestamp than the last, because Google says the provider may expect increasing timestamps.</li>
+        <li>Call <code>setMockMode(false)</code> when you finish. Mock mode affects every app on the phone that uses the fused provider, so Google says to always switch it off.</li>
+      </ol>
+      <p>If you use any other tool, check how it injects locations, then confirm it with a test fence on your device. That includes Wander: its Android app uses the built-in mock-location developer setting, and we haven't published a test of it against Play services geofencing.</p>
+      <p>A 2015 Stack Overflow answer adds that the geofence manager considers location requests from every app on the phone, so real positions from other apps can fight your mock ones. It is old, so treat it as a lead to check rather than current behaviour.</p>
+      <h3>iPhone</h3>
+      <p>The simplest route is Xcode: with the iPhone connected, pick a location or GPX file from Simulate Location while Xcode runs your app. This already changes the location for the whole phone, not just your app. TELUS Digital suggests opening Maps to make the system update, and warns the device may keep the simulated location after you disconnect; a restart clears it. The catch is that you drive it from a debug session on your Mac, and an attached debugger is not how users run your app.</p>
+      <p>Other tools set the same system location through Apple's developer services, with no debugger attached:</p>
+      <ul>
+        <li><strong>pymobiledevice3</strong> (free, open source) sets a point or plays a GPX file on iOS 17 and later, for example <code>pymobiledevice3 developer dvt simulate-location play route.gpx</code>, and <code>... simulate-location clear</code> resets it. It runs on your computer, so keep the phone connected while a route plays.</li>
+        <li><strong>libimobiledevice's <code>idevicesetlocation</code></strong> (free, open source) sets a single point, but its source code says it isn't supported on iOS 17 and later.</li>
+        <li><strong>Wander</strong> sets the location from the phone itself, over Apple's own developer tunnel (the connection Apple's developer tools use to reach a phone). After a one-time setup from a Mac or Windows PC (Developer Mode, a free Apple ID and the free LocalDevVPN tunnel app from the App Store; see the <a href="/download/">install guide</a>), no computer is needed, and scheduled moves keep going in the background. See <a href="/iphone/">Wander on iPhone</a>.</li>
+      </ul>
+      <p>Expect iOS to mark all of these fixes as simulated, Xcode's included. Apple's <code>CLLocationSourceInformation.isSimulatedBySoftware</code> is true for locations simulated on the device, and Wander's own pricing FAQ says iOS marks locations set through the developer tunnel as simulated. If your app checks that flag and rejects simulated fixes, these tests will exercise that rejection path rather than your normal one, so plan a separate test for each.</p>
+      <p>An honest limit: we haven't verified whether iOS relaunches a terminated app when a simulated location meets a condition. A 2015 Stack Overflow question about testing with the app killed has no answers either. Test it, and let the real walk decide.</p>
+
+      <h2 id="test-routes">Designing test routes</h2>
+      <ul>
+        <li><strong>Start well outside,</strong> at least twice the radius or the radius plus 200 metres from the centre, whichever is larger, so accuracy errors can't put you inside and iOS sees a clear crossing.</li>
+        <li><strong>Cross at walking pace.</strong> Teleports are a useful test too, but users don't move that way.</li>
+        <li><strong>Enter, dwell, exit, re-enter.</strong> The second entry finds state bugs the first one hides.</li>
+        <li><strong>Test near the minimum radius</strong>, 100 to 150 metres on Android.</li>
+        <li><strong>Hold, then wait.</strong> Stay at each point for at least 20 seconds (iOS needs that), and allow several minutes per step.</li>
+        <li><strong>Log expected and actual events</strong>, with times.</li>
+      </ul>
+      <p>Here is how Wander covers each step, as one example (details from <a href="/features/">features</a> and <a href="/pricing/">pricing</a>):</p>
+      <ul>
+        <li><strong>Teleport</strong> in, then back out: drop a pin, search by name or paste coordinates. That takes two teleports, and the free trial includes 1 a day, so on the trial use one of the 3 monthly two-spot routes for the in-and-out test instead.</li>
+        <li><strong>A two-point route</strong> through the fence in walking mode, at realistic speed. The free trial includes 3 two-spot routes a month.</li>
+        <li><strong>A multi-stop route</strong> for enter, exit and re-enter, with auto-loop for soak tests (long, repeated runs that shake out slow failures). Multi-spot routes are Pro.</li>
+        <li><strong>An itinerary step</strong> such as "stay 1 hour here, then route to there" for dwell tests.</li>
+        <li><strong>Route files.</strong> Android imports GPX, KML, GeoJSON and CSV; the iPhone app can import route files. GPX import is Pro.</li>
+      </ul>
+      <p>The pricing page marks teleports, two-spot routes, multi-spot routes and GPX import. It doesn't list auto-loop, itineraries or the other import formats, so check <a href="/pricing/">pricing</a> or the app for which of these are Pro.</p>
+      <p>Wander's Geofence Triggers feature is a different thing. It returns your phone to its real GPS when you actually arrive at or leave a real place, so it isn't for testing your app's fences.</p>
+
+      <h2 id="edge-cases">Edge cases to script</h2>
+      <ul>
+        <li><strong>App swiped away.</strong> Run the route with the app terminated.</li>
+        <li><strong>Reboot.</strong> Android apps must listen for boot-complete and re-register. On iOS, unlock first, then check your app recreated its monitors, since Apple's wording on what survives a reboot is ambiguous.</li>
+        <li><strong>Permission downgraded</strong> to While Using, then approximate. Your app should notice and explain.</li>
+        <li><strong>Background App Refresh off (iOS).</strong> Apple's archived guide says the system doesn't wake your app for region notifications when Background App Refresh is off, for the whole device or just for your app. Test both.</li>
+        <li><strong>Low Power Mode and Battery Saver.</strong> We found no platform numbers to cite, so record what happens.</li>
+        <li><strong>Airplane mode, Wi-Fi off, no data.</strong> Android may give no alerts; iOS needs a network for timely reports.</li>
+      </ul>
+
+      <h2 id="field-test">Rung 4: what simulated tests can't tell you</h2>
+      <p>A simulated fix is an exact coordinate. Real positions are noisy. Google says Wi-Fi location is usually accurate to 20 to 50 metres, and without Wi-Fi, on a rural drive say, the error can reach several hundred metres or more. Simulation can't tell you whether your radius survives that. Plan one real test:</p>
+      <ol>
+        <li>Pick a walkable fence with your production radius.</li>
+        <li>Start well outside, app in the background.</li>
+        <li>Walk in, wait for your dwell time, walk out.</li>
+        <li>Log each crossing and each callback, with times.</li>
+        <li>Repeat after a reboot and with the app swiped away.</li>
+      </ol>
+      <p>On Android, Wander can record that walk and replay the exact track at the pace you walked it (see <a href="/android/">Wander on Android</a>), so you can rerun the same path later. The replay goes through the same mock-location setting as above, so first confirm that your geofences fire under Wander's mock.</p>
+
+      <h2 id="checklist">Checklist</h2>
+      <table>
+        <thead>
+          <tr><th>Test case</th><th>How to simulate it</th><th>Expected callback</th><th>Platform gotcha</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Enter</td><td>Route from well outside (2× radius or radius + 200 m) to the centre, then hold</td><td>Android <code>GEOFENCE_TRANSITION_ENTER</code>; iOS condition satisfied</td><td>Android: up to 6 minutes</td></tr>
+          <tr><td>Exit</td><td>Continue about 200 m past the edge and hold</td><td>Android <code>GEOFENCE_TRANSITION_EXIT</code>; iOS unsatisfied</td><td>iOS: hold 20 s or more past the margin</td></tr>
+          <tr><td>Dwell</td><td>Itinerary stop longer than your dwell time</td><td>Android <code>GEOFENCE_TRANSITION_DWELL</code></td><td>iOS: time it yourself</td></tr>
+          <tr><td>Re-enter</td><td>Loop the route</td><td>A second enter</td><td>Stale state</td></tr>
+          <tr><td>Background</td><td>Start the route, leave the app</td><td>Same, later</td><td>Android 8.0+: every couple of minutes</td></tr>
+          <tr><td>Terminated</td><td>Swipe away, run the route</td><td>iOS tries to launch the app</td><td>iOS needs Always; confirm on a walk</td></tr>
+          <tr><td>Reboot</td><td>Reboot, unlock, run the route</td><td>Events if fences survive</td><td>Android: re-register on boot; iOS: recreate monitors at launch</td></tr>
+          <tr><td>Already inside</td><td>Register the fence with the location at the centre</td><td>Android: enter with <code>INITIAL_TRIGGER_ENTER</code>; iOS: none</td><td>iOS: call <code>requestState(for:)</code></td></tr>
+          <tr><td>Approximate</td><td>Turn off precise location</td><td>None on iOS</td><td>Region monitoring disabled</td></tr>
+          <tr><td>No network</td><td>Airplane mode or Wi-Fi off</td><td>Possibly none</td><td>Android needs network location</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="faq">FAQ</h2>
+      <h3>Why is didEnterRegion not called in the Simulator?</h3>
+      <p>Check permission first. Request the same authorization in the Simulator as on the phone, and make sure the app has precise location. Then check that the route goes about 200 metres past the boundary and stays there for at least 20 seconds, as Apple's archived testing guide advises, and wait a few minutes. If the location was already inside the region when you registered it, iOS sends no enter event, so call <code>requestState(for:)</code> to check.</p>
+      <h3>Why isn't my geofence triggered with a mock location on Android?</h3>
+      <p>On most devices the geofence service uses network location, so we would expect that a mock which only feeds the GPS provider might not reach it. That is our inference, not something Google states. Google does say the fused location provider's mock mode affects geofencing, so the most direct test is a debug app that calls <code>setMockMode(true)</code> and <code>setMockLocation()</code>. Test any other mock tool against a known fence first.</p>
+      <h3>Can I test geofencing with the app killed?</h3>
+      <p>Partly. Swipe the app away, move the simulated location across the fence and log whether the app wakes. On iOS this needs Always permission. Confirm the result with one real walk.</p>
+    </div>
+
+    <aside class="post-cta">
+      <h2>Walk across the fence from your desk</h2>
+      <p>Wander moves your phone's system location in and out of a fence, or along a walking-speed route, while the app you're testing sits in the background. It can't promise your geofence events fire: confirm that with the steps above, and on Android check it against a test fence first, since we haven't published that test. The free trial needs no card.</p>
+      <div class="hero-cta">
+        <a href="/download/" class="btn btn-primary">Download Wander free</a>
+        <a href="/features/" class="btn btn-ghost">See all features</a>
+      </div>
+    </aside>
+
+    <section class="post-sources">
+      <h2>Sources</h2>
+      <ol>
+        <li><a href="https://developer.android.com/develop/sensors-and-location/location/geofencing" rel="noopener" target="_blank">Create and monitor geofences</a> - Android Developers</li>
+        <li><a href="https://developer.android.com/about/versions/oreo/background-location-limits" rel="noopener" target="_blank">Background Location Limits</a> - Android Developers</li>
+        <li><a href="https://developer.android.com/studio/run/emulator-extended-controls" rel="noopener" target="_blank">Extended controls, settings, and help</a> - Android Developers</li>
+        <li><a href="https://developer.android.com/studio/run/emulator-console" rel="noopener" target="_blank">Send emulator console commands</a> - Android Developers</li>
+        <li><a href="https://developer.android.com/studio/run/emulator-troubleshooting" rel="noopener" target="_blank">Troubleshoot known issues with Android Emulator</a> - Android Developers</li>
+        <li><a href="https://issuetracker.google.com/issues/228201899" rel="noopener" target="_blank">Can't see google maps inside Android Emulator Extended Controls (issue 228201899)</a> - Google Issue Tracker</li>
+        <li><a href="https://developer.android.com/studio/debug/dev-options" rel="noopener" target="_blank">Configure on-device developer options</a> - Android Developers</li>
+        <li><a href="https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderClient" rel="noopener" target="_blank">FusedLocationProviderClient</a> - Google for Developers</li>
+        <li><a href="https://developer.apple.com/documentation/corelocation/monitoring-the-user-s-proximity-to-geographic-regions" rel="noopener" target="_blank">Monitoring the user's proximity to geographic regions</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/corelocation/cllocationmanager/accuracyauthorization" rel="noopener" target="_blank">accuracyAuthorization</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/corelocation/cllocationmanager/startmonitoring(for:)" rel="noopener" target="_blank">startMonitoring(for:)</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/LocationAwarenessPG/RegionMonitoring/RegionMonitoring.html" rel="noopener" target="_blank">Region Monitoring and iBeacon (Location and Maps Programming Guide, archived)</a> - Apple Developer Documentation Archive</li>
+        <li><a href="https://developer.apple.com/documentation/corelocation/cllocationsourceinformation/issimulatedbysoftware" rel="noopener" target="_blank">isSimulatedBySoftware</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/corelocation/requesting-authorization-to-use-location-services" rel="noopener" target="_blank">Requesting authorization to use location services</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/xcode/simulating-location-in-tests" rel="noopener" target="_blank">Simulating location in tests</a> - Apple Developer Documentation</li>
+        <li><a href="https://www.telusdigital.com/insights/digital-experience/article/simulating-location-in-ios" rel="noopener" target="_blank">How to Simulate Location in iOS: Tips and Techniques</a> - TELUS Digital</li>
+        <li><a href="https://dev.classmethod.jp/en/articles/ios-simulator-location-command-line/" rel="noopener" target="_blank">Control location information of iOS simulator from the command line</a> - DevelopersIO (Classmethod)</li>
+        <li><a href="https://github.com/doronz88/pymobiledevice3/blob/master/docs/guides/cli-recipes.md" rel="noopener" target="_blank">pymobiledevice3 CLI recipes</a> - pymobiledevice3 on GitHub</li>
+        <li><a href="https://github.com/libimobiledevice/libimobiledevice/blob/master/tools/idevicesetlocation.c" rel="noopener" target="_blank">idevicesetlocation.c</a> - libimobiledevice on GitHub</li>
+        <li><a href="https://github.com/MobileNativeFoundation/set-simulator-location" rel="noopener" target="_blank">set-simulator-location</a> - Mobile Native Foundation on GitHub</li>
+        <li><a href="https://stackoverflow.com/questions/44722395/locationmanager-didenterregion-not-called-in-xcode-9-simulator" rel="noopener" target="_blank">locationManager didEnterRegion not called in XCode 9 Simulator</a> - Stack Overflow</li>
+        <li><a href="https://stackoverflow.com/questions/32116485" rel="noopener" target="_blank">Monitoring CLCirculerregion didStartMonitoring called, but didEnterRegion or didExitRegion never called</a> - Stack Overflow</li>
+        <li><a href="https://stackoverflow.com/questions/28220366" rel="noopener" target="_blank">GeoFence Not Triggered w/Mock Location</a> - Stack Overflow</li>
+        <li><a href="https://stackoverflow.com/questions/28028675" rel="noopener" target="_blank">How to emulate location while app isn't running</a> - Stack Overflow</li>
+      </ol>
+    </section>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="brand">
+          <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
+          Wander
+        </a>
+        <p>Your location, anywhere. A clean, affordable location changer for iPhone, Android, Mac &amp; Windows, with a free trial.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="/iphone/">iPhone</a></li>
+          <li><a href="/android/">Android</a></li>
+          <li><a href="/imyfone-anyto-alternative/">vs iMyFone AnyTo</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/life360/">Fake Life360 location</a></li>
+          <li><a href="/find-my/">Change Find My location</a></li>
+          <li><a href="/dating/">Change dating app location</a></li>
+          <li><a href="/pokemon-go/">Play Pokémon GO from home</a></li>
+          <li><a href="/vpn/">Match IP to spoofed location</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Use cases</h4>
+        <ul>
+          <li><a href="/pokemon-go/">Pokémon GO spoofing</a></li>
+          <li><a href="/find-my/">Change Find My location</a></li>
+          <li><a href="/life360/">Fake Life360 location</a></li>
+          <li><a href="/dating/">Dating app location</a></li>
+          <li><a href="/vpn/">Match IP to GPS</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:faisalnab25@gmail.com">Email</a></li>
+          <li><a href="https://github.com/faisal-nabulsi/Wander" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://discord.gg/gfHdsRXUVA" target="_blank" rel="noopener">Discord</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Wander.</span>
+      <span>For personal &amp; testing use — you're responsible for the terms of the apps you use it with.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/script.js"></script>
+<script type="module" src="/auth.js"></script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a52c69fd55864ba897a82f7afe24df6c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
+

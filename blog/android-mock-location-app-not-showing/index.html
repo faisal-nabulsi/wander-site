@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mock Location App Not Showing on Android? Fixes | Wander</title>
+<meta name="description" content="Can't find Select mock location app, or your app isn't listed? Where Android 12 moved it, why apps go missing, and how to fix it without root." />
+<link rel="canonical" href="https://wanderspoofer.com/blog/android-mock-location-app-not-showing/" />
+<meta property="og:title" content="Mock Location App Not Showing on Android? Fixes" />
+<meta property="og:description" content="Can't find Select mock location app, or your app isn't listed? Where Android 12 moved it, why apps go missing, and how to fix it without root." />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Wander" />
+<meta property="og:url" content="https://wanderspoofer.com/blog/android-mock-location-app-not-showing/" />
+<meta property="og:image" content="https://wanderspoofer.com/og-image.png" />
+<meta property="og:image:width" content="1600" />
+<meta property="og:image:height" content="900" />
+<meta property="article:published_time" content="2026-11-15" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Mock Location App Not Showing on Android? Fixes" />
+<meta name="twitter:description" content="Can't find Select mock location app, or your app isn't listed? Where Android 12 moved it, why apps go missing, and how to fix it without root." />
+<meta name="twitter:image" content="https://wanderspoofer.com/og-image.png" />
+<meta name="theme-color" content="#185FA5" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/blog/blog.css" />
+<link rel="alternate" type="application/rss+xml" title="Wander blog" href="https://wanderspoofer.com/blog/feed.xml" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Mock Location App Not Showing on Android? Fixes",
+  "description": "Can't find Select mock location app, or your app isn't listed? Where Android 12 moved it, why apps go missing, and how to fix it without root.",
+  "datePublished": "2026-11-15",
+  "dateModified": "2026-11-15",
+  "mainEntityOfPage": "https://wanderspoofer.com/blog/android-mock-location-app-not-showing/",
+  "image": "https://wanderspoofer.com/og-image.png",
+  "author": { "@type": "Organization", "name": "Wander", "url": "https://wanderspoofer.com/" },
+  "publisher": { "@type": "Organization", "name": "Wander", "logo": { "@type": "ImageObject", "url": "https://wanderspoofer.com/wander-logo.png" } }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wanderspoofer.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://wanderspoofer.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Mock Location App Not Showing on Android? Fixes", "item": "https://wanderspoofer.com/blog/android-mock-location-app-not-showing/" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I need root to use a mock location app?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Select mock location app is a built-in Android setting. You only need to unlock Developer options and install an app that requests mock-location access."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the mock location app list empty?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The list only shows installed apps that request the ACCESS_MOCK_LOCATION permission. Install a mock location app first, then back out of the picker and open it again."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can apps tell that my location is a mock location?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Android marks mock locations, and apps can check that mark. Some apps reject mock locations or forbid location changing in their terms, and you're responsible for following those terms."
+      }
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="/" class="brand" aria-label="Wander home">
+      <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
+      Wander
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="/">Home</a>
+      <a href="/features/">Features</a>
+      <a href="/download/">Download</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/contact/">Contact</a>
+      <a href="/login/" id="navAuthLink">Log in</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost btn-star" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+      <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-discord" target="_blank" rel="noopener" aria-label="Join the Wander Discord">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 5.3A17 17 0 0015.7 4l-.2.4a12 12 0 016.9 0zM8.5 4.4A17 17 0 004 5.3 15.7 15.7 0 001 17a17 17 0 005.2 2.6l.6-1a11 11 0 01-1.7-.8l.4-.3a11.9 11.9 0 0010.2 0l.4.3-1.7.8.6 1A16.6 16.6 0 0023 17 15.7 15.7 0 0020 5.3zM9 14.4c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8zm6 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8z"/></svg>
+        Discord
+      </a>
+      <a href="/pricing/" class="btn btn-primary btn-pro">Get Pro</a>
+      <a href="/download/" class="btn btn-ghost">Download</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="nav-mobile" id="navMobile">
+  <a href="/">Home</a>
+  <a href="/features/">Features</a>
+  <a href="/download/">Download</a>
+  <a href="/pricing/">Pricing</a>
+  <a href="/contact/">Contact</a>
+  <a href="/login/" id="navAuthLinkMobile">Log in</a>
+  <a href="/pricing/" class="btn btn-primary btn-pro nav-mobile-pro">Get Pro</a>
+  <div class="nav-mobile-social">
+    <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost btn-star" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+    <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-discord" target="_blank" rel="noopener">Discord</a>
+  </div>
+</nav>
+
+<main class="post">
+  <article class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Blog</a></nav>
+    <h1>'Select Mock Location App' Not Showing or Not Working on Android: How to Fix It</h1>
+    <p class="lede">"Select mock location app" is hidden inside Developer options, so it won't appear until you unlock that screen by tapping Build number seven times. If the setting is there but your app isn't listed, install the app first: Android only lists installed apps that ask for mock-location permission.</p>
+    <p class="post-meta">Published 15 November 2026 · 10 min read</p>
+    <div class="post-body">
+      <div class="note">
+        <p><strong>Quick answer:</strong> "Select mock location app" lives in Developer options. On Android 12 and later it's under the <strong>Location</strong> heading near the bottom of that screen. On Android 11 and earlier it's under <strong>Debugging</strong>. Phone makers can move it, so the fastest way on any phone is to search Settings for <code>mock</code>. If you can't see it, Developer options is probably still locked. Tap Build number seven times to unlock it. If the setting is there but your app isn't in the list, the app isn't installed yet, or it doesn't ask Android for mock-location access. A work or school device, a second user account, or a very old Android version can also hide it.</p>
+      </div>
+
+      <div class="toc">
+        <strong>On this page</strong>
+        <ul>
+          <li><a href="#what-it-does">What the setting does</a></li>
+          <li><a href="#unlock-developer-options">Step 1: Unlock Developer options</a></li>
+          <li><a href="#find-the-setting">Step 2: Find the setting</a></li>
+          <li><a href="#option-missing">The option is missing entirely</a></li>
+          <li><a href="#app-not-listed">My app isn't in the list</a></li>
+          <li><a href="#location-not-changing">It's selected, but my location doesn't change</a></li>
+          <li><a href="#apps-reject-mock">Why some apps reject mock locations</a></li>
+          <li><a href="#wander-example">Worked example: setting up Wander</a></li>
+          <li><a href="#turn-it-off">Turn it off when you're done</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <h2 id="what-it-does">What "Select mock location app" does</h2>
+      <p>A <strong>mock location</strong> is a made-up position that an app gives Android in place of your real one. <strong>Developer options</strong> is a hidden Settings screen with tools for people who build and test apps, such as USB debugging.</p>
+      <p>"Select mock location app" sits inside Developer options. Google describes it as a way to fake the device's GPS location "to test whether your app behaves the same in other locations." You pick one app from a list. That app then gets permission to supply the phone's location.</p>
+      <p>Only one app can hold that permission at a time. In Android's own Settings code, picking a new app takes the permission away from the old one. Picking <em>Nothing</em> takes it away from every app.</p>
+      <p>Google's guide adds one more detail: you have to install a mock location app before you can use the setting. That detail explains most "it's not showing" problems.</p>
+
+      <h2 id="unlock-developer-options">Step 1: Unlock Developer options</h2>
+      <p>Since Android 4.2, Developer options is hidden until you unlock it. You unlock it by tapping the <strong>Build number</strong>, a line in your phone's About screen. Google's guide lists where to find it on several phones, including these:</p>
+      <table>
+        <thead>
+          <tr><th>Phone</th><th>Where to find Build number</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Google Pixel</td><td>Settings &gt; About phone &gt; Build number</td></tr>
+          <tr><td>Samsung Galaxy S8 and later</td><td>Settings &gt; About phone &gt; Software information &gt; Build number</td></tr>
+          <tr><td>OnePlus 5T and later</td><td>Settings &gt; About phone &gt; Build number</td></tr>
+        </tbody>
+      </table>
+      <p>Other phone makers use different menus and labels, and Google's guide notes that on some phones the Developer options screen is located or named differently. If your phone isn't in the table, check your phone maker's help pages.</p>
+      <ol>
+        <li>Open the Build number line for your phone, using the table above.</li>
+        <li>Tap <strong>Build number</strong> seven times, until you see "You are now a developer!"</li>
+        <li>If you use a screen lock, enter your PIN, pattern or password when asked.</li>
+        <li>Go back. Developer options now appears in Settings.</li>
+      </ol>
+      <p>Where it appears depends on the phone. On a recent Pixel, look in Settings &gt; System &gt; Developer options. Some older Android versions put it under System &gt; Advanced instead. On a Samsung Galaxy, Samsung says it appears at the very bottom of the main Settings menu.</p>
+      <div class="note">
+        <p><strong>Samsung is one level deeper.</strong> On a Galaxy, Build number isn't on the About phone screen itself. Open <strong>Software information</strong> first, then tap Build number.</p>
+      </div>
+
+      <h2 id="find-the-setting">Step 2: Find "Select mock location app"</h2>
+      <p>Open Developer options. Where the setting sits depends on your Android version:</p>
+      <ul>
+        <li><strong>Android 12 and later:</strong> scroll near the bottom of Developer options to the <strong>Location</strong> heading.</li>
+        <li><strong>Android 11 and earlier:</strong> look under the <strong>Debugging</strong> heading instead.</li>
+      </ul>
+      <p>Android's own Settings layout file shows this move. Google's developer guide still describes the setting among its debugging options, so a Pixel owner on a recent version who scrolls to Debugging won't find it there. On stock Android, as on a Pixel, the setting is called "Select mock location app". Under the name, Android shows either "No mock location app set" or "Mock location app:" followed by the app's name.</p>
+      <p>Developer options is a long list, and phone makers can move things around in it. Searching is usually faster than scrolling:</p>
+      <ol>
+        <li>Open Settings.</li>
+        <li>Tap the search bar or magnifying glass.</li>
+        <li>Type <code>mock</code>.</li>
+        <li>Tap the result that mentions a mock location app.</li>
+      </ol>
+      <p>If search finds nothing, Developer options is probably locked or switched off. The next section covers that.</p>
+
+      <h2 id="option-missing">The option is missing entirely</h2>
+      <h3>The Developer options switch is off</h3>
+      <p>Developer options has a main switch at the top of its screen. Google says to keep it on, because most options below it are disabled while it's off. Samsung's help uses the same switch to turn Developer options off. Switch it back on and look again.</p>
+      <p>Switching Developer options off also clears your mock location app. Android's Settings code removes the mock-location permission from every app when you turn the switch off, and turning it back on doesn't restore it. So after you switch it back on, open Select mock location app and pick your app again.</p>
+
+      <h3>Your phone runs a very old Android version</h3>
+      <p>Before Android 6.0 there was no app picker. There was a checkbox called "Allow mock locations" instead. Google's reference marks that old setting as deprecated in Android 6.0 (API level 23) and says it is no longer used.</p>
+      <p>A 2016 Android Central thread shows the same thing: a Galaxy J5 on Android 5.1.1 had only an on/off switch. On a phone that old, the checkbox is the setting.</p>
+
+      <h3>It's a work or school phone</h3>
+      <p>Many employers and schools manage phones with <strong>MDM</strong> (mobile device management) software. MDM lets an IT admin set rules for a device. Google's Android Management API, which management tools can use, has a developer settings policy. By default, that policy disables all developer settings and stops the user from opening them.</p>
+      <p>Android also lets an organization block debugging features. If it manages the whole phone, the block applies everywhere. If it only manages a <strong>work profile</strong> (a separate, badged set of work apps on your own phone), the block covers only that profile. Your personal Developer options are unaffected. Google's docs say the block is on by default for work profiles created on or after the April 2025 security patch.</p>
+      <p>When a block like this applies, Android's Settings code doesn't show the Developer options list. Instead it shows either a notice that your admin has turned the feature off, or the message "Developer options are not available for this user".</p>
+      <p>Some MDM tools also have their own mock-location switch. Hexnode's help notes that on fully managed (Device Owner) phones, turning mock locations off there disables Developer options completely.</p>
+      <p>If an admin has blocked it, you can't turn it back on yourself. Ask your IT team. Don't try to get around a policy on a device someone else controls.</p>
+
+      <h3>You're signed in as a second user or a guest</h3>
+      <p>Android phones and tablets can have more than one user. In Android's Settings code, Developer options is for admin users only. If you're not the admin user, Android shows the message "Only the admin users can access developer settings." and closes the screen. Switch to the phone owner's account and try again.</p>
+
+      <h2 id="app-not-listed">My app isn't in the list</h2>
+      <p>This is the most common surprise. The picker doesn't list every app. Android's Settings code builds the list from installed apps that request one <strong>permission</strong> (a named ability an app asks Android for): <code>ACCESS_MOCK_LOCATION</code>. An app that doesn't request it never appears, whatever it claims to do.</p>
+      <ul>
+        <li><strong>Install the app first.</strong> The list only shows apps that are already on the phone.</li>
+        <li><strong>Reopen the picker.</strong> If the picker was open while you installed the app, back out of it and open it again. Android rebuilds the list each time the picker opens.</li>
+        <li><strong>The list only says "Nothing".</strong> No installed app requests the permission yet. Install one that does.</li>
+        <li><strong>The app is installed but still missing.</strong> It doesn't request the permission, so it can't be your mock location app. Ask its developer.</li>
+      </ul>
+
+      <h3>If you're building your own mock location app</h3>
+      <p>Declare the permission in your app's manifest:</p>
+      <pre><code>&lt;uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" /&gt;</code></pre>
+      <p>Then select your app in Developer options. Until you do, <code>LocationManager.addTestProvider()</code> throws a <code>SecurityException</code>. Google's Fused Location Provider has the same rule: its mock mode needs the permission and needs your app selected as the mock location app.</p>
+      <p>One more trap, on Android 10 and earlier: calling <code>addTestProvider()</code> a second time with the same name, such as <code>gps</code>, throws an <code>IllegalArgumentException</code> with the message <code>Provider "gps" already exists</code>. A Stack Overflow question about Android 10 hit exactly this. Remove the old test provider with <code>removeTestProvider()</code> before adding it again, or catch the error, and then call <code>setTestProviderLocation()</code>. From Android 11 on, this no longer throws. Google's current LocationManager docs say a new test provider replaces any existing provider with the same name.</p>
+
+      <h2 id="location-not-changing">It's selected, but my location doesn't change</h2>
+      <p>Selecting an app only gives it permission. It doesn't move you by itself. Work through these checks in order:</p>
+      <ol>
+        <li><strong>Turn Location on.</strong> Open Settings &gt; Location and switch on <strong>Use location</strong>. On Android 9 it's under Security &amp; Location &gt; Location.</li>
+        <li><strong>Set a location in the app.</strong> Open the mock location app and start it. A B4X forum post warns that apps listed as mock providers don't always send a location, so other apps may not get a location fix at all.</li>
+        <li><strong>Check which app is selected.</strong> Only one app can be the mock location app. If you picked a different one later, it replaced the first.</li>
+        <li><strong>Pick it again if you toggled Developer options.</strong> Turning Developer options off clears your mock location app, and turning it back on doesn't restore it. If the setting shows "No mock location app set", open Select mock location app and choose your app again.</li>
+        <li><strong>Compare two apps.</strong> Android has more than one way to deliver a location. A mock app can feed Android's own location providers, or Google's <strong>Fused Location Provider</strong> (a location service in Google Play services that many apps use). Apps that read from a different source may show a different result.</li>
+        <li><strong>Restart the phone.</strong> Then open the mock app and set the location again.</li>
+        <li><strong>Confirm in a maps app.</strong> Open a map and check where your location dot is.</li>
+      </ol>
+
+      <h2 id="apps-reject-mock">Why some apps ignore or reject mock locations</h2>
+      <p>Android tells apps when a location is a mock. Each location carries a flag. Since Android 12, apps read it with <code>Location.isMock()</code>. Older versions use <code>isFromMockProvider()</code>, which dates back to Android 4.3.</p>
+      <p>Google's documentation says users may have a good reason to mock their location. It tells developers to reject mock locations only when real locations are essential to the app.</p>
+      <p>Some apps reject them anyway. Some also forbid changing your location in their terms of service. If you use a mock location app alongside another app or service, you're responsible for following that service's terms. This guide doesn't cover hiding the mock flag, and we don't help with getting around an app's rules.</p>
+      <p>If you're a developer, the flag is useful. Test both cases: what your app does with a real location, and what it does when the location is marked as a mock.</p>
+
+      <h2 id="wander-example">Worked example: setting up Wander</h2>
+      <p>Wander is a location changer for iPhone, Android, Mac and Windows. On Android it uses the built-in developer mock-location setting, and nothing is flashed (no new system software is installed), patched or unlocked. It doesn't need <strong>root</strong> (unlocking full system access on the phone). The <a href="/download/">download page</a> says it installs on the phone in under a minute, with no computer. That covers installing the app itself. Unlocking Developer options and selecting Wander are extra steps on top of that.</p>
+      <ol>
+        <li>On your phone, open the <a href="/download/">download page</a> and tap <strong>Download APK</strong>. An <strong>APK</strong> is an Android app install file.</li>
+        <li>Open <code>Wander.apk</code>. Android asks whether to allow installs from your browser. Turn on <strong>Install unknown apps</strong> for that browser, go back, and open the APK again.</li>
+        <li>Tap <strong>Install</strong>, then open Wander.</li>
+        <li>Unlock Developer options, as in <a href="#unlock-developer-options">Step 1</a>, if you haven't already.</li>
+        <li>Open Developer options &gt; <strong>Select mock location app</strong> and pick Wander.</li>
+        <li>Back in Wander, drop a pin on the map, search for a place by name, or paste coordinates. Then teleport.</li>
+      </ol>
+      <p>After that, you can teleport in one tap from a home-screen widget or a Quick Settings tile, without opening the app.</p>
+      <div class="note">
+        <p>The "Install unknown apps" permission is per app and only used for installing. You can switch it back off afterward. Wander then updates itself from inside the app.</p>
+      </div>
+      <p>The free trial includes 1 free teleport every day, plus 15 minutes of joystick and 3 routes every month, with no card. See <a href="/pricing/">pricing</a> for Pro, or the <a href="/android/">Android page</a> for everything the Android app does.</p>
+
+      <h2 id="turn-it-off">Turn it off when you're done</h2>
+      <ol>
+        <li><strong>Stop the mock app.</strong> In Wander, the Panic Button snaps you back to your real GPS in one tap.</li>
+        <li><strong>Clear the selection.</strong> Open Developer options &gt; Select mock location app and choose <strong>Nothing</strong>. Now no app can supply a mock location.</li>
+        <li><strong>Optional:</strong> switch Developer options off with the switch at the top of its screen. This also clears the mock location app selection by itself.</li>
+        <li><strong>Optional:</strong> turn off Install unknown apps for your browser if you installed an APK.</li>
+      </ol>
+      <p>For every platform, see <a href="/blog/get-real-location-back/">how to get your real location back</a>.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <h3>Do I need root to use a mock location app?</h3>
+      <p>No. Select mock location app is a built-in Android setting. You only need to unlock Developer options and install an app that requests mock-location access.</p>
+      <h3>Why is the mock location app list empty?</h3>
+      <p>The list only shows installed apps that request the ACCESS_MOCK_LOCATION permission. Install a mock location app first, then back out of the picker and open it again.</p>
+      <h3>Can apps tell that my location is a mock location?</h3>
+      <p>Yes. Android marks mock locations, and apps can check that mark. Some apps reject mock locations or forbid location changing in their terms, and you're responsible for following those terms.</p>
+
+      <h2 id="related">Related guides</h2>
+      <ul>
+        <li><a href="/blog/test-geofencing-without-driving/">Test geofencing without driving</a></li>
+        <li><a href="/blog/precise-vs-approximate-location/">Precise vs approximate location</a></li>
+        <li><a href="/blog/get-real-location-back/">Get your real location back</a></li>
+        <li><a href="/features/">Everything Wander can do</a></li>
+        <li><a href="/security/">How Wander works and what happens to your data</a></li>
+      </ul>
+    </div>
+
+    <aside class="post-cta">
+      <h2>Need a mock location app to test with?</h2>
+      <p>Wander uses Android's built-in mock-location setting, with no root and no changes to the phone's system software. Install the APK, select Wander in Developer options, and try 1 free teleport a day.</p>
+      <div class="hero-cta">
+        <a href="/download/" class="btn btn-primary">Download Wander free</a>
+        <a href="/features/" class="btn btn-ghost">See all features</a>
+      </div>
+    </aside>
+
+    <section class="post-sources">
+      <h2>Sources</h2>
+      <ol>
+        <li><a href="https://developer.android.com/studio/debug/dev-options" rel="noopener" target="_blank">Configure on-device developer options</a> - Android Developers</li>
+        <li><a href="https://www.samsung.com/us/support/answer/ANS10003430/" rel="noopener" target="_blank">Turn on the Developer options menu on your Galaxy phone</a> - Samsung</li>
+        <li><a href="https://android.googlesource.com/platform/packages/apps/Settings/+/refs/heads/main/src/com/android/settings/development/MockLocationAppPreferenceController.java" rel="noopener" target="_blank">MockLocationAppPreferenceController.java (Settings app source)</a> - Android Open Source Project</li>
+        <li><a href="https://android.googlesource.com/platform/packages/apps/Settings/+/refs/heads/main/src/com/android/settings/development/AppPicker.java" rel="noopener" target="_blank">AppPicker.java (Settings app source)</a> - Android Open Source Project</li>
+        <li><a href="https://android.googlesource.com/platform/packages/apps/Settings/+/refs/heads/main/src/com/android/settings/development/DevelopmentSettingsDashboardFragment.java" rel="noopener" target="_blank">DevelopmentSettingsDashboardFragment.java (Settings app source)</a> - Android Open Source Project</li>
+        <li><a href="https://android.googlesource.com/platform/packages/apps/Settings/+/refs/heads/main/src/com/android/settings/dashboard/RestrictedDashboardFragment.java" rel="noopener" target="_blank">RestrictedDashboardFragment.java (Settings app source)</a> - Android Open Source Project</li>
+        <li><a href="https://android.googlesource.com/platform/packages/apps/Settings/+/refs/heads/main/res/xml/development_settings.xml" rel="noopener" target="_blank">development_settings.xml, current version (Developer options layout, Location heading)</a> - Android Open Source Project</li>
+        <li><a href="https://android.googlesource.com/platform/packages/apps/Settings/+/refs/heads/android11-release/res/xml/development_settings.xml" rel="noopener" target="_blank">development_settings.xml, Android 11 (Developer options layout, Debugging heading)</a> - Android Open Source Project</li>
+        <li><a href="https://android.googlesource.com/platform/frameworks/base/+/refs/heads/main/packages/SettingsLib/res/values/strings.xml" rel="noopener" target="_blank">SettingsLib strings.xml (Settings labels)</a> - Android Open Source Project</li>
+        <li><a href="https://android.googlesource.com/platform/packages/apps/Settings/+/refs/heads/main/res/values/strings.xml" rel="noopener" target="_blank">Settings strings.xml (Settings messages)</a> - Android Open Source Project</li>
+        <li><a href="https://developer.android.com/reference/android/provider/Settings.Secure#ALLOW_MOCK_LOCATION" rel="noopener" target="_blank">Settings.Secure: ALLOW_MOCK_LOCATION</a> - Android Developers</li>
+        <li><a href="https://developer.android.com/guide/topics/manifest/uses-sdk-element" rel="noopener" target="_blank">&lt;uses-sdk&gt; (API levels table)</a> - Android Developers</li>
+        <li><a href="https://forums.androidcentral.com/threads/select-mock-location-app-feature-missing.707113/" rel="noopener" target="_blank">SELECT mock location APP feature missing</a> - Android Central Forums</li>
+        <li><a href="https://developers.google.com/android/management/reference/rest/v1/enterprises.policies" rel="noopener" target="_blank">REST Resource: enterprises.policies (DeveloperSettings)</a> - Android Management API, Google for Developers</li>
+        <li><a href="https://developer.android.com/reference/android/os/UserManager#DISALLOW_DEBUGGING_FEATURES" rel="noopener" target="_blank">UserManager: DISALLOW_DEBUGGING_FEATURES</a> - Android Developers</li>
+        <li><a href="https://www.hexnode.com/mobile-device-management/help/how-to-disable-users-from-setting-up-mock-locations-on-android-devices/" rel="noopener" target="_blank">How to disable users from setting up mock locations on Android devices?</a> - Hexnode Help Center</li>
+        <li><a href="https://www.b4x.com/android/forum/threads/access_mock_location-permission-issues.137213/" rel="noopener" target="_blank">Access_Mock_Location permission issues</a> - B4X Programming Forum</li>
+        <li><a href="https://developer.android.com/reference/android/location/LocationManager" rel="noopener" target="_blank">LocationManager (addTestProvider)</a> - Android Developers</li>
+        <li><a href="https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderClient" rel="noopener" target="_blank">FusedLocationProviderClient (setMockMode)</a> - Google Play services, Google for Developers</li>
+        <li><a href="https://stackoverflow.com/questions/65067752/test-provider-for-mock-location-not-working-on-android-10" rel="noopener" target="_blank">Test provider for mock location not working on Android 10</a> - Stack Overflow</li>
+        <li><a href="https://android.googlesource.com/platform/frameworks/base/+/refs/heads/android10-release/services/core/java/com/android/server/LocationManagerService.java" rel="noopener" target="_blank">LocationManagerService.java, Android 10 (addTestProvider)</a> - Android Open Source Project</li>
+        <li><a href="https://android.googlesource.com/platform/frameworks/base/+/refs/heads/android11-release/services/core/java/com/android/server/location/LocationManagerService.java" rel="noopener" target="_blank">LocationManagerService.java, Android 11 (addTestProvider)</a> - Android Open Source Project</li>
+        <li><a href="https://support.google.com/android/answer/3467281" rel="noopener" target="_blank">Manage your Android device's location settings</a> - Android Help, Google</li>
+        <li><a href="https://developer.android.com/reference/android/location/Location#isMock()" rel="noopener" target="_blank">Location: isMock()</a> - Android Developers</li>
+      </ol>
+    </section>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="brand">
+          <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
+          Wander
+        </a>
+        <p>Your location, anywhere. A clean, affordable location changer for iPhone, Android, Mac &amp; Windows, with a free trial.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="/iphone/">iPhone</a></li>
+          <li><a href="/android/">Android</a></li>
+          <li><a href="/imyfone-anyto-alternative/">vs iMyFone AnyTo</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/life360/">Fake Life360 location</a></li>
+          <li><a href="/find-my/">Change Find My location</a></li>
+          <li><a href="/dating/">Change dating app location</a></li>
+          <li><a href="/pokemon-go/">Play Pokémon GO from home</a></li>
+          <li><a href="/vpn/">Match IP to spoofed location</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Use cases</h4>
+        <ul>
+          <li><a href="/pokemon-go/">Pokémon GO spoofing</a></li>
+          <li><a href="/find-my/">Change Find My location</a></li>
+          <li><a href="/life360/">Fake Life360 location</a></li>
+          <li><a href="/dating/">Dating app location</a></li>
+          <li><a href="/vpn/">Match IP to GPS</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:faisalnab25@gmail.com">Email</a></li>
+          <li><a href="https://github.com/faisal-nabulsi/Wander" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://discord.gg/gfHdsRXUVA" target="_blank" rel="noopener">Discord</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Wander.</span>
+      <span>For personal &amp; testing use — you're responsible for the terms of the apps you use it with.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/script.js"></script>
+<script type="module" src="/auth.js"></script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a52c69fd55864ba897a82f7afe24df6c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
+

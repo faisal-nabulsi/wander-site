@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>iPhone Developer Mode Not Showing? How to Fix It | Wander</title>
+<meta name="description" content="Developer Mode missing from Privacy &amp; Security on your iPhone? Why iOS hides the toggle, what makes it appear, and how to switch it off again when you're done." />
+<link rel="canonical" href="https://wanderspoofer.com/blog/iphone-developer-mode-not-showing/" />
+<meta property="og:title" content="iPhone Developer Mode Not Showing? How to Fix It" />
+<meta property="og:description" content="Developer Mode missing from Privacy &amp; Security on your iPhone? Why iOS hides the toggle, what makes it appear, and how to switch it off again when you're done." />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Wander" />
+<meta property="og:url" content="https://wanderspoofer.com/blog/iphone-developer-mode-not-showing/" />
+<meta property="og:image" content="https://wanderspoofer.com/og-image.png" />
+<meta property="og:image:width" content="1600" />
+<meta property="og:image:height" content="900" />
+<meta property="article:published_time" content="2026-11-15" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="iPhone Developer Mode Not Showing? How to Fix It" />
+<meta name="twitter:description" content="Developer Mode missing from Privacy &amp; Security on your iPhone? Why iOS hides the toggle, what makes it appear, and how to switch it off again when you're done." />
+<meta name="twitter:image" content="https://wanderspoofer.com/og-image.png" />
+<meta name="theme-color" content="#185FA5" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/blog/blog.css" />
+<link rel="alternate" type="application/rss+xml" title="Wander blog" href="https://wanderspoofer.com/blog/feed.xml" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "iPhone Developer Mode Not Showing? How to Fix It",
+  "description": "Developer Mode missing from Privacy & Security on your iPhone? Why iOS hides the toggle, what makes it appear, and how to switch it off again when you're done.",
+  "datePublished": "2026-11-15",
+  "dateModified": "2026-11-15",
+  "mainEntityOfPage": "https://wanderspoofer.com/blog/iphone-developer-mode-not-showing/",
+  "image": "https://wanderspoofer.com/og-image.png",
+  "author": { "@type": "Organization", "name": "Wander", "url": "https://wanderspoofer.com/" },
+  "publisher": { "@type": "Organization", "name": "Wander", "logo": { "@type": "ImageObject", "url": "https://wanderspoofer.com/wander-logo.png" } }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wanderspoofer.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://wanderspoofer.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "iPhone Developer Mode Not Showing? How to Fix It", "item": "https://wanderspoofer.com/blog/iphone-developer-mode-not-showing/" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does turning on Developer Mode void my warranty or wipe my iPhone?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Apple's guide doesn't mention either. The steps it describes are a switch, a restart and your passcode. Erasing the phone isn't one of them. You can turn Developer Mode off again with the same switch."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Developer Mode stay on after an iOS update?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Apple's guide doesn't say. After an update, check Settings → Privacy & Security. If it's off, turn it on again with the same steps. If you use Xcode, Apple says Device Hub shows a message when Developer Mode is off on a device you paired before."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why can't I find Developer Mode on iOS 26 or iOS 27?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Apple's guide doesn't list iOS versions. Its current version, which we re-read on 15 November 2026, puts the switch under Security in Privacy & Security. Apple says it appears once you start pairing the device, or if it was paired to a Mac before. Install the app or connect to Xcode first, then look again."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need Developer Mode for App Store apps?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Apple says Developer Mode doesn't affect apps from the App Store or betas from TestFlight. You need it for apps run from Xcode and for developer-signed apps installed directly."
+      }
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="/" class="brand" aria-label="Wander home">
+      <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
+      Wander
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="/">Home</a>
+      <a href="/features/">Features</a>
+      <a href="/download/">Download</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/contact/">Contact</a>
+      <a href="/login/" id="navAuthLink">Log in</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost btn-star" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+      <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-discord" target="_blank" rel="noopener" aria-label="Join the Wander Discord">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 5.3A17 17 0 0015.7 4l-.2.4a12 12 0 016.9 0zM8.5 4.4A17 17 0 004 5.3 15.7 15.7 0 001 17a17 17 0 005.2 2.6l.6-1a11 11 0 01-1.7-.8l.4-.3a11.9 11.9 0 0010.2 0l.4.3-1.7.8.6 1A16.6 16.6 0 0023 17 15.7 15.7 0 0020 5.3zM9 14.4c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8zm6 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8z"/></svg>
+        Discord
+      </a>
+      <a href="/pricing/" class="btn btn-primary btn-pro">Get Pro</a>
+      <a href="/download/" class="btn btn-ghost">Download</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="nav-mobile" id="navMobile">
+  <a href="/">Home</a>
+  <a href="/features/">Features</a>
+  <a href="/download/">Download</a>
+  <a href="/pricing/">Pricing</a>
+  <a href="/contact/">Contact</a>
+  <a href="/login/" id="navAuthLinkMobile">Log in</a>
+  <a href="/pricing/" class="btn btn-primary btn-pro nav-mobile-pro">Get Pro</a>
+  <div class="nav-mobile-social">
+    <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost btn-star" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+    <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-discord" target="_blank" rel="noopener">Discord</a>
+  </div>
+</nav>
+
+<main class="post">
+  <article class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Blog</a></nav>
+    <h1>iPhone Developer Mode Not Showing? Why the Toggle Is Missing and How to Make It Appear</h1>
+    <p class="lede">On iOS 16 and later, the Developer Mode switch only appears once your iPhone has a reason to need it. Install the app that needs it first (one that didn't come from the App Store), or connect the iPhone to a Mac running Xcode, Apple's app for building iPhone apps. Then check Settings → Privacy &amp; Security again.</p>
+    <p class="post-meta">Published 15 November 2026 · 10 min read</p>
+    <div class="post-body">
+      <div class="toc">
+        <strong>On this page</strong>
+        <ul>
+          <li><a href="#short-answer">The short answer</a></li>
+          <li><a href="#what-it-is">What Developer Mode is, and why Apple added it</a></li>
+          <li><a href="#where-it-is">Where the switch lives</a></li>
+          <li><a href="#fixes">Fixes, in order</a></li>
+          <li><a href="#turn-on">How to turn it on once you can see it</a></li>
+          <li><a href="#is-it-safe">Is Developer Mode safe?</a></li>
+          <li><a href="#wander">For Wander users: where this step fits</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <h2 id="short-answer">The short answer</h2>
+      <p>Apple says the switch appears once you start pairing the device, or if it was paired to a Mac before. Pairing means connecting the phone so a computer can install apps on it. Apple's page only describes the Mac route. Expo, a company that makes app-building tools, documents a second one: install the app on the phone first, then tap its icon.</p>
+      <p>So the fix is usually about order. Get the app onto the phone, or connect the phone to Xcode. Then go back to <strong>Settings → Privacy &amp; Security</strong> and look again.</p>
+
+      <h2 id="what-it-is">What Developer Mode is, and why Apple added it</h2>
+      <p>Developer Mode is a setting that arrived with iOS 16. Think of it as a gate. It has to be on before your iPhone will run apps signed for development, such as apps built in Xcode or signed with your own Apple ID.</p>
+      <p>Two terms come up a lot here:</p>
+      <ul>
+        <li><strong>Sideloading</strong> means installing an app from somewhere other than the App Store. Often that means from a computer, over a USB cable.</li>
+        <li>A <strong>developer-signed app</strong> is an app signed with a developer's certificate. A certificate is a digital signature that says who built the app. Apple calls these apps "development-signed". They didn't come from the App Store or from TestFlight, Apple's beta-testing service.</li>
+      </ul>
+      <p>Apple's documentation explains the reason for the gate. It says Developer Mode <q>protects people from inadvertently installing potentially harmful software</q>. Apple adds that it also cuts down the ways someone could abuse tools meant only for developers. That's why the iPhone itself makes you confirm that you're a developer and that you understand the risk.</p>
+      <p>Developer Mode doesn't touch normal installs. Apple says App Store apps and TestFlight betas aren't affected. It matters for apps you build and run from Xcode. It also matters when you install an app file (an .ipa file) directly, such as with Apple Configurator, a Mac app from Apple. Expo adds that it doesn't apply to enterprise-signed apps, a different kind of signing that companies use.</p>
+
+      <h2 id="where-it-is">Where the switch lives</h2>
+      <p>Open <strong>Settings → Privacy &amp; Security</strong> and scroll down. Apple puts Developer Mode under the <strong>Security</strong> heading on that screen.</p>
+      <p>If it isn't there, it hasn't been unlocked yet. Apple's developer forum has a long-running thread about this. The person who started it said the only item at the end of Privacy &amp; Security was Lockdown Mode. The Developer Mode row simply wasn't in the list.</p>
+      <p>If your iPhone runs iOS 15 or earlier, it has no Developer Mode and doesn't need one. Expo says the setting is needed on devices running iOS 16 and above. To check your version, open <strong>Settings → General → About</strong>.</p>
+
+      <h2 id="fixes">Fixes, in order</h2>
+      <p>Work down this list. Check Settings again after each step. Fixes 1 and 2 come from Apple's and Expo's documentation. Fixes 3 and 4 are reports from other users on Apple's forums, and some of those posters had the phone connected to a Mac running Xcode at the time. They are not Apple guidance. Fix 5 is our advice, based on Apple's guide and one forum report.</p>
+
+      <h3>1. Install the developer-signed app first, then open it</h3>
+      <p>This route doesn't need a Mac. Expo's guide tells you to install your app on the iPhone before you look for the setting. Then tap the app's icon. iOS shows an alert asking you to enable Developer Mode. After that, go to <strong>Settings → Privacy &amp; Security → Developer Mode</strong>.</p>
+      <p>One poster in Apple's forum thread had the same experience. They said the option appeared as soon as they installed an app that required Developer Mode. Their explanation: until then, nothing on the phone needed it.</p>
+      <p>You can install the app with Xcode, or with a sideloading installer that signs it with your Apple ID. For Wander, that's the Wander Installer. You still need a Mac or a Windows PC once, to run it. There's more on that <a href="#wander">below</a> and in the <a href="/download/">install guide</a>.</p>
+
+      <h3>2. Connect the iPhone to a Mac with Xcode</h3>
+      <p>This is Apple's own route. Apple says the switch appears once you start pairing the device, and its page describes doing that from a Mac with Xcode. Here are the steps from Expo's current guide:</p>
+      <ol>
+        <li>Plug the iPhone into the Mac with a USB cable.</li>
+        <li>When the iPhone asks <strong>Trust This Computer?</strong>, tap <strong>Trust</strong>.</li>
+        <li>Open Xcode. In the menu bar, choose <strong>Xcode → Open Developer Tool → Device Hub</strong>. Device Hub is Xcode's window for managing your devices.</li>
+        <li>Select your iPhone in the sidebar. Device Hub shows an <strong>Enable Developer Mode</strong> message with instructions.</li>
+        <li>On the iPhone, open <strong>Settings → Privacy &amp; Security</strong> again.</li>
+      </ol>
+      <p>Forum posts from 2023 describe another way to start pairing. In Xcode, choose your iPhone as the run destination (<strong>Product → Destination</strong>), then press Build and Run. One poster said the Developer Mode row was there after they did this.</p>
+      <p>No Mac? A Windows user with no Mac asked this in an Apple Community thread. The answer was still a Mac: a responder there called connecting to a Mac running Xcode <q>the supported means</q> to turn Developer Mode on. If you don't have a Mac, use fix 1 instead. For Wander, that means running the Wander Installer on a Windows PC.</p>
+
+      <h3>3. Close Settings fully, then restart the iPhone</h3>
+      <p>One forum poster had just added their iPhone in Xcode's Devices and Simulators window, but Settings was already open on the phone. They said the fix was to force-close Settings and open it again. So if you've just connected the phone to Xcode, force-close Settings from the app switcher, then reopen it.</p>
+      <p>If that doesn't work, restart the iPhone. One poster in the same thread said they had to restart before the option was there. Another listed turning the phone off and on again, along with reconnecting it to Xcode, among the steps that worked for them.</p>
+
+      <h3>4. Try the community fixes (anecdotal)</h3>
+      <p>Each of these comes from a single post in Apple's forum thread. Apple doesn't list them. They're quick to try and easy to undo, but they may do nothing for you.</p>
+      <ul>
+        <li><strong>Turn off Focus.</strong> One person, with the phone plugged into a Mac running Xcode, said switching off an active Focus mode, such as Sleep or Personal, made the option appear.</li>
+        <li><strong>Turn Wi-Fi on.</strong> Another said turning on Wi-Fi did the trick.</li>
+        <li><strong>Turn your VPN off.</strong> A VPN (virtual private network) app sends your internet traffic through another server. One poster said switching theirs off fixed it on an iPhone 13 Pro. Turn it back on when you're done.</li>
+      </ul>
+
+      <h3>5. Still missing? Don't erase your iPhone</h3>
+      <p>Apple's guide doesn't list erasing the phone as a fix. It didn't help one person who tried it. In a 2025 Apple forum thread, a poster on iOS 18.6 said they had reset and erased their iPhone several times. The option still didn't appear. The only reply from an Apple engineer was a link to the Developer Mode documentation.</p>
+      <p>Instead, go back to fix 1 or fix 2. Make sure the app install or the Xcode connection actually finished. If you're setting up Wander, the <a href="/download/">install guide</a> links to the Wander Discord for setup help.</p>
+
+      <h2 id="turn-on">How to turn it on once you can see it</h2>
+      <p>These steps follow Apple's guide:</p>
+      <ol>
+        <li>Open <strong>Settings → Privacy &amp; Security</strong> and tap <strong>Developer Mode</strong> under Security.</li>
+        <li>Turn the switch on. An alert warns that Developer Mode reduces your device's security.</li>
+        <li>Tap <strong>Restart</strong> in the alert.</li>
+        <li>After the iPhone restarts, unlock it. A second alert asks you to confirm.</li>
+        <li>Swipe up, tap <strong>Enable</strong>, and enter your passcode.</li>
+      </ol>
+      <div class="note">Guides use different names for the last button. Apple's page, which we re-read on 15 November 2026, says <strong>Enable</strong>. Expo's guide says <strong>Turn On</strong>. Tap whichever one your iPhone shows.</div>
+
+      <h2 id="is-it-safe">Is Developer Mode safe?</h2>
+      <p>It's a built-in Apple setting, but Apple is open about the cost. The alert you see when you turn it on says it reduces your device's security. That's the trade-off. You get to run developer-signed apps, and in return some of the phone's protections are relaxed.</p>
+      <p>Our advice:</p>
+      <ul>
+        <li><strong>Turn it on only when you need it.</strong></li>
+        <li><strong>Turn it off when you're finished</strong> with developer-signed apps. Switch it off in <strong>Settings → Privacy &amp; Security</strong>, then restart the iPhone.</li>
+        <li><strong>Know what turning it off does.</strong> Apple says you can't run apps from Xcode until you turn it back on. Expo's guide says the same for the test builds its tools make. So development-signed apps (not enterprise-signed ones) won't open while it's off.</li>
+        <li><strong>Expect to repeat the steps.</strong> Expo notes that turning it back on means going through the same process, restart included.</li>
+      </ul>
+      <p>If you use Wander, its install guide makes Developer Mode a setup step. Wander is signed with your own Apple ID rather than coming from the App Store. That makes it the kind of development-signed app that, going by Apple's and Expo's guides, needs Developer Mode on to run. So leave it on while you use Wander, and switch it off if you stop. Wander's iPhone app is open source under the GNU AGPL v3, so anyone can read what it does. See <a href="/security/">how Wander works and what data it keeps</a>.</p>
+
+      <h2 id="wander">For Wander users: where this step fits</h2>
+      <p>Developer Mode is the second thing you do on the iPhone after the installer finishes. Here's the full order from Wander's <a href="/download/">install guide</a>:</p>
+      <ol>
+        <li><strong>Run the Wander Installer</strong> on a Mac or Windows PC. Sign in with your free Apple ID. No paid developer account is needed. Click <strong>Install Wander</strong>, and it signs the app and installs it on your connected iPhone. The Windows installer is a fresh beta and needs the free Apple Devices app.</li>
+        <li><strong>Trust the developer:</strong> Settings → General → VPN &amp; Device Management → tap your Apple ID → Trust.</li>
+        <li><strong>Turn on Developer Mode:</strong> Settings → Privacy &amp; Security → Developer Mode, then restart when asked.</li>
+        <li><strong>Get LocalDevVPN</strong> (free) from the App Store. It's the secure tunnel Wander uses, an on-device connection that the simulated location runs over. Connect it on Wi-Fi.</li>
+        <li><strong>Open Wander.</strong></li>
+      </ol>
+      <p>Step 1 is the "install the app first" route from fix 1. If the Developer Mode row still isn't there after the installer finishes, work through fixes 2 to 5 above. LocalDevVPN comes after Developer Mode in this order, so it shouldn't be running yet while you look.</p>
+      <p>The whole iPhone setup is a one-time job of about 10 minutes. There's no jailbreak (hacking iOS to remove Apple's limits) and no $99 Apple developer account. The <a href="/iphone/">iPhone page</a> shows what Wander does, and <a href="/pricing/">pricing</a> lists what the free trial includes. Some apps' terms forbid changing your location, and you're responsible for following them.</p>
+
+      <h3>Seeing "Untrusted Developer"?</h3>
+      <p>That message means the Trust step hasn't been done yet. Wander's guide says that without it, iOS shows "Untrusted Developer" and Wander won't open. Do the Trust step first, then Developer Mode. The <a href="/download/">install guide</a> has the full steps.</p>
+
+      <h3>No Trust button? Check for work or school management</h3>
+      <p>This is a separate problem from the missing switch. Some iPhones are run by an organization through MDM, short for mobile device management. MDM lets an IT team set rules for a phone from a distance. Apple's MDM documentation includes a restriction that removes the <strong>Trust Enterprise Developer</strong> button in <strong>Settings → General → VPN &amp; Device Management</strong>. Apple says it applies to free developer accounts. On a phone with that rule, you can't trust an app signed with a free Apple ID, and turning on Developer Mode won't change that.</p>
+      <p>If an employer or school gave you the iPhone or set it up for you, ask their IT team before you go further. Don't try to work around their rules.</p>
+      <p>Related reading: <a href="/blog/sideloaded-apps-expire-7-days/">our guide to sideloaded app expiry</a>, <a href="/blog/change-iphone-location-from-windows/">changing your iPhone location from Windows</a>, and <a href="/blog/xcode-simulate-location-not-working/">fixing Xcode's Simulate Location</a>.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <h3>Does turning on Developer Mode void my warranty or wipe my iPhone?</h3>
+      <p>Apple's guide doesn't mention either. The steps it describes are a switch, a restart and your passcode. Erasing the phone isn't one of them. You can turn Developer Mode off again with the same switch.</p>
+      <h3>Does Developer Mode stay on after an iOS update?</h3>
+      <p>Apple's guide doesn't say. After an update, check Settings → Privacy &amp; Security. If it's off, turn it on again with the same steps. If you use Xcode, Apple says Device Hub shows a message when Developer Mode is off on a device you paired before.</p>
+      <h3>Why can't I find Developer Mode on iOS 26 or iOS 27?</h3>
+      <p>Apple's guide doesn't list iOS versions. Its current version, which we re-read on 15 November 2026, puts the switch under Security in Privacy &amp; Security. Apple says it appears once you start pairing the device, or if it was paired to a Mac before. Install the app or connect to Xcode first, then look again.</p>
+      <h3>Do I need Developer Mode for App Store apps?</h3>
+      <p>No. Apple says Developer Mode doesn't affect apps from the App Store or betas from TestFlight. You need it for apps run from Xcode and for developer-signed apps installed directly.</p>
+    </div>
+
+    <aside class="post-cta">
+      <h2>Setting up Wander on your iPhone?</h2>
+      <p>The install guide covers each step in order: the installer, Trust, Developer Mode, then LocalDevVPN. It's a one-time setup of about 10 minutes with a free Apple ID, and no jailbreak.</p>
+      <div class="hero-cta">
+        <a href="/download/" class="btn btn-primary">Download Wander free</a>
+        <a href="/features/" class="btn btn-ghost">See all features</a>
+      </div>
+    </aside>
+
+    <section class="post-sources">
+      <h2>Sources</h2>
+      <ol>
+        <li><a href="https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device" rel="noopener" target="_blank">Enabling Developer Mode on a device</a> - Apple Developer Documentation</li>
+        <li><a href="https://docs.expo.dev/guides/ios-developer-mode/" rel="noopener" target="_blank">iOS Developer Mode</a> - Expo Documentation</li>
+        <li><a href="https://developer.apple.com/forums/thread/716697" rel="noopener" target="_blank">No Developer Mode option on iOS 16 device</a> - Apple Developer Forums</li>
+        <li><a href="https://developer.apple.com/forums/thread/799370" rel="noopener" target="_blank">Developer Mode option not visible in iOS device Privacy &amp; Security section</a> - Apple Developer Forums</li>
+        <li><a href="https://discussions.apple.com/thread/255410532" rel="noopener" target="_blank">developer mode option not visible in Settings-&gt;Privacy &amp; Security IOS 17.1.2</a> - Apple Community</li>
+        <li><a href="https://developer.apple.com/documentation/devicemanagement/restrictions" rel="noopener" target="_blank">Restrictions (Device Management)</a> - Apple Developer Documentation</li>
+        <li><a href="https://support.apple.com/en-us/109065" rel="noopener" target="_blank">Find the software version on your iPhone, iPad, or iPod touch</a> - Apple Support</li>
+      </ol>
+    </section>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="brand">
+          <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
+          Wander
+        </a>
+        <p>Your location, anywhere. A clean, affordable location changer for iPhone, Android, Mac &amp; Windows, with a free trial.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="/iphone/">iPhone</a></li>
+          <li><a href="/android/">Android</a></li>
+          <li><a href="/imyfone-anyto-alternative/">vs iMyFone AnyTo</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/life360/">Fake Life360 location</a></li>
+          <li><a href="/find-my/">Change Find My location</a></li>
+          <li><a href="/dating/">Change dating app location</a></li>
+          <li><a href="/pokemon-go/">Play Pokémon GO from home</a></li>
+          <li><a href="/vpn/">Match IP to spoofed location</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Use cases</h4>
+        <ul>
+          <li><a href="/pokemon-go/">Pokémon GO spoofing</a></li>
+          <li><a href="/find-my/">Change Find My location</a></li>
+          <li><a href="/life360/">Fake Life360 location</a></li>
+          <li><a href="/dating/">Dating app location</a></li>
+          <li><a href="/vpn/">Match IP to GPS</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:faisalnab25@gmail.com">Email</a></li>
+          <li><a href="https://github.com/faisal-nabulsi/Wander" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://discord.gg/gfHdsRXUVA" target="_blank" rel="noopener">Discord</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Wander.</span>
+      <span>For personal &amp; testing use — you're responsible for the terms of the apps you use it with.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/script.js"></script>
+<script type="module" src="/auth.js"></script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a52c69fd55864ba897a82f7afe24df6c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
+

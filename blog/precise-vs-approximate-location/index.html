@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Precise Location vs Approximate Location Explained | Wander</title>
+<meta name="description" content="What precise and approximate location actually share on iPhone and Android, which apps truly need your exact spot, and how to change the setting app by app." />
+<link rel="canonical" href="https://wanderspoofer.com/blog/precise-vs-approximate-location/" />
+<meta property="og:title" content="Precise Location vs Approximate Location Explained" />
+<meta property="og:description" content="What precise and approximate location actually share on iPhone and Android, which apps truly need your exact spot, and how to change the setting app by app." />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Wander" />
+<meta property="og:url" content="https://wanderspoofer.com/blog/precise-vs-approximate-location/" />
+<meta property="og:image" content="https://wanderspoofer.com/og-image.png" />
+<meta property="og:image:width" content="1600" />
+<meta property="og:image:height" content="900" />
+<meta property="article:published_time" content="2026-11-15" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Precise Location vs Approximate Location Explained" />
+<meta name="twitter:description" content="What precise and approximate location actually share on iPhone and Android, which apps truly need your exact spot, and how to change the setting app by app." />
+<meta name="twitter:image" content="https://wanderspoofer.com/og-image.png" />
+<meta name="theme-color" content="#185FA5" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/blog/blog.css" />
+<link rel="alternate" type="application/rss+xml" title="Wander blog" href="https://wanderspoofer.com/blog/feed.xml" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Precise Location vs Approximate Location Explained",
+  "description": "What precise and approximate location actually share on iPhone and Android, which apps truly need your exact spot, and how to change the setting app by app.",
+  "datePublished": "2026-11-15",
+  "dateModified": "2026-11-15",
+  "mainEntityOfPage": "https://wanderspoofer.com/blog/precise-vs-approximate-location/",
+  "image": "https://wanderspoofer.com/og-image.png",
+  "author": { "@type": "Organization", "name": "Wander", "url": "https://wanderspoofer.com/" },
+  "publisher": { "@type": "Organization", "name": "Wander", "logo": { "@type": "ImageObject", "url": "https://wanderspoofer.com/wander-logo.png" } }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wanderspoofer.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://wanderspoofer.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Precise Location vs Approximate Location Explained", "item": "https://wanderspoofer.com/blog/precise-vs-approximate-location/" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is approximate location the same on iPhone and Android?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Android documents approximate location as accurate to within about 3 square kilometres (about 1.2 square miles). Apple says its approximate location typically keeps your city, is usually within 1 to 20 kilometres of you, and updates at most a few times an hour."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can an app tell that I turned Precise off?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. On iPhone, apps can read whether they have full or reduced accuracy, and they can't opt out of your choice. On Android, apps check which location permission you granted, and Android restarts an app when you downgrade it from precise to approximate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does turning off Precise Location stop all tracking?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It limits what one app reads from your phone's location system. Websites can still estimate your area from your IP address, photos can carry their own location data, and Apple notes that apps and websites may use other ways to work out where you are."
+      }
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="/" class="brand" aria-label="Wander home">
+      <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
+      Wander
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="/">Home</a>
+      <a href="/features/">Features</a>
+      <a href="/download/">Download</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/contact/">Contact</a>
+      <a href="/login/" id="navAuthLink">Log in</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost btn-star" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+      <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-discord" target="_blank" rel="noopener" aria-label="Join the Wander Discord">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 5.3A17 17 0 0015.7 4l-.2.4a12 12 0 016.9 0zM8.5 4.4A17 17 0 004 5.3 15.7 15.7 0 001 17a17 17 0 005.2 2.6l.6-1a11 11 0 01-1.7-.8l.4-.3a11.9 11.9 0 0010.2 0l.4.3-1.7.8.6 1A16.6 16.6 0 0023 17 15.7 15.7 0 0020 5.3zM9 14.4c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8zm6 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8z"/></svg>
+        Discord
+      </a>
+      <a href="/pricing/" class="btn btn-primary btn-pro">Get Pro</a>
+      <a href="/download/" class="btn btn-ghost">Download</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="nav-mobile" id="navMobile">
+  <a href="/">Home</a>
+  <a href="/features/">Features</a>
+  <a href="/download/">Download</a>
+  <a href="/pricing/">Pricing</a>
+  <a href="/contact/">Contact</a>
+  <a href="/login/" id="navAuthLinkMobile">Log in</a>
+  <a href="/pricing/" class="btn btn-primary btn-pro nav-mobile-pro">Get Pro</a>
+  <div class="nav-mobile-social">
+    <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost btn-star" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+    <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-discord" target="_blank" rel="noopener">Discord</a>
+  </div>
+</nav>
+
+<main class="post">
+  <article class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Blog</a></nav>
+    <h1>Precise Location vs Approximate Location: What Apps Really Get, and When to Turn Precise Off</h1>
+    <p class="lede">Precise location gives an app your exact spot (usually within about 50 metres on Android), while approximate location gives it only a rough area: about 3 square kilometres on Android, and usually within 1 to 20 kilometres of you on iPhone. Turn Precise off for apps that only need your town, like weather, news and shopping, and leave it on for maps, ride-hailing and delivery.</p>
+    <p class="post-meta">Published 15 November 2026 · 10 min read</p>
+    <div class="post-body">
+<div class="toc">
+<strong>On this page</strong>
+<ul>
+<li><a href="#quick-answer">Quick answer</a></li>
+<li><a href="#what-each-shares">What each setting actually shares</a></li>
+<li><a href="#what-breaks">What stops working when Precise is off</a></li>
+<li><a href="#by-app-type">Which setting to pick, by type of app</a></li>
+<li><a href="#iphone">How to change it on iPhone</a></li>
+<li><a href="#android">How to change it on Android</a></li>
+<li><a href="#other-leaks">Other ways your location gets out</a></li>
+<li><a href="#location-changer">Where a location changer fits</a></li>
+<li><a href="#faq">FAQ</a></li>
+</ul>
+</div>
+
+<h2 id="quick-answer">Quick answer</h2>
+<p>A <strong>location permission</strong> is the access you give one app to read where your phone is. Both iPhone and Android split that permission in two. <strong>Precise location</strong> gives the app your exact spot. <strong>Approximate location</strong> gives it only a rough area around you, so it may know your town but not your street.</p>
+<ul>
+<li><strong>Turn Precise off</strong> for apps that only need your town: weather, news, shopping and most social apps.</li>
+<li><strong>Leave Precise on</strong> for apps that must find your exact spot: maps and navigation, ride-hailing, food delivery, run and ride tracking, and anything that alerts you when you arrive somewhere.</li>
+</ul>
+<p>The setting is free, works one app at a time, and switches back in seconds.</p>
+
+<h2 id="what-each-shares">What each setting actually shares</h2>
+<p>Your phone works out its position from GPS, Bluetooth, crowd-sourced Wi-Fi hotspots and mobile phone towers, Apple says. Android uses a similar mix. The Precise switch doesn't change how your phone finds itself. It changes how much of that answer one app may see.</p>
+
+<h3>Android: the numbers Google publishes</h3>
+<p>Android's developer documentation gives clear figures:</p>
+<ul>
+<li><strong>Approximate:</strong> accurate to within about 3 square kilometres (about 1.2 square miles).</li>
+<li><strong>Precise:</strong> usually within about 50 metres (160 feet), and sometimes within a few metres or better.</li>
+</ul>
+<p>If you grant approximate, the app gets approximate, whatever it asked for.</p>
+
+<h3>iPhone: what Apple says</h3>
+<p>Apple's support pages explain the switch but give no size. Its developer documentation does. It says approximate location keeps your country or region, typically keeps your city, and is usually within 1 to 20 kilometres of where you really are. It is blurred in time too: the position updates at most a few times an hour. Apple's 2020 developer talk put it at about four times per hour.</p>
+<p>In Apple's 2020 demo, Maps showed the familiar blue dot with Precise on. With Precise off, it showed a large circle instead, with your true position somewhere inside.</p>
+<div class="note">You will see other figures online. The numbers here come from Apple's and Google's own documentation, checked on 15 November 2026. Google gives an area and Apple gives a distance range, so they aren't directly comparable.</div>
+
+<h2 id="what-breaks">What stops working when Precise is off</h2>
+<p>Most apps work fine with a rough area. A few features don't.</p>
+<ul>
+<li><strong>Turn-by-turn directions.</strong> In Apple's own demo, Maps asks for your exact location before it will route you from where you stand.</li>
+<li><strong>Ride pickups and deliveries.</strong> A driver or courier needs your exact pickup point or door, not a rough area.</li>
+<li><strong>Location-based reminders and geofences.</strong> A <strong>geofence</strong> is an invisible boundary around a place. Your phone tells an app when you cross it, as in "remind me when I leave work." On iPhone, Apple's documentation says an app with reduced accuracy can't use region monitoring, which is Apple's name for geofences. Apple used its own Reminders app as the example. On Android, apps that use Google's geofencing tools must hold the precise location permission.</li>
+<li><strong>Run and ride tracking.</strong> Distance and route maps are built from many exact points. Apple names fitness and navigation apps as the kind of experiences that need full accuracy.</li>
+<li><strong>Finding a specific spot.</strong> If an app only knows your position to within a few kilometres, it can't mark where you parked or which entrance you're at.</li>
+</ul>
+<p>You don't have to give up precision forever. On iPhone, an app can ask for a temporary upgrade to full accuracy, which expires automatically some time after you stop actively using the app. On Android, you can grant <em>Only this time</em>, and some apps have a location button that shares your precise location for a single session.</p>
+<p>If you build apps, plan for people who keep Precise off, because geofence features won't fire for them. Our guide to <a href="/blog/test-geofencing-without-driving/">testing geofences without driving</a> covers how to check those paths at your desk.</p>
+
+<h2 id="by-app-type">Which setting to pick, by type of app</h2>
+<p>Use this as a starting point. If an app stops doing something you need, turn Precise back on for that app.</p>
+<table>
+<thead>
+<tr><th>Type of app</th><th>What it uses your location for</th><th>Suggested setting</th></tr>
+</thead>
+<tbody>
+<tr><td>Maps and navigation</td><td>Directions from where you are</td><td>Precise on, While Using</td></tr>
+<tr><td>Ride-hailing</td><td>Your exact pickup point</td><td>Precise on, While Using</td></tr>
+<tr><td>Food delivery</td><td>Where to bring your order</td><td>Precise on, While Using</td></tr>
+<tr><td>Weather</td><td>The forecast for your town</td><td>Precise off</td></tr>
+<tr><td>News</td><td>Local stories</td><td>Precise off</td></tr>
+<tr><td>Shopping</td><td>Nearby stores and stock</td><td>Precise off</td></tr>
+<tr><td>Social media</td><td>Nearby posts, tagging places</td><td>Precise off; turn it on briefly if you want to tag an exact place</td></tr>
+<tr><td>Dating</td><td>Showing people in your area</td><td>Precise off is usually enough</td></tr>
+<tr><td>Fitness tracking</td><td>Measuring walks, runs and rides</td><td>Precise on, While Using</td></tr>
+<tr><td>Family location sharing</td><td>Showing your location to people you chose</td><td>Precise on, so the people you share with see your real spot</td></tr>
+<tr><td>Camera</td><td>Saving where each photo was taken</td><td>Your choice; see the photo section below</td></tr>
+</tbody>
+</table>
+<p>Apple itself picked dating, local events and social media apps as examples where an approximate area may be all an app needs.</p>
+
+<h2 id="iphone">How to change it on iPhone</h2>
+<p>Precise Location arrived in iOS 14. On any recent iPhone:</p>
+<ol>
+<li>Open <strong>Settings</strong>.</li>
+<li>Tap <strong>Privacy &amp; Security</strong>, then <strong>Location Services</strong>.</li>
+<li>Check that Location Services is on, then scroll down and tap the app.</li>
+<li>Choose when the app may use your location (the options are below).</li>
+<li>Turn <strong>Precise Location</strong> off or on.</li>
+</ol>
+<p>The access options are:</p>
+<ul>
+<li><strong>Never:</strong> the app gets no location at all.</li>
+<li><strong>Ask Next Time Or When I Share:</strong> the app has to ask again, and you can allow it just once.</li>
+<li><strong>While Using the App:</strong> the app gets your location only while it, or one of its features, is on screen.</li>
+<li><strong>Always:</strong> the app can also read your location in the background.</li>
+</ul>
+<p>Some apps offer only two of these. When an app asks for the first time, the permission prompt includes a Precise switch, so you can choose approximate from the start.</p>
+
+<h2 id="android">How to change it on Android</h2>
+<p>Per-app control over precise location arrived in Android 12. Menu names vary by phone maker.</p>
+
+<h3>Pixel and phones close to standard Android</h3>
+<ol>
+<li>Open <strong>Settings</strong> and tap <strong>Location</strong>.</li>
+<li>Tap <strong>App location permissions</strong> and pick the app.</li>
+<li>Choose an access level. Google's help page lists <em>Allow all the time</em>, <em>Allow only while using the app</em>, <em>Ask every time</em> (or allow when you share), and <em>Don't allow</em>.</li>
+<li>If you allowed access, turn <strong>Use precise location</strong> off or on.</li>
+</ol>
+<p>A shortcut: touch and hold the app's icon, tap <strong>App info</strong>, then <strong>Permissions</strong> &gt; <strong>Location</strong>.</p>
+
+<h3>Samsung Galaxy</h3>
+<ol>
+<li>Open <strong>Settings</strong> &gt; <strong>Location</strong> &gt; <strong>App permissions</strong>.</li>
+<li>Tap the app and choose an access level, such as <em>Allow only while using the app</em>.</li>
+<li>On recent One UI versions, a <strong>Use precise location</strong> switch appears once access is allowed. Turn it off for approximate.</li>
+</ol>
+<p>Samsung's own guide covers the first two steps. The precise switch, and a second route through Settings &gt; Apps &gt; the app &gt; Permissions, come from SamMobile's 2026 walkthrough.</p>
+
+<h3>When an app first asks</h3>
+<p>The Android permission prompt lets you pick <strong>Precise</strong> or <strong>Approximate</strong>, then <em>While using the app</em>, <em>Only this time</em>, or deny. <em>Only this time</em> is a good fit for an app you rarely use.</p>
+<div class="note"><strong>Use precise location</strong> is not the same as the phone-wide <strong>Location Accuracy</strong> setting (also called Google Location Services). Location Accuracy lets your phone use Wi-Fi and mobile networks on top of GPS and its sensors. Google warns that turning it off may stop apps getting a precise location at all. To limit one app, use the per-app switch.</div>
+
+<h2 id="other-leaks">Other ways your location gets out</h2>
+<p>The Precise switch only controls what apps read from your phone's location system. Other routes matter too.</p>
+
+<h3>Photos</h3>
+<p>Photos can carry <strong>metadata</strong>: hidden details stored inside the file, often called EXIF data. When the camera has location access, that includes where you took the picture, and people you share it with may be able to read it.</p>
+<ul>
+<li><strong>iPhone, when sharing:</strong> select the photos, tap Share, tap <strong>Options</strong>, and turn off <strong>Location</strong>. "Location Not Included" then appears above the Options button.</li>
+<li><strong>iPhone, existing photos:</strong> open the photo, tap the <strong>More</strong> button (three dots), then <strong>Adjust Info</strong> &gt; <strong>Adjust Location</strong> &gt; <strong>No Location</strong>.</li>
+<li><strong>iPhone, future photos:</strong> go to Settings &gt; Privacy &amp; Security &gt; Location Services &gt; Camera and choose <strong>Never</strong>.</li>
+<li><strong>Android:</strong> your camera app can save your location with each photo. To stop that, use the permission steps above to set the camera app to <em>Don't allow</em>. Google also notes that a photo you download and email keeps the location your phone saved.</li>
+</ul>
+<p>Even with the data removed, a landmark in the background can give a place away.</p>
+
+<h3>Your IP address</h3>
+<p>Every website and app you connect to sees your <strong>IP address</strong>, the network address your connection comes from, and it can be matched to a rough area. Google says that even with location turned off, you can still get local results and ads based on your IP address. Our <a href="/vpn/">VPN page</a> explains how IP location and GPS location relate.</p>
+
+<h3>Wi-Fi and Bluetooth scanning</h3>
+<p>Android phones can scan for nearby Wi-Fi networks and Bluetooth devices to help apps get better location info. Samsung notes these scans work even when Wi-Fi or Bluetooth is switched off. On Android 12 and later, the switches are at Settings &gt; Location &gt; Location Services &gt; <strong>Wi-Fi scanning</strong> and <strong>Bluetooth scanning</strong>. On Samsung phones, look under Settings &gt; Location &gt; <strong>Improve accuracy</strong>. Turning them off can make location less accurate.</p>
+
+<h3>Significant Locations on iPhone</h3>
+<p>Your iPhone can learn places and routes that matter to you, for suggestions in Maps, Calendar and Photos. To turn this off, go to Settings &gt; Privacy &amp; Security &gt; Location Services &gt; System Services &gt; <strong>Significant Locations &amp; Routes</strong>.</p>
+
+<h2 id="location-changer">Where a location changer fits</h2>
+<p>Everything above is free and built into your phone. Start there.</p>
+<p>A location changer is a different kind of tool. Wander changes the location your phone itself reports, and every app on the phone reads that same system location. Its <strong>Frozen &amp; Approximate Location</strong> feature can hold your reported position perfectly still, or blur it to an approximate area of about 3–5 km. That works on iPhone and Android. The Mac and Windows apps, which control a connected iPhone, can hold the reported spot still but can't blur it.</p>
+<p>Unlike the built-in switch, Wander is paid. There is a free trial (1 teleport a day, no card needed), and Pro costs $3.99 a month, $36 a year or $80 once. The <a href="/pricing/">pricing page</a> has the details.</p>
+<ul>
+<li><strong>It is not more private than the built-in switch.</strong> A 3–5 km blur is roughly the same scale as the platforms' own approximate setting. The difference is scope: one setting for every app, rather than one app at a time.</li>
+<li><strong>It doesn't replace permissions.</strong> An app set to Never still gets nothing.</li>
+<li><strong>The same features break.</strong> Navigation, ride pickups and arrival alerts will see the blurred spot, not your real one.</li>
+<li><strong>It takes setup.</strong> On iPhone, setup is a one-time job of about 10 minutes on a Mac or Windows PC, where you sign in to the installer with a free Apple ID. The Windows installer is still a beta and needs the free Apple Devices app. On the phone, you trust the developer (Settings &gt; General &gt; VPN &amp; Device Management) and turn on Developer Mode (Settings &gt; Privacy &amp; Security). You also install LocalDevVPN, a free tunnel app from the App Store, which Wander depends on and which has to be connected. On cellular, you connect LocalDevVPN and then turn on Airplane Mode (you can switch it back off afterwards), and cellular use needs Pro. On Android, Wander uses mock location, a built-in developer option where you pick one app to supply the phone's location. The <a href="/download/">download page</a> has the steps.</li>
+<li><strong>Your real location stays on the phone.</strong> Wander says your real GPS coordinates are never collected, never uploaded and never sent to it or anyone else, and that no location history leaves the device. For accounts, it keeps your email, a plan flag, and your saved places only if you turn on sync. The <a href="/security/">security page</a> explains how it works, and the <a href="/privacy/">privacy policy</a> has the full details.</li>
+<li><strong>Apps have rules.</strong> Some apps' terms forbid changing your location. If you use a location changer, you're responsible for following the terms of the apps you use it with.</li>
+</ul>
+<p>Wander's panic button snaps you back to your real GPS in one tap, and our guide to <a href="/blog/get-real-location-back/">getting your real location back</a> covers the other ways. The <a href="/features/">features page</a> lists the rest.</p>
+
+<h2 id="faq">FAQ</h2>
+<h3>Is approximate location the same on iPhone and Android?</h3>
+<p>No. Android documents approximate location as accurate to within about 3 square kilometres (about 1.2 square miles). Apple says its approximate location typically keeps your city, is usually within 1 to 20 kilometres of you, and updates at most a few times an hour.</p>
+<h3>Can an app tell that I turned Precise off?</h3>
+<p>Yes. On iPhone, apps can read whether they have full or reduced accuracy, and they can't opt out of your choice. On Android, apps check which location permission you granted, and Android restarts an app when you downgrade it from precise to approximate.</p>
+<h3>Does turning off Precise Location stop all tracking?</h3>
+<p>No. It limits what one app reads from your phone's location system. Websites can still estimate your area from your IP address, photos can carry their own location data, and Apple notes that apps and websites may use other ways to work out where you are.</p>
+    </div>
+
+    <aside class="post-cta">
+      <h2>Want a blurred spot for every app at once?</h2>
+      <p>The OS toggle is the first step, one app at a time. Wander's Approximate Location can blur what every app on your iPhone or Android phone sees to an area of about 3–5 km, and Wander never uploads your real location. Wander is a paid app: try it with the free trial (no card needed), and see the pricing page for Pro.</p>
+      <div class="hero-cta">
+        <a href="/download/" class="btn btn-primary">Download Wander free</a>
+        <a href="/features/" class="btn btn-ghost">See all features</a>
+      </div>
+    </aside>
+
+    <section class="post-sources">
+      <h2>Sources</h2>
+      <ol>
+        <li><a href="https://support.apple.com/en-us/102647" rel="noopener" target="_blank">Turn Location Services and GPS on or off on your iPhone, iPad, or iPod touch</a> - Apple Support</li>
+        <li><a href="https://support.apple.com/guide/personal-safety/ips9bf20ad2f/web" rel="noopener" target="_blank">Manage Location Services settings (Personal Safety User Guide)</a> - Apple Support</li>
+        <li><a href="https://developer.apple.com/documentation/corelocation/kcllocationaccuracyreduced" rel="noopener" target="_blank">kCLLocationAccuracyReduced</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/corelocation/cllocationmanager/accuracyauthorization" rel="noopener" target="_blank">accuracyAuthorization</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/documentation/corelocation/cllocationmanager/requesttemporaryfullaccuracyauthorization(withpurposekey:completion:)" rel="noopener" target="_blank">requestTemporaryFullAccuracyAuthorization(withPurposeKey:completion:)</a> - Apple Developer Documentation</li>
+        <li><a href="https://developer.apple.com/videos/play/wwdc2020/10660/" rel="noopener" target="_blank">What's new in location (WWDC20)</a> - Apple Developer</li>
+        <li><a href="https://support.apple.com/guide/personal-safety/ips0d7a5df82/web" rel="noopener" target="_blank">Manage location metadata in Photos (Personal Safety User Guide)</a> - Apple Support</li>
+        <li><a href="https://developer.android.com/develop/sensors-and-location/location/permissions" rel="noopener" target="_blank">Request location permissions</a> - Android Developers</li>
+        <li><a href="https://developer.android.com/develop/sensors-and-location/location/permissions/runtime" rel="noopener" target="_blank">Request location access at runtime</a> - Android Developers</li>
+        <li><a href="https://developer.android.com/develop/sensors-and-location/location/geofencing" rel="noopener" target="_blank">Create and monitor geofences</a> - Android Developers</li>
+        <li><a href="https://support.google.com/accounts/answer/6179507?hl=en" rel="noopener" target="_blank">Manage location permissions for apps</a> - Google Account Help</li>
+        <li><a href="https://support.google.com/android/answer/3467281?hl=en" rel="noopener" target="_blank">Manage your Android device's location settings</a> - Android Help</li>
+        <li><a href="https://support.google.com/photos/answer/6153599?hl=en" rel="noopener" target="_blank">Understand, find &amp; edit your photos' locations</a> - Google Photos Help</li>
+        <li><a href="https://www.samsung.com/latin_en/support/mobile-devices/how-to-activate-my-location-and-change-settings-for-location-permissions/" rel="noopener" target="_blank">How to activate my location and change settings for location permissions</a> - Samsung</li>
+        <li><a href="https://www.sammobile.com/news/what-is-the-difference-between-precise-and-approximate-location-on-a-phone/" rel="noopener" target="_blank">What is the difference between precise and approximate location on a phone?</a> - SamMobile</li>
+      </ol>
+    </section>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="brand">
+          <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
+          Wander
+        </a>
+        <p>Your location, anywhere. A clean, affordable location changer for iPhone, Android, Mac &amp; Windows, with a free trial.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="/iphone/">iPhone</a></li>
+          <li><a href="/android/">Android</a></li>
+          <li><a href="/imyfone-anyto-alternative/">vs iMyFone AnyTo</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/life360/">Fake Life360 location</a></li>
+          <li><a href="/find-my/">Change Find My location</a></li>
+          <li><a href="/dating/">Change dating app location</a></li>
+          <li><a href="/pokemon-go/">Play Pokémon GO from home</a></li>
+          <li><a href="/vpn/">Match IP to spoofed location</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Use cases</h4>
+        <ul>
+          <li><a href="/pokemon-go/">Pokémon GO spoofing</a></li>
+          <li><a href="/find-my/">Change Find My location</a></li>
+          <li><a href="/life360/">Fake Life360 location</a></li>
+          <li><a href="/dating/">Dating app location</a></li>
+          <li><a href="/vpn/">Match IP to GPS</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:faisalnab25@gmail.com">Email</a></li>
+          <li><a href="https://github.com/faisal-nabulsi/Wander" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://discord.gg/gfHdsRXUVA" target="_blank" rel="noopener">Discord</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Wander.</span>
+      <span>For personal &amp; testing use — you're responsible for the terms of the apps you use it with.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/script.js"></script>
+<script type="module" src="/auth.js"></script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a52c69fd55864ba897a82f7afe24df6c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
+

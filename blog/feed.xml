@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wander Blog</title>
+    <link>https://wanderspoofer.com/blog/</link>
+    <atom:link href="https://wanderspoofer.com/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <description>Practical guides from the Wander team: testing location features in Xcode and Android, fixing setup problems, sideloading explained, and location privacy.</description>
+    <language>en</language>
+    <lastBuildDate>Sun, 15 Nov 2026 12:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Xcode Simulate Location Not Working? How to Fix It in the Simulator and on a Real iPhone</title>
+      <link>https://wanderspoofer.com/blog/xcode-simulate-location-not-working/</link>
+      <guid isPermaLink="true">https://wanderspoofer.com/blog/xcode-simulate-location-not-working/</guid>
+      <pubDate>Sun, 15 Nov 2026 12:00:00 GMT</pubDate>
+      <category>Developers</category>
+      <description>Xcode's Simulate Location greyed out, your GPX file missing, or the iPhone snapping back when the debugger stops? Causes and fixes for Simulator and device.</description>
+    </item>
+    <item>
+      <title>How to Test Geofencing Without Driving Around: iOS and Android, From Simulator to Real Device</title>
+      <link>https://wanderspoofer.com/blog/test-geofencing-without-driving/</link>
+      <guid isPermaLink="true">https://wanderspoofer.com/blog/test-geofencing-without-driving/</guid>
+      <pubDate>Sun, 15 Nov 2026 12:00:00 GMT</pubDate>
+      <category>Developers</category>
+      <description>Test geofence enter, exit and dwell events without leaving your desk: start in the Simulator or emulator, then test on a real phone with the app in background.</description>
+    </item>
+    <item>
+      <title>'Select Mock Location App' Not Showing or Not Working on Android: How to Fix It</title>
+      <link>https://wanderspoofer.com/blog/android-mock-location-app-not-showing/</link>
+      <guid isPermaLink="true">https://wanderspoofer.com/blog/android-mock-location-app-not-showing/</guid>
+      <pubDate>Sun, 15 Nov 2026 12:00:00 GMT</pubDate>
+      <category>Troubleshooting</category>
+      <description>Can't find Select mock location app, or your app isn't listed? Where Android 12 moved it, why apps go missing, and how to fix it without root.</description>
+    </item>
+    <item>
+      <title>iPhone Developer Mode Not Showing? Why the Toggle Is Missing and How to Make It Appear</title>
+      <link>https://wanderspoofer.com/blog/iphone-developer-mode-not-showing/</link>
+      <guid isPermaLink="true">https://wanderspoofer.com/blog/iphone-developer-mode-not-showing/</guid>
+      <pubDate>Sun, 15 Nov 2026 12:00:00 GMT</pubDate>
+      <category>Troubleshooting</category>
+      <description>Developer Mode missing from Privacy &amp; Security on your iPhone? Why iOS hides the toggle, what makes it appear, and how to switch it off again when you're done.</description>
+    </item>
+    <item>
+      <title>Why Sideloaded iPhone Apps Expire After 7 Days (and the 3-App Limit), Explained</title>
+      <link>https://wanderspoofer.com/blog/sideloaded-apps-expire-7-days/</link>
+      <guid isPermaLink="true">https://wanderspoofer.com/blog/sideloaded-apps-expire-7-days/</guid>
+      <pubDate>Sun, 15 Nov 2026 12:00:00 GMT</pubDate>
+      <category>Explainer</category>
+      <description>Apps installed with a free Apple ID stop opening after 7 days, and you can only keep 3. Apple's rules, how refreshing works, and how to recover an expired app.</description>
+    </item>
+    <item>
+      <title>Precise Location vs Approximate Location: What Apps Really Get, and When to Turn Precise Off</title>
+      <link>https://wanderspoofer.com/blog/precise-vs-approximate-location/</link>
+      <guid isPermaLink="true">https://wanderspoofer.com/blog/precise-vs-approximate-location/</guid>
+      <pubDate>Sun, 15 Nov 2026 12:00:00 GMT</pubDate>
+      <category>Privacy</category>
+      <description>What precise and approximate location actually share on iPhone and Android, which apps truly need your exact spot, and how to change the setting app by app.</description>
+    </item>
+    <item>
+      <title>How to Set a Real iPhone's Location From a Windows PC: pymobiledevice3, GeoPort and Wander Desktop Compared</title>
+      <link>https://wanderspoofer.com/blog/change-iphone-location-from-windows/</link>
+      <guid isPermaLink="true">https://wanderspoofer.com/blog/change-iphone-location-from-windows/</guid>
+      <pubDate>Sun, 15 Nov 2026 12:00:00 GMT</pubDate>
+      <category>Comparison</category>
+      <description>No Mac or Xcode? Three tools built for Apple's iOS 17+ developer tunnel set a real iPhone's location from Windows: pymobiledevice3, GeoPort and Wander Desktop.</description>
+    </item>
+    <item>
+      <title>How to Get Your Real Location Back After Fake GPS or Location Simulation (iPhone and Android)</title>
+      <link>https://wanderspoofer.com/blog/get-real-location-back/</link>
+      <guid isPermaLink="true">https://wanderspoofer.com/blog/get-real-location-back/</guid>
+      <pubDate>Sun, 15 Nov 2026 12:00:00 GMT</pubDate>
+      <category>Troubleshooting</category>
+      <description>Phone still showing a simulated or fake location after you stopped? Step-by-step fixes for iPhone and Android, from switching location off and on to a full Location &amp; Privacy reset.</description>
+    </item>
+  </channel>
+</rss>
