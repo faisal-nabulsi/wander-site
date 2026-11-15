@@ -859,16 +859,17 @@ ul { list-style: none; }
   .discord-banner .db-text { flex-direction: column; text-align: center; }
 }
 
-/* Community social-proof quotes (home CTA) */
+/* Checkable facts under the home CTA (replaced invented testimonials 2026-11-15) */
 .social-proof { margin-top: 26px; }
 .social-proof .sp-quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
 .social-proof .sp-quote {
   background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 22px 20px;
   box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 10px; margin: 0;
 }
-.social-proof .sp-stars { color: #f5a623; font-size: .95rem; letter-spacing: 2px; }
-.social-proof blockquote { margin: 0; color: var(--ink); font-size: .98rem; line-height: 1.5; }
-.social-proof figcaption { margin-top: auto; color: var(--ink-2); font-weight: 700; font-size: .82rem; letter-spacing: .04em; text-transform: uppercase; }
+.social-proof .sp-fact { margin: 0; font-size: 1.08rem; color: var(--ink); }
+.social-proof .sp-text { margin: 0; color: var(--ink-2); font-size: .98rem; line-height: 1.5; }
+.social-proof .sp-link { margin-top: auto; color: var(--brand); font-weight: 700; font-size: .9rem; text-decoration: none; }
+.social-proof .sp-link:hover { text-decoration: underline; }
 .social-proof .sp-note { margin-top: 16px; text-align: center; color: var(--ink-2); font-size: .9rem; }
 .social-proof .sp-note a { color: var(--brand); font-weight: 700; }
 .social-proof .sp-note a:hover { text-decoration: underline; }
