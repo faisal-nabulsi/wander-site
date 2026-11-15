@@ -158,7 +158,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
     <!-- Danger zone: irreversible account deletion, visually separated. -->
     <div class="account-card reveal" id="dangerZone" style="border:1px solid #E5484D;background:#fff5f5">
       <h2 style="color:#C62828">Danger zone</h2>
-      <p class="muted">Permanently delete your Wander account and all its data — your license, trial history, and saved places. This can't be undone. If you have Pro, deleting here does not cancel a subscription in Lemon Squeezy; cancel that separately first if it's still active.</p>
+      <p class="muted">Permanently delete your Wander account and all its data — your license, trial history, and saved places. This can't be undone. If you have Pro, deleting here does not cancel a subscription in Lemon Squeezy; <a href="https://app.lemonsqueezy.com/my-orders" target="_blank" rel="noopener">cancel that separately first</a> if it's still active.</p>
       <div class="account-actions" style="margin-top:16px">
         <button type="button" class="btn btn-ghost" id="deleteAccountBtn" style="border-color:#E5484D;color:#C62828">Delete my account</button>
       </div>
@@ -185,6 +185,9 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
           <li><a href="/pricing/">Pricing</a></li>
           <li><a href="/download/#instructions">Install guide</a></li>
           <li><a href="/download/">Download</a></li>
+          <li><a href="/iphone/">iPhone</a></li>
+          <li><a href="/android/">Android</a></li>
+          <li><a href="/imyfone-anyto-alternative/">vs iMyFone AnyTo</a></li>
         </ul>
       </div>
       <div>
@@ -282,7 +285,9 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
     if (plan === "pro") {
       badge.innerHTML = 'Pro <span class="chip">Active</span>';
       desc.textContent = "You're on Wander Pro — everything's unlocked on iOS, Android, and desktop. Thanks for supporting Wander 💙";
-      actions.innerHTML = '<a href="/download/" class="btn btn-primary">Open the apps</a>';
+      actions.innerHTML = '<a href="/download/" class="btn btn-primary">Open the apps</a>' +
+        ' <a href="https://app.lemonsqueezy.com/my-orders" class="btn btn-ghost" target="_blank" rel="noopener">Manage subscription</a>' +
+        '<p class="muted" style="margin-top:10px">Cancel, change your card, or get receipts in Lemon Squeezy — sign in with the email you paid with.</p>';
     } else {
       badge.innerHTML = 'Free <span class="chip">Trial</span>';
       desc.textContent = "You're on the free trial. Upgrade to Wander Pro for unlimited teleports, joystick, and routes.";

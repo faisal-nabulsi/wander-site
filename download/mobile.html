@@ -112,10 +112,6 @@
 </head>
 <body>
 
-<div class="promo" id="promo">
-  <span class="txt"><b>Launch sale</b> · 50% off your first month — ends in <span class="cd" id="cd">soon</span></span>
-  <button type="button" id="promoX" aria-label="Dismiss sale banner">&times;</button>
-</div>
 
 <header class="hdr">
   <a class="brand" href="#top">
@@ -240,22 +236,6 @@
     ham.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
   menu.addEventListener('click', function(e){ if(e.target.tagName === 'A') menu.classList.remove('open'); });
-
-  // Dismiss sale bar
-  document.getElementById('promoX').addEventListener('click', function(){
-    document.getElementById('promo').style.display = 'none';
-  });
-
-  // Labeled countdown (edit the end date as needed)
-  var target = new Date('2026-08-01T00:00:00').getTime();
-  var cd = document.getElementById('cd');
-  function tick(){
-    var diff = target - Date.now();
-    if(diff <= 0){ document.getElementById('promo').style.display = 'none'; return; }
-    var d = Math.floor(diff/864e5), h = Math.floor(diff%864e5/36e5), m = Math.floor(diff%36e5/6e4);
-    cd.textContent = d + 'd ' + h + 'h ' + m + 'm';
-  }
-  tick(); setInterval(tick, 30000);
 
   // Chat bubble placeholder (wire to the real Wanda widget in production)
   document.getElementById('chat').addEventListener('click', function(){
