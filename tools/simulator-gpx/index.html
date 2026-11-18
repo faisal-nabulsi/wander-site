@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simulator GPX Builder &amp; Fixer for Xcode and Android | Wander</title>
+<meta name="description" content="Build GPX routes that Xcode's iOS Simulator and the Android Emulator will actually play, or find out why your GPX file won't move. Free, runs in your browser." />
+<link rel="canonical" href="https://wanderspoofer.com/tools/simulator-gpx/" />
+<meta property="og:title" content="Simulator GPX Builder &amp; Fixer for Xcode and Android" />
+<meta property="og:description" content="Build GPX routes that Xcode's iOS Simulator and the Android Emulator will actually play, or find out why your GPX file won't move. Free, runs in your browser." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Wander" />
+<meta property="og:url" content="https://wanderspoofer.com/tools/simulator-gpx/" />
+<meta property="og:image" content="https://wanderspoofer.com/og-image.png" />
+<meta property="og:image:width" content="1600" />
+<meta property="og:image:height" content="900" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Simulator GPX Builder &amp; Fixer for Xcode and Android" />
+<meta name="twitter:description" content="Build GPX routes that Xcode's iOS Simulator and the Android Emulator will actually play, or find out why your GPX file won't move. Free, runs in your browser." />
+<meta name="twitter:image" content="https://wanderspoofer.com/og-image.png" />
+<meta name="theme-color" content="#185FA5" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/blog/blog.css" />
+<script>
+/* A shared route arrives in the URL fragment (#r=...). Read it, then take it out of the
+   address bar straight away, before any other script on the page runs, so the route is
+   never part of a URL that an analytics script could report. */
+(function () {
+  try {
+    if (location.hash.indexOf('#r=') === 0) {
+      window.__gpxRouteHash = location.hash;
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+  } catch (e) {}
+})();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Simulator GPX Builder and Fixer",
+  "url": "https://wanderspoofer.com/tools/simulator-gpx/",
+  "description": "Builds GPX route files that Xcode's iOS Simulator and the Android Emulator will play at a chosen speed, and checks existing GPX, KML, GeoJSON and CSV files for the mistakes that stop them working. Runs entirely in the browser.",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "image": "https://wanderspoofer.com/og-image.png",
+  "publisher": { "@type": "Organization", "name": "Wander", "url": "https://wanderspoofer.com/", "logo": { "@type": "ImageObject", "url": "https://wanderspoofer.com/wander-logo.png" } }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wanderspoofer.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://wanderspoofer.com/tools/" },
+    { "@type": "ListItem", "position": 3, "name": "Simulator GPX Builder and Fixer", "item": "https://wanderspoofer.com/tools/simulator-gpx/" }
+  ]
+}
+</script>
+<style>
+/* ---------- Simulator GPX tool (page-specific) ---------- */
+.tool .wrap { max-width: 860px; }
+.tool-privacy { margin-top: 16px; padding: 11px 15px; border-radius: 12px; background: var(--bg-soft); border: 1px solid var(--line); color: var(--ink-2); font-size: .95rem; }
+.tool-panel { margin-top: 26px; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow-sm); min-width: 0; }
+.tool-panel > h2 { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; line-height: 1.25; margin-bottom: 14px; }
+.step-n { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--brand); color: #fff; font-size: .9rem; font-weight: 800; }
+.tool label, .tool .label { display: block; font-weight: 700; font-size: .9rem; margin-bottom: 5px; color: var(--ink); }
+.tool textarea, .tool input[type="number"], .tool input[type="datetime-local"], .tool input[type="text"], .tool select {
+  width: 100%; max-width: 100%; font: inherit; font-size: 1rem; color: var(--ink); background: #fff;
+  padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 10px;
+}
+.tool textarea { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9rem; line-height: 1.5; min-height: 160px; resize: vertical; }
+.tool textarea:focus-visible, .tool input:focus-visible, .tool select:focus-visible, .tool button:focus-visible, .tool .drop:focus-visible, .tool summary:focus-visible {
+  outline: 3px solid var(--brand-300); outline-offset: 2px; border-color: var(--brand);
+}
+.hint { margin-top: 6px; font-size: .88rem; color: var(--ink-2); }
+.hint code, .tool-note code, .how code, .finding code, .out > p code { background: var(--bg-soft); padding: 1px 5px; border-radius: 5px; font-size: .92em; overflow-wrap: anywhere; }
+.tabs { display: flex; gap: 4px; margin-bottom: 14px; border-bottom: 1.5px solid var(--line); }
+.tabs button { font: inherit; font-weight: 700; font-size: .95rem; color: var(--ink-2); background: none; border: 0; border-bottom: 3px solid transparent; margin-bottom: -1.5px; padding: 9px 12px; cursor: pointer; border-radius: 8px 8px 0 0; }
+.tabs button[aria-selected="true"] { color: var(--brand); border-bottom-color: var(--brand); }
+.drop { margin-top: 14px; padding: 18px 16px; text-align: center; border: 2px dashed var(--brand-300); border-radius: 14px; background: var(--bg-soft); color: var(--ink-2); font-size: .95rem; }
+.drop.over, .tool-panel.over .drop { border-color: var(--brand); background: var(--bg-tint); }
+.drop strong { color: var(--ink); }
+.linkish { font: inherit; font-weight: 700; color: var(--brand); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.issues { margin-top: 8px; font-size: .88rem; color: var(--ink-2); }
+.issues li { padding: 3px 0; overflow-wrap: anywhere; }
+.issues li.err { color: #9b1c1c; }
+.issues code { background: var(--bg-soft); padding: 1px 5px; border-radius: 5px; }
+.tool-msg { margin-top: 10px; font-size: .92rem; overflow-wrap: anywhere; }
+.tool-msg.err { color: #9b1c1c; font-weight: 600; }
+.route-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+.route-bar .summary { flex: 1 1 100%; font-weight: 700; font-size: .95rem; }
+.tbtn { font: inherit; font-weight: 700; font-size: .9rem; color: var(--brand); background: #fff; border: 1.5px solid var(--line); border-radius: 100px; padding: 8px 14px; cursor: pointer; transition: border-color .15s ease, background .15s ease; }
+.tbtn:hover:not(:disabled) { border-color: var(--brand-300); background: var(--bg-soft); }
+.tbtn:disabled { opacity: .45; cursor: not-allowed; }
+.tbtn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+.tbtn.primary:hover:not(:disabled) { background: var(--brand-600); border-color: var(--brand-600); }
+.settings-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; }
+.settings-grid .wide { grid-column: 1 / -1; }
+.inline-row { display: flex; gap: 8px; align-items: stretch; }
+.inline-row > * { min-width: 0; }
+.inline-row .tbtn { flex: none; border-radius: 10px; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 4px 0 6px; }
+.stat { background: var(--bg-soft); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+.stat b { display: block; font-size: 1.02rem; line-height: 1.3; overflow-wrap: anywhere; }
+.stat span { font-size: .8rem; color: var(--ink-2); }
+.findings { margin-top: 10px; }
+.finding { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px 12px; padding: 12px 0; border-top: 1px solid var(--line); font-size: .95rem; }
+.finding p { overflow-wrap: anywhere; }
+.finding a { color: var(--brand); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.badge { display: inline-block; height: fit-content; white-space: nowrap; font-size: .72rem; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; }
+.badge.problem { background: #fde8e8; color: #9b1c1c; }
+.badge.warning { background: #fef3c7; color: #8a3b0a; }
+.badge.note { background: var(--bg-tint); color: var(--brand); }
+.badge.ok { background: #dcfce7; color: #166534; }
+.scope { display: block; margin-top: 4px; font-size: .72rem; font-weight: 700; color: var(--ink-2); text-align: center; }
+.out { margin-top: 14px; padding: 16px; border: 1px solid var(--line); border-radius: 14px; min-width: 0; }
+.out h3 { font-size: 1.05rem; line-height: 1.3; overflow-wrap: anywhere; }
+.out h3 code { font-size: .95em; background: var(--bg-soft); padding: 2px 7px; border-radius: 6px; }
+.out > p { margin-top: 6px; font-size: .94rem; color: var(--ink-2); }
+.out-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.out pre { margin-top: 12px; max-width: 100%; max-height: 230px; overflow: auto; background: #0c1a2b; color: #e8eef6; padding: 12px 14px; border-radius: 10px; font-size: .78rem; line-height: 1.55; white-space: pre; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+#pre-simctl { white-space: pre-wrap; overflow-wrap: anywhere; }
+.out details { margin-top: 12px; font-size: .94rem; }
+.out summary { cursor: pointer; font-weight: 700; color: var(--brand); width: fit-content; border-radius: 6px; }
+.how { margin: 8px 0 0; padding-left: 1.3em; list-style: decimal; color: var(--ink-2); }
+.how li { margin: 5px 0; }
+.tool-note { margin-top: 10px; padding: 10px 14px; border-left: 4px solid var(--brand); background: var(--bg-soft); border-radius: 0 10px 10px 0; font-size: .92rem; color: var(--ink-2); }
+.tool-note.warn { border-left-color: #b45309; background: #fffbeb; }
+#map { height: 380px; border-radius: 12px; border: 1px solid var(--line); overflow: hidden; background: var(--bg-soft); }
+/* inset ring, so #map's overflow:hidden does not clip it */
+#map .maplibregl-canvas:focus-visible { outline: 3px solid var(--brand-300); outline-offset: -3px; }
+.map-credit { margin-top: 6px; font-size: .8rem; color: var(--ink-2); }
+.map-credit a { color: var(--brand); text-decoration: underline; }
+.gpx-marker { width: 24px; height: 24px; border-radius: 50%; background: var(--brand); border: 2px solid #fff; box-shadow: 0 1px 5px rgba(12,26,43,.45); color: #fff; font: 800 .66rem/1 var(--font); display: flex; align-items: center; justify-content: center; cursor: grab; }
+.gpx-marker.first { background: #166534; }
+.gpx-marker.last { background: #9b1c1c; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.tool .post-body { margin-top: 44px; }
+@media (max-width: 560px) {
+  .tool-panel { padding: 16px 14px; }
+  .settings-grid { grid-template-columns: minmax(0, 1fr); }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tabs button { padding: 9px 8px; font-size: .9rem; }
+  #map { height: 320px; }
+  .out { padding: 14px 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .tbtn { transition: none; } }
+/* The closed phone menu is only slid off screen by styles.css, so its links stay in the
+   Tab order. Hide it from focus until it is opened (site-wide fix belongs in styles.css). */
+@media (max-width: 980px) {
+  .nav-mobile { visibility: hidden; transition: transform .28s ease, visibility 0s linear .28s; }
+  .nav-mobile.open { visibility: visible; transition: transform .28s ease, visibility 0s linear 0s; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="/" class="brand" aria-label="Wander home">
+      <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
+      Wander
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="/">Home</a>
+      <a href="/features/">Features</a>
+      <a href="/download/">Download</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/contact/">Contact</a>
+      <a href="/login/" id="navAuthLink">Log in</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost btn-star" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+      <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-discord" target="_blank" rel="noopener" aria-label="Join the Wander Discord">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 5.3A17 17 0 0015.7 4l-.2.4a12 12 0 016.9 0zM8.5 4.4A17 17 0 004 5.3 15.7 15.7 0 001 17a17 17 0 005.2 2.6l.6-1a11 11 0 01-1.7-.8l.4-.3a11.9 11.9 0 0010.2 0l.4.3-1.7.8.6 1A16.6 16.6 0 0023 17 15.7 15.7 0 0020 5.3zM9 14.4c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8zm6 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8z"/></svg>
+        Discord
+      </a>
+      <a href="/pricing/" class="btn btn-primary btn-pro">Get Pro</a>
+      <a href="/download/" class="btn btn-ghost">Download</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="nav-mobile" id="navMobile">
+  <a href="/">Home</a>
+  <a href="/features/">Features</a>
+  <a href="/download/">Download</a>
+  <a href="/pricing/">Pricing</a>
+  <a href="/contact/">Contact</a>
+  <a href="/login/" id="navAuthLinkMobile">Log in</a>
+  <a href="/pricing/" class="btn btn-primary btn-pro nav-mobile-pro">Get Pro</a>
+  <div class="nav-mobile-social">
+    <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost btn-star" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+    <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-discord" target="_blank" rel="noopener">Discord</a>
+  </div>
+</nav>
+
+<main class="post tool">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/tools/">Tools</a> › Simulator GPX Builder</nav>
+    <h1>Simulator GPX Builder and Fixer</h1>
+    <p class="lede">Make a route file that Xcode's iOS Simulator and the Android Emulator will actually play, timed for the speed you choose. Or drop in a GPX file that won't move and see exactly what is wrong with it.</p>
+    <p class="tool-privacy"><strong>Private by design.</strong> Nothing you draw, paste or drop is uploaded. Map tiles come from OpenFreeMap. Once the map is open it zooms to your route, so OpenFreeMap sees that area.</p>
+
+    <noscript><p class="tool-note warn">This tool runs in your browser and needs JavaScript. The guide further down the page works without it.</p></noscript>
+
+    <!-- ============ 1. ROUTE ============ -->
+    <section class="tool-panel" id="inputPanel" aria-labelledby="h-route">
+      <h2 id="h-route"><span class="step-n" aria-hidden="true">1</span> Add your route</h2>
+      <div class="tabs" role="tablist" aria-label="How to add points">
+        <button type="button" role="tab" id="tab-paste" aria-controls="panel-paste" aria-selected="true">Paste or drop a file</button>
+        <button type="button" role="tab" id="tab-map" aria-controls="panel-map" aria-selected="false" tabindex="-1">Draw on a map</button>
+      </div>
+
+      <div id="panel-paste" role="tabpanel" aria-labelledby="tab-paste">
+        <label for="points">Points, one per line</label>
+        <textarea id="points" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="51.5007, -0.1246&#10;51°30'05.0&quot;N 0°08'30.8&quot;W&#10;https://www.openstreetmap.org/?mlat=51.5033&amp;mlon=-0.1196"></textarea>
+        <p class="hint">Use decimal <code>lat, lon</code>, degrees-minutes-seconds, or a full Google Maps, Apple Maps or OpenStreetMap link. Lines starting with <code>#</code> are ignored.</p>
+        <ul class="issues" id="pasteIssues" aria-live="polite"></ul>
+
+        <div class="drop" id="drop">
+          <strong>Drop a GPX, KML, GeoJSON or CSV file here</strong>, or
+          <button type="button" class="linkish" id="pickFile">choose a file</button>.
+          <span class="hint" style="display:block">4 MB at most. The file is read on this device and checked by the GPX doctor.</span>
+          <input type="file" id="file" class="sr-only" tabindex="-1" aria-label="Choose a route file" accept=".gpx,.kml,.geojson,.json,.csv,.tsv,.txt,application/gpx+xml,application/vnd.google-earth.kml+xml,application/geo+json,text/csv,text/plain" />
+        </div>
+        <p class="tool-msg" id="fileMsg" role="status"></p>
+      </div>
+
+      <div id="panel-map" role="tabpanel" aria-labelledby="tab-map" hidden>
+        <div id="map" aria-label="Map for drawing a route"></div>
+        <p class="map-credit">Map: <a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> <a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">© OpenMapTiles</a> Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></p>
+        <p class="hint" id="mapHint">Click or tap the map to add a point. Drag a point to move it. On a phone, use two fingers to move the map.</p>
+        <p class="tool-msg" id="mapMsg" role="status"></p>
+      </div>
+
+      <div class="route-bar">
+        <span class="summary" id="routeSummary" aria-live="polite">No points yet. Paste some, drop a file, draw on the map, or load the example.</span>
+        <button type="button" class="tbtn" id="btnExample">Load example</button>
+        <button type="button" class="tbtn" id="btnReverse" disabled>Reverse</button>
+        <button type="button" class="tbtn" id="btnOutBack" disabled>Out and back</button>
+        <button type="button" class="tbtn" id="btnLoop" disabled>Loop</button>
+        <button type="button" class="tbtn" id="btnUndo" disabled>Remove last point</button>
+        <button type="button" class="tbtn" id="btnClear" disabled>Clear</button>
+      </div>
+    </section>
+
+    <!-- ============ GPX DOCTOR ============ -->
+    <section class="tool-panel" id="doctor" aria-labelledby="h-doctor" hidden>
+      <h2 id="h-doctor" tabindex="-1"><span class="step-n" aria-hidden="true">+</span> <span id="doctorTitle">GPX doctor</span></h2>
+      <div class="stats" id="doctorStats"></div>
+      <div class="findings" id="doctorFindings"></div>
+      <p class="tool-note" id="doctorLoaded"></p>
+      <div class="out-actions" id="doctorActions"></div>
+    </section>
+
+    <!-- ============ 2. PACE ============ -->
+    <section class="tool-panel" aria-labelledby="h-pace">
+      <h2 id="h-pace"><span class="step-n" aria-hidden="true">2</span> Set the pace</h2>
+      <div class="settings-grid">
+        <div>
+          <label for="speedPreset">Speed</label>
+          <select id="speedPreset">
+            <option value="walk" selected>Walk, 1.4 m/s</option>
+            <option value="run">Run, 3 m/s</option>
+            <option value="cycle">Cycle, 5.5 m/s</option>
+            <option value="drive">Drive, 13.9 m/s</option>
+            <option value="custom">Custom</option>
+          </select>
+          <p class="hint" id="speedHint"></p>
+        </div>
+        <div id="customWrap" hidden>
+          <label for="speedCustom">Custom speed (metres per second)</label>
+          <input type="number" id="speedCustom" min="0.1" max="1000" step="0.1" value="2" inputmode="decimal" />
+        </div>
+        <div>
+          <label for="interval">Update interval (seconds)</label>
+          <input type="number" id="interval" min="1" max="3600" step="1" value="1" inputmode="numeric" />
+          <p class="hint">Whole seconds. One point is written per interval. <span id="intervalNote" aria-live="polite"></span></p>
+        </div>
+        <div>
+          <label for="dwell">Dwell at each point (seconds)</label>
+          <input type="number" id="dwell" min="0" max="86400" step="1" value="0" inputmode="numeric" />
+          <p class="hint">A pause at every point you entered, first and last included. Leave at 0 for imported tracks.</p>
+        </div>
+        <div class="wide">
+          <label for="start">Start time (UTC)</label>
+          <div class="inline-row">
+            <input type="datetime-local" id="start" step="1" />
+            <button type="button" class="tbtn" id="btnNow">Now</button>
+          </div>
+          <p class="hint">Only the gaps between times matter to the simulators, so any start time works.</p>
+        </div>
+      </div>
+      <p class="tool-msg err" id="paceMsg" role="alert"></p>
+    </section>
+
+    <!-- ============ 3. OUTPUTS ============ -->
+    <section class="tool-panel" aria-labelledby="h-out">
+      <h2 id="h-out"><span class="step-n" aria-hidden="true">3</span> Get your files</h2>
+      <div class="stats" id="planStats" aria-live="polite"></div>
+      <p class="tool-msg" id="planMsg" role="status">Add at least one point to build the files.</p>
+      <p class="sr-only" id="copyStatus" role="status"></p>
+
+      <div class="out" id="out-xcode">
+        <h3><code>route-xcode.gpx</code> for Xcode and the iOS Simulator</h3>
+        <p>GPX 1.1 with waypoints only, in time order, each with a whole-second UTC time. No track or route tags, because Xcode does not support them.</p>
+        <div class="out-actions">
+          <button type="button" class="tbtn primary" data-download="xcode" disabled>Download</button>
+          <button type="button" class="tbtn" data-copy="xcode" disabled>Copy</button>
+        </div>
+        <pre id="pre-xcode" tabindex="0" aria-label="Preview of route-xcode.gpx" hidden></pre>
+        <details>
+          <summary>How to use it in Xcode</summary>
+          <ol class="how">
+            <li>Add the file to your project: drag it into the Project navigator.</li>
+            <li>Run your app, then click the <strong>Simulate Location</strong> button in the debug bar (the location arrow) and choose the file, or choose <strong>Add GPX File to Project…</strong> there.</li>
+            <li>To start with it every run, choose <strong>Edit Scheme &gt; Run &gt; Options</strong>, tick Allow Location Simulation and pick the file under <strong>Default Location</strong>.</li>
+          </ol>
+        </details>
+      </div>
+
+      <div class="out" id="out-android">
+        <h3><code>route-android.gpx</code> for the Android Emulator</h3>
+        <p>GPX 1.1 with one track and one segment. Every point has a whole-second time later than the one before, because the emulator reads whole seconds and sorts points by time.</p>
+        <div class="out-actions">
+          <button type="button" class="tbtn primary" data-download="android" disabled>Download</button>
+          <button type="button" class="tbtn" data-copy="android" disabled>Copy</button>
+        </div>
+        <pre id="pre-android" tabindex="0" aria-label="Preview of route-android.gpx" hidden></pre>
+        <details>
+          <summary>How to use it in the emulator</summary>
+          <ol class="how">
+            <li>Click <strong>More</strong> in the emulator panel to open <strong>Extended controls</strong>, then choose <strong>Location</strong>.</li>
+            <li>Open the <strong>Routes</strong> tab and click <strong>Import GPX/KML</strong>. Google's guide and older builds call the button <strong>Load GPX/KML</strong>.</li>
+            <li>Pick the file, leave the speed at 1X, then click <strong>Play Route</strong> (<strong>Run</strong> in Google's guide).</li>
+          </ol>
+        </details>
+      </div>
+
+      <div class="out" id="out-simctl">
+        <h3><code>simctl</code> command for a booted iOS Simulator</h3>
+        <p>No project or file needed. simctl moves between your points at the speed you set and sends an update every interval.</p>
+        <div class="out-actions">
+          <button type="button" class="tbtn primary" data-copy="simctl" disabled>Copy command</button>
+        </div>
+        <pre id="pre-simctl" tabindex="0" aria-label="simctl command" hidden></pre>
+        <p class="tool-note" id="simctlNote">Paste it into Terminal on a Mac with Xcode installed. Stop the route with <code>xcrun simctl location booted clear</code>. simctl cannot pause, so it ignores the dwell setting.</p>
+      </div>
+
+      <div class="out" id="out-adb">
+        <h3><code>route-adb.sh</code> script for the Android Emulator console</h3>
+        <p>Sends one <code>adb emu geo fix</code> per interval, then sleeps. Useful in test scripts and CI.</p>
+        <div class="out-actions">
+          <button type="button" class="tbtn primary" data-download="adb" disabled>Download</button>
+          <button type="button" class="tbtn" data-copy="adb" disabled>Copy</button>
+        </div>
+        <pre id="pre-adb" tabindex="0" aria-label="Preview of route-adb.sh" hidden></pre>
+        <p class="tool-note warn"><strong>Longitude comes first.</strong> <code>geo fix</code> takes longitude, then latitude, the reverse of the usual order. The script already has them the right way round. Run it with <code>sh route-adb.sh</code> on macOS, Linux or Git Bash while one emulator is running. Under WSL, adb has to be set up to reach an emulator running on Windows first.</p>
+      </div>
+
+      <div class="out" id="out-plain">
+        <h3>Plain <code>route.gpx</code> and <code>route.geojson</code></h3>
+        <p>Just the shape: the points you entered, with no timing. For Wander or any other app that sets its own pace. The GPX is a single track. The GeoJSON is a LineString with positions in longitude, latitude order.</p>
+        <div class="out-actions">
+          <button type="button" class="tbtn primary" data-download="track" disabled>Download GPX</button>
+          <button type="button" class="tbtn" data-copy="track" disabled>Copy GPX</button>
+          <button type="button" class="tbtn primary" data-download="geojson" disabled>Download GeoJSON</button>
+          <button type="button" class="tbtn" data-copy="geojson" disabled>Copy GeoJSON</button>
+        </div>
+      </div>
+
+      <div class="out" id="out-link">
+        <h3>Link to this route</h3>
+        <p>The route is stored after the <code>#</code> in the link. Browsers never send that part of an address to a server (<a href="https://www.rfc-editor.org/rfc/rfc3986#section-3.5" target="_blank" rel="noopener">RFC 3986</a>), and this page removes it from the address bar as soon as it has read it. Points are rounded to about 1 metre.</p>
+        <label for="permalink" class="sr-only">Link to this route</label>
+        <input type="text" id="permalink" readonly value="" style="margin-top:10px" />
+        <div class="out-actions">
+          <button type="button" class="tbtn primary" data-copy="link" disabled>Copy link</button>
+        </div>
+        <p class="tool-msg" id="linkMsg" role="status"></p>
+      </div>
+    </section>
+
+    <!-- ============ GUIDE ============ -->
+    <div class="post-body" id="guide">
+      <h2 id="why">Why your GPX won't move in Xcode or the emulator</h2>
+      <p>GPX (GPS Exchange Format) is an XML file format for location data. The <a href="https://www.topografix.com/GPX/1/1/" target="_blank" rel="noopener">GPX 1.1 schema</a> gives a file three ways to hold a point: a waypoint (<code>&lt;wpt&gt;</code>), a route point (<code>&lt;rtept&gt;</code> inside <code>&lt;rte&gt;</code>) and a track point (<code>&lt;trkpt&gt;</code> inside <code>&lt;trk&gt;</code> and <code>&lt;trkseg&gt;</code>). The schema describes a track as an ordered list of points describing a path, so that is how a recorded trip is normally saved. Xcode and the Android Emulator read these files in different ways, and most "it loads but nothing moves" problems come from that difference.</p>
+
+      <h3 id="xcode">Xcode plays waypoints and nothing else</h3>
+      <p>Apple's Xcode Help is direct about this. Its page on <a href="https://help.apple.com/xcode/mac/current/#/dev1b4074150" target="_blank" rel="noopener">simulating a location in the debugger</a> says a GPX file may hold a series of waypoints using the <code>wpt</code> tag, and that the <code>rte</code> and <code>trk</code> tags are not supported. The page on <a href="https://help.apple.com/xcode/mac/current/#/dev8dbd2f820" target="_blank" rel="noopener">the scheme editor</a> says the same. A track exported from another app can be perfectly valid GPX and still contain no point that Xcode will use.</p>
+      <p>Timing is the second trap. The GPX File template in Xcode's New File dialog (<strong>File &gt; New &gt; File</strong>, then GPX File) carries a comment with the rules. Give each waypoint a <code>&lt;time&gt;</code> and Xcode moves at a speed based on the time between waypoints. Leave the times out and Xcode uses a fixed speed. Either way, waypoints must be sorted by time in ascending order. The error messages built into Xcode 27.2 are stricter still: a time has to be in ISO 8601 form without milliseconds, each waypoint has to be later than the one before it, and a waypoint may carry only one time element. Going by those messages, one bad waypoint makes Xcode reject the whole file. Xcode shows them when you pick a bad GPX file under Simulate Location. Apple does not publish the template or these messages online; we read them in Xcode 27.2.</p>
+      <p>Developers still disagree about how closely Xcode follows those times. In a long-running <a href="https://stackoverflow.com/questions/9439495" target="_blank" rel="noopener">Stack Overflow thread</a> about controlling speed with GPX, one answer quotes the template and says the times set the speed. Another reports that the simulator took the same time between any two points, whatever the distance, and that the fix was to add many evenly spaced points. This tool does both. If Xcode follows the times, the route moves at your chosen speed. If it steps through one point per location update instead, the even spacing still gives a steady pace, and at the default 1-second interval it should come out close to your speed. We have not measured Xcode's playback speed ourselves.</p>
+
+      <h3 id="android">The Android Emulator reads every point, then sorts by time</h3>
+      <p>The emulator is relaxed about structure. Its open-source <a href="https://android.googlesource.com/platform/external/qemu/+/refs/heads/emu-master-dev/android/emu/gps/src/android/gps/GpxParser.cpp" target="_blank" rel="noopener">GPX parser</a> reads waypoints, route points and track points alike. What it cares about is time, in three ways.</p>
+      <ul>
+        <li><strong>Whole seconds only.</strong> The parser reads each <code>&lt;time&gt;</code> as six whole numbers: year, month, day, hour, minute and second. Nothing after the seconds is read, so fractions of a second are dropped and an offset such as <code>+02:00</code> is not applied.</li>
+        <li><strong>Points are sorted by time.</strong> After reading the file, the parser sorts every point by its time. A file with out-of-order times plays in a different order than it was written.</li>
+        <li><strong>The gap between times is the delay.</strong> The emulator's route code (<a href="https://android.googlesource.com/platform/external/qemu/+/refs/heads/emu-master-dev/android/android-ui/modules/aemu-ext-pages/location/src/android/skin/qt/extended-pages/location-page-route.cpp" target="_blank" rel="noopener">location-page-route.cpp</a> and <a href="https://android.googlesource.com/platform/external/qemu/+/refs/heads/emu-master-dev/android/android-ui/modules/aemu-ext-pages/location/src/android/skin/qt/extended-pages/location-page-route-playback.cpp" target="_blank" rel="noopener">location-page-route-playback.cpp</a>) turns the difference between each point's time and the previous point's time into the delay before that point, so points that share a whole-second time play with no pause between them. A track logged ten times a second, or a file with no times at all, will not play at the speed it was recorded.</li>
+      </ul>
+      <p>To load a file, Google's <a href="https://developer.android.com/studio/run/emulator-extended-controls" target="_blank" rel="noopener">extended controls guide</a> says to open Location, click Load GPX/KML, pick the file, optionally choose a speed multiplier and run it. In the current emulator source the button is labelled Import GPX/KML and sits on the Routes tab.</p>
+
+      <h3 id="what-it-does">What this tool changes</h3>
+      <p>The builder resamples your route so that consecutive points are speed × interval apart, measured along the path. At walking pace (1.4 m/s) with a 1 second interval, that is one point every 1.4 m. Sharp corners and turnarounds are kept exactly, so the gap just before each one can be shorter, and the summary in step 3 says how many there are. It then stamps each point with a whole-second UTC time, one interval after the last. The Xcode file holds only waypoints. The Android file holds one track with one segment. A simulator that follows the times moves at your chosen speed. A simulator that steps through one point per update still moves at a steady pace, but that pace matches your speed only when its update period equals the interval you set.</p>
+
+      <h3 id="command-line">Two command-line traps</h3>
+      <p><strong>simctl and negative latitudes.</strong> <code>xcrun simctl location booted start</code> takes a speed and a list of <code>lat,lon</code> waypoints and does its own interpolation, so it needs no GPX file. When we ran it on Xcode 27.2, a waypoint with a negative latitude, such as <code>-33.8688,151.2093</code>, was read as a command-line option and the command stopped with an "invalid option" error. Putting <code>--</code> before the waypoints fixed it, and so did sending them on standard input with <code>-</code>. Every route command this page builds uses one of the two. A single point uses simctl's <code>set</code> action instead, which reads negative latitudes correctly.</p>
+      <p><strong>adb and longitude first.</strong> Google's <a href="https://developer.android.com/studio/run/emulator-console" target="_blank" rel="noopener">emulator console guide</a> documents the command as <code>geo fix longitude latitude</code>. That is the reverse of the usual "lat, lon" order, and of simctl. Swap the two and the emulator lands somewhere else entirely. The script this page builds keeps the order right.</p>
+
+      <h3 id="limits">Limits worth knowing</h3>
+      <ul>
+        <li>Points are joined by straight lines. Nothing here snaps to roads, so add a point wherever your path turns.</li>
+        <li>The files contain clean, exact positions. Real GPS drift and signal loss are not simulated.</li>
+      </ul>
+    </div>
+
+    <aside class="post-cta">
+      <h2>Ready to test on a real phone?</h2>
+      <p>The simulator is not a real phone. To walk this route on a real iPhone or Android, import the plain <code>route.gpx</code> into Wander (GPX import is a Pro feature). Some apps' terms forbid changing your location, so check the terms of the apps you use it with.</p>
+      <div class="hero-cta">
+        <a href="/download/" class="btn btn-primary">Download Wander free</a>
+        <a href="/pricing/" class="btn btn-ghost">See pricing</a>
+      </div>
+    </aside>
+
+    <section class="post-sources">
+      <h2>Sources</h2>
+      <ol>
+        <li><a href="https://help.apple.com/xcode/mac/current/#/dev1b4074150" rel="noopener" target="_blank">Simulate a location in the debugger</a> - Xcode Help, Apple</li>
+        <li><a href="https://help.apple.com/xcode/mac/current/#/dev8dbd2f820" rel="noopener" target="_blank">Simulate a runtime location in the scheme editor</a> - Xcode Help, Apple</li>
+        <li>The GPX File template (File &gt; New &gt; File &gt; GPX File), the GPX error messages Xcode shows when you pick a bad file under Simulate Location, and the built-in help for <code>xcrun simctl location</code>, all checked in Xcode 27.2 (27B52) - Apple. These texts ship inside Xcode and are not published online; run <code>xcrun simctl help location</code> to check your own copy.</li>
+        <li><a href="https://stackoverflow.com/questions/9439495" rel="noopener" target="_blank">When using GPX in Xcode to simulate location changes, is there a way to control the speed?</a> - Stack Overflow</li>
+        <li><a href="https://android.googlesource.com/platform/external/qemu/+/refs/heads/emu-master-dev/android/emu/gps/src/android/gps/GpxParser.cpp" rel="noopener" target="_blank">GpxParser.cpp</a> - Android Emulator source, Android Open Source Project</li>
+        <li><a href="https://android.googlesource.com/platform/external/qemu/+/refs/heads/emu-master-dev/android/android-ui/modules/aemu-ext-pages/location/src/android/skin/qt/extended-pages/location-page-route.cpp" rel="noopener" target="_blank">location-page-route.cpp</a>, <a href="https://android.googlesource.com/platform/external/qemu/+/refs/heads/emu-master-dev/android/android-ui/modules/aemu-ext-pages/location/src/android/skin/qt/extended-pages/location-page-route-playback.cpp" rel="noopener" target="_blank">location-page-route-playback.cpp</a> and <a href="https://android.googlesource.com/platform/external/qemu/+/refs/heads/emu-master-dev/android/android-ui/modules/aemu-ext-pages/location/src/android/skin/qt/extended-pages/location-page.ui" rel="noopener" target="_blank">location-page.ui</a> - Android Emulator source, Android Open Source Project</li>
+        <li><a href="https://developer.android.com/studio/run/emulator-extended-controls" rel="noopener" target="_blank">Extended controls, settings, and help</a> - Android Developers</li>
+        <li><a href="https://developer.android.com/studio/run/emulator-console" rel="noopener" target="_blank">Send emulator console commands</a> - Android Developers</li>
+        <li><a href="https://www.topografix.com/GPX/1/1/" rel="noopener" target="_blank">GPX 1.1 Schema Documentation</a> - TopoGrafix</li>
+        <li><a href="https://developers.google.com/kml/documentation/kmlreference" rel="noopener" target="_blank">KML Reference</a> - Google for Developers</li>
+        <li><a href="https://www.rfc-editor.org/rfc/rfc7946" rel="noopener" target="_blank">RFC 7946: The GeoJSON Format</a> - IETF</li>
+        <li><a href="https://developers.google.com/maps/documentation/utilities/polylinealgorithm" rel="noopener" target="_blank">Encoded Polyline Algorithm Format</a> - Google Maps Platform</li>
+        <li><a href="https://www.rfc-editor.org/rfc/rfc3986#section-3.5" rel="noopener" target="_blank">RFC 3986, section 3.5: Fragment</a> - IETF (the part of a link after <code>#</code> is handled by the browser and is not sent in the request)</li>
+      </ol>
+      <p style="margin-top:10px">The map is drawn with <a href="https://maplibre.org/" rel="noopener" target="_blank">MapLibre GL JS</a> 5.24.0 and tiles from <a href="https://openfreemap.org" rel="noopener" target="_blank">OpenFreeMap</a>.</p>
+    </section>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="brand">
+          <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
+          Wander
+        </a>
+        <p>Your location, anywhere. A clean, affordable location changer for iPhone, Android, Mac &amp; Windows, with a free trial.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="/iphone/">iPhone</a></li>
+          <li><a href="/android/">Android</a></li>
+          <li><a href="/imyfone-anyto-alternative/">vs iMyFone AnyTo</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/tools/simulator-gpx/">Free GPX tool</a></li>
+          <li><a href="/life360/">Fake Life360 location</a></li>
+          <li><a href="/find-my/">Change Find My location</a></li>
+          <li><a href="/dating/">Change dating app location</a></li>
+          <li><a href="/pokemon-go/">Play Pokémon GO from home</a></li>
+          <li><a href="/vpn/">Match IP to spoofed location</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Use cases</h4>
+        <ul>
+          <li><a href="/pokemon-go/">Pokémon GO spoofing</a></li>
+          <li><a href="/find-my/">Change Find My location</a></li>
+          <li><a href="/life360/">Fake Life360 location</a></li>
+          <li><a href="/dating/">Dating app location</a></li>
+          <li><a href="/vpn/">Match IP to GPS</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:faisalnab25@gmail.com">Email</a></li>
+          <li><a href="https://github.com/faisal-nabulsi/Wander" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://discord.gg/gfHdsRXUVA" target="_blank" rel="noopener">Discord</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Wander.</span>
+      <span>For personal &amp; testing use — you're responsible for the terms of the apps you use it with.</span>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+import * as core from '/tools/simulator-gpx/gpx-core.js';
+
+const $ = (id) => document.getElementById(id);
+const int = (n) => n.toLocaleString('en-US');
+const MAX_LISTED = 5000;   // routes longer than this are not written into the paste box
+const MAX_MARKERS = 300;   // routes longer than this are drawn as a line only
+const MAPLIBRE = {
+  js: 'https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js',
+  jsSri: 'sha512-hoXlvOdSmh58mppUyZHZsscHkR/yXl6zLpTMTNwA6IZ61DpeaCNjosRu1WJ2DeIpkfW5MsJJ9H89zjV4IBGqRw==',
+  css: 'https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.css',
+  cssSri: 'sha512-KIMsMWIdnoG9OwZa+oaIafmbDonqck1UCmq+/zcUi2aaZ97N9QE6TqpTM+n36EO40HGh64hU/375zxtjx7WTyQ==',
+  style: 'https://tiles.openfreemap.org/styles/positron',
+};
+const EXAMPLE = [
+  { lat: 51.5007, lon: -0.1246 },
+  { lat: 51.5033, lon: -0.1196 },
+  { lat: 51.5081, lon: -0.1281 },
+  { lat: 51.5014, lon: -0.1419 },
+];
+
+const state = {
+  route: [],         // [{lat, lon}] the shape the user entered
+  listed: true,      // false when the route is too long to show in the paste box
+  parsed: null,      // last parsed file (for the doctor)
+  doctorName: '',    // name of the file the doctor is showing
+  fileName: '',      // name of the file the builder's route came from
+  plan: null,
+  settings: null,
+  map: null,
+  mapReady: false,
+  mapLoading: false,
+  markers: [],
+};
+
+/* ---------------------------------------------------------------- helpers */
+function el(tag, attrs, ...children) {
+  const node = document.createElement(tag);
+  if (attrs) {
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === 'class') node.className = v;
+      else if (k === 'text') node.textContent = v;
+      else node.setAttribute(k, v);
+    }
+  }
+  for (const c of children) node.append(c);
+  return node;
+}
+
+function stat(value, label) {
+  return el('div', { class: 'stat' }, el('b', { text: value }), el('span', { text: label }));
+}
+
+function debounce(fn, ms) {
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
+/* ---------------------------------------------------------------- route state */
+function setRoute(points, origin) {
+  state.route = points.map((p) => ({ lat: p.lat, lon: p.lon }));
+  if (origin !== 'paste') syncTextarea();
+  if (origin !== 'drag') syncMap(origin !== 'map');
+  refresh();
+}
+
+function syncTextarea() {
+  const ta = $('points');
+  const issues = $('pasteIssues');
+  issues.replaceChildren();
+  if (state.route.length <= MAX_LISTED) {
+    ta.value = core.pointsToText(state.route);
+    state.listed = true;
+  } else {
+    ta.value = '';
+    state.listed = false;
+    issues.append(el('li', { text: `${int(state.route.length)} points are loaded${state.fileName ? ' from ' + state.fileName : ''}. That is too many to list in this box. Typing or pasting here replaces them.` }));
+  }
+}
+
+const onPaste = debounce(() => {
+  const res = core.parsePointsText($('points').value);
+  const issues = $('pasteIssues');
+  issues.replaceChildren();
+  const rows = [
+    ...res.errors.map((e) => ({ cls: 'err', line: e.line, text: e.text, msg: e.reason })),
+    ...res.notes.map((n) => ({ cls: '', line: n.line, text: n.text, msg: 'Note: ' + n.note + '.' })),
+  ].sort((a, b) => a.line - b.line);
+  for (const r of rows.slice(0, 8)) {
+    issues.append(el('li', { class: r.cls }, `Line ${r.line} `, el('code', { text: r.text }), ` ${r.msg}`));
+  }
+  if (rows.length > 8) issues.append(el('li', { text: `...and ${int(rows.length - 8)} more lines with a message.` }));
+  state.listed = true;
+  state.route = res.points;
+  syncMap(true);
+  refresh();
+}, 200);
+
+/* ---------------------------------------------------------------- settings */
+function readSettings() {
+  const preset = $('speedPreset').value;
+  const errors = [];
+  let speed = preset === 'custom' ? Number($('speedCustom').value) : core.SPEED_PRESETS[preset];
+  if (!(speed >= 0.1 && speed <= 1000)) { errors.push('Speed must be between 0.1 and 1000 m/s.'); speed = NaN; }
+  let interval = Number($('interval').value);
+  let intervalRounded = false;
+  if (!(interval >= 1 && interval <= 3600)) { errors.push('The update interval must be between 1 and 3600 seconds.'); interval = NaN; }
+  else if (!Number.isInteger(interval)) { interval = Math.max(1, Math.round(interval)); intervalRounded = true; }
+  let dwell = Number($('dwell').value);
+  if (!(dwell >= 0 && dwell <= 86400)) { errors.push('Dwell must be between 0 and 86,400 seconds.'); dwell = NaN; }
+  const raw = $('start').value;
+  let start = raw ? Date.parse(raw.replace(/\.\d+$/, '') + (raw.length === 16 ? ':00Z' : 'Z')) : NaN;
+  if (!Number.isFinite(start)) start = Date.now();
+  return { speed, interval, dwell, start, errors, intervalRounded };
+}
+
+function setStartNow() {
+  $('start').value = new Date().toISOString().slice(0, 19);
+}
+
+function updateSpeedHint() {
+  const preset = $('speedPreset').value;
+  $('customWrap').hidden = preset !== 'custom';
+  const speed = preset === 'custom' ? Number($('speedCustom').value) : core.SPEED_PRESETS[preset];
+  $('speedHint').textContent = speed > 0 ? `${(speed * 3.6).toFixed(1)} km/h, ${(speed * 2.236936).toFixed(1)} mph` : '';
+}
+
+/* ---------------------------------------------------------------- outputs */
+const OUT = {
+  xcode: { file: 'route-xcode.gpx', mime: 'application/gpx+xml', src: 'points', closers: 1, unit: 'waypoints', make: (pts) => core.writeXcodeGPX(pts) },
+  android: { file: 'route-android.gpx', mime: 'application/gpx+xml', src: 'points', closers: 3, unit: 'track points', make: (pts) => core.writeAndroidGPX(pts) },
+  adb: { file: 'route-adb.sh', mime: 'text/x-shellscript', src: 'points', closers: 1, unit: 'lines', make: (pts, s) => core.adbScript(pts, { interval: s.interval }) },
+  simctl: { file: 'route-simctl.sh', mime: 'text/x-shellscript', src: 'shape', closers: 1, unit: 'waypoints', make: (pts, s, opts) => core.simctlCommand(pts, { speed: s.speed, interval: s.interval, ...opts }) },
+  track: { file: 'route.gpx', mime: 'application/gpx+xml', src: 'shape', make: (pts) => core.writeTrackGPX(pts) },
+  geojson: { file: 'route.geojson', mime: 'application/geo+json', src: 'shape', make: (pts) => core.writeGeoJSON(pts) },
+};
+
+function fullText(key) {
+  if (!state.plan) return '';
+  if (key === 'link') return $('permalink').value;
+  const o = OUT[key];
+  return o.make(state.plan[o.src], state.settings);
+}
+
+function previewText(key) {
+  const o = OUT[key];
+  const src = state.plan[o.src];
+  const keep = key === 'simctl' ? core.LIMITS.simctlInlineMax : 6;
+  if (src.length <= keep) return o.make(src, state.settings).trimEnd();
+  const opts = key === 'simctl' ? { inlineMax: 0 } : undefined; // long routes use the stdin form
+  const lines = o.make(src.slice(0, keep), state.settings, opts).trimEnd().split('\n');
+  const tail = lines.splice(lines.length - o.closers, o.closers);
+  return [...lines, `   ... ${int(src.length - keep)} more ${o.unit} ...`, ...tail].join('\n');
+}
+
+function refresh() {
+  const n = state.route.length;
+  // route bar
+  const dist = core.pathLength(state.route);
+  $('routeSummary').textContent = n === 0
+    ? 'No points yet. Paste some, drop a file, draw on the map, or load the example.'
+    : n === 1 ? '1 point. Add another to make a route.'
+    : `${int(n)} points, ${core.formatDistance(dist)} along the route.`;
+  $('btnReverse').disabled = n < 2;
+  $('btnOutBack').disabled = n < 2;
+  $('btnLoop').disabled = n < 2;
+  $('btnUndo').disabled = n < 1;
+  $('btnClear').disabled = n < 1 && $('points').value === '';
+
+  // settings and plan
+  updateSpeedHint();
+  const s = readSettings();
+  $('paceMsg').textContent = s.errors.join(' ');
+  $('intervalNote').textContent = s.intervalRounded ? `Rounded to ${s.interval} s.` : '';
+  let plan = null;
+  let planError = '';
+  if (n > 0 && s.errors.length === 0) {
+    try {
+      plan = core.planRoute(state.route, s);
+    } catch (e) {
+      planError = e.message;
+    }
+  }
+  state.plan = plan && plan.count > 0 ? plan : null;
+  state.settings = s;
+
+  const stats = $('planStats');
+  stats.replaceChildren();
+  const msg = $('planMsg');
+  msg.className = 'tool-msg';
+  if (!state.plan) {
+    msg.textContent = planError || (s.errors.length ? 'Fix the pace settings above to build the files.' : 'Add at least one point to build the files.');
+    if (planError) msg.className = 'tool-msg err';
+  } else {
+    const p = state.plan;
+    stats.append(
+      stat(core.formatDistance(p.distance), 'distance'),
+      stat(core.formatDuration(p.duration), 'duration'),
+      stat(int(p.count), p.count === 1 ? 'point' : 'points'),
+      stat(p.count > 1 ? `${Number(p.step.toFixed(2))} m` : '-', 'between points'));
+    const bits = [];
+    if (p.count === 1) bits.push('One point makes a fixed location, not a route.');
+    else bits.push(`Moving at ${core.formatSpeed(p.speed)}, one point every ${p.interval} s.`);
+    if (p.corners > 0) {
+      bits.push(`The route stops exactly at ${int(p.corners)} sharp ${p.corners === 1 ? 'corner or turnaround' : 'corners or turnarounds'}, so the gap just before ${p.corners === 1 ? 'it is' : 'each is'} shorter than ${Number(p.step.toFixed(2))} m.`);
+    }
+    if (p.dwell > 0) {
+      bits.push(`Pausing ${p.dwell} s at each of the ${int(p.shape.length)} points you entered` +
+        (p.dwell !== s.dwell ? ' (the dwell is rounded to a whole number of intervals).' : '.'));
+    }
+    if (p.count > core.LIMITS.doctorMaxPoints) bits.push(`That is a lot of points (${int(p.count)}). Big files load slowly. A longer interval or a faster speed makes a smaller file.`);
+    msg.textContent = bits.join(' ');
+  }
+
+  // previews and buttons
+  for (const key of ['xcode', 'android', 'adb', 'simctl']) {
+    const pre = $('pre-' + key);
+    if (state.plan) { pre.textContent = previewText(key); pre.hidden = false; }
+    else { pre.textContent = ''; pre.hidden = true; }
+  }
+  // permalink
+  const link = $('permalink');
+  const linkMsg = $('linkMsg');
+  linkMsg.textContent = '';
+  let linkOk = false;
+  if (state.plan) {
+    const url = location.origin + location.pathname + core.buildPermalinkHash({ points: state.plan.shape, speed: s.speed, interval: s.interval, dwell: s.dwell });
+    if (url.length > 30000) {
+      link.value = '';
+      linkMsg.textContent = `This route is too long to fit in a link (${int(url.length)} characters). Download the GPX instead.`;
+    } else {
+      link.value = url;
+      linkOk = true;
+      if (url.length > 2000) linkMsg.textContent = `This link is ${int(url.length)} characters long. Some chat and email apps cut long links short.`;
+    }
+  } else {
+    link.value = '';
+  }
+  document.querySelectorAll('[data-download], [data-copy]').forEach((b) => {
+    const key = b.dataset.download || b.dataset.copy;
+    b.disabled = key === 'link' ? !linkOk : !state.plan;
+  });
+}
+
+function flash(btn, text) {
+  // the button text is visual only; the status line is what screen readers hear
+  const status = $('copyStatus');
+  status.textContent = '';
+  setTimeout(() => { status.textContent = text === 'Copied' ? 'Copied to the clipboard.' : 'Copy failed. Select the text and copy it yourself.'; }, 50);
+  const old = btn.dataset.label || btn.textContent;
+  btn.dataset.label = old;
+  btn.textContent = text;
+  clearTimeout(btn._t);
+  btn._t = setTimeout(() => { btn.textContent = old; }, 1600);
+}
+
+async function copyText(text, btn) {
+  try {
+    await navigator.clipboard.writeText(text);
+    flash(btn, 'Copied');
+  } catch (e) {
+    const ta = el('textarea', { class: 'sr-only', 'aria-hidden': 'true' });
+    ta.value = text;
+    document.body.append(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e2) { ok = false; }
+    ta.remove();
+    flash(btn, ok ? 'Copied' : 'Copy failed');
+  }
+}
+
+function download(name, text, mime) {
+  const url = URL.createObjectURL(new Blob([text], { type: mime + ';charset=utf-8' }));
+  const a = el('a', { href: url, download: name });
+  document.body.append(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+/* ---------------------------------------------------------------- files and the doctor */
+async function handleFile(file) {
+  const msg = $('fileMsg');
+  msg.className = 'tool-msg';
+  msg.textContent = '';
+  if (!file) return;
+  // every rejected file hides the doctor, so it never shows the previous file under a new error
+  if (file.size > core.LIMITS.maxFileBytes) {
+    msg.className = 'tool-msg err';
+    msg.textContent = `${file.name} is too big (${(file.size / 1048576).toFixed(2)} MB). The limit is 4 MB.`;
+    $('doctor').hidden = true;
+    return;
+  }
+  let text;
+  try {
+    text = await file.text();
+  } catch (e) {
+    msg.className = 'tool-msg err';
+    msg.textContent = `Could not read ${file.name}.`;
+    $('doctor').hidden = true;
+    return;
+  }
+  let parsed;
+  try {
+    parsed = core.parseRouteFile(text, file.name);
+  } catch (e) {
+    msg.className = 'tool-msg err';
+    msg.textContent = `${file.name}: ${e.message}`;
+    $('doctor').hidden = true;
+    return;
+  }
+  state.parsed = parsed;
+  state.doctorName = file.name;  // state.fileName changes only once points from this file are loaded
+  msg.textContent = `Read ${file.name} on this device. The check is below.`;
+  showDoctor(true);
+}
+
+const FORMAT_NAMES = { gpx: 'GPX', kml: 'KML', geojson: 'GeoJSON', csv: 'CSV', text: 'text' };
+const LEVEL_NAMES = { problem: 'Problem', warning: 'Warning', note: 'Note' };
+const SCOPE_NAMES = { xcode: 'Xcode', android: 'Android', both: 'Xcode and Android' };
+const KIND_NAMES = { trkpt: 'track points', rtept: 'route points', wpt: 'waypoints', lines: 'points from its lines' };
+
+function showDoctor(scroll) {
+  const parsed = state.parsed;
+  const report = core.diagnose(parsed);
+  const route = core.routePointsFrom(parsed);
+  $('doctorTitle').textContent = `${parsed.format === 'gpx' ? 'GPX doctor' : 'Route check'}: ${state.doctorName} (${FORMAT_NAMES[parsed.format] || parsed.format})`;
+
+  const st = report.stats;
+  $('doctorStats').replaceChildren(
+    stat(int(st.count), st.count === 1 ? 'point' : 'points'),
+    stat(core.formatDistance(st.distance), 'total distance'),
+    stat(st.duration === null ? 'no times' : core.formatDuration(st.duration), 'duration'),
+    stat(st.avgSpeed === null ? '-' : `${Number(st.avgSpeed.toFixed(2))} m/s`, 'average speed'));
+
+  const list = $('doctorFindings');
+  list.replaceChildren();
+  if (report.findings.length === 0) {
+    let okText;
+    if (parsed.format !== 'gpx') okText = 'No problems found in the coordinates. This format carries no timing, so set the pace in step 2.';
+    else if (st.count === 1) okText = 'No problems found. This file has a single waypoint, so it sets one fixed location rather than a route.';
+    else if (st.timedCount === st.count) okText = 'No problems found. This file uses waypoints with clean, increasing whole-second times.';
+    else okText = 'No problems found.';
+    list.append(el('div', { class: 'finding' },
+      el('div', null, el('span', { class: 'badge ok', text: 'OK' })),
+      el('p', { text: okText })));
+  }
+  for (const f of report.findings) {
+    const body = el('p', { text: f.message });
+    if (f.source) body.append(' ', el('a', { href: f.source, target: '_blank', rel: 'noopener', text: 'Source' }));
+    list.append(el('div', { class: 'finding' },
+      el('div', null, el('span', { class: 'badge ' + f.level, text: LEVEL_NAMES[f.level] }), el('span', { class: 'scope', text: SCOPE_NAMES[f.affects] })),
+      body));
+  }
+
+  const loaded = $('doctorLoaded');
+  const actions = $('doctorActions');
+  actions.replaceChildren();
+  // offer the swap only when most of the file looks swapped, since it flips every point
+  const swap = report.findings.find((f) => f.id === 'latlon-swap');
+  const hasSwap = !!swap && swap.count * 2 >= parsed.points.length;
+  if (route.points.length > 0) {
+    const what = route.used ? KIND_NAMES[route.used] : 'points';
+    const left = [];
+    if (route.pins) left.push(`${int(route.pins)} single ${route.pins === 1 ? 'pin' : 'pins'} next to the path`);
+    if (route.dropped) left.push(`${int(route.dropped)} with bad coordinates`);
+    loaded.textContent = `Loaded ${int(route.points.length)} ${what} into the builder` +
+      (left.length ? `, leaving out ${left.join(' and ')}` : '') +
+      '. The files in step 3 are rebuilt from them with even spacing and clean whole-second times, so they are the fixed version of this file.';
+    state.fileName = state.doctorName;
+    setRoute(route.points, 'file');
+  } else {
+    loaded.textContent = 'No usable points could be loaded from this file.' +
+      (state.route.length ? ' The builder still holds your previous route, and the files in step 3 are still built from it.' : '');
+  }
+  if (hasSwap) {
+    const b = el('button', { type: 'button', class: 'tbtn primary', text: 'Swap latitude and longitude' });
+    b.addEventListener('click', () => {
+      state.parsed = { ...state.parsed, points: core.swapLatLon(state.parsed.points) };
+      showDoctor(false);
+      // the button is gone after the re-render, so move focus to the doctor's heading
+      $('h-doctor').focus();
+    });
+    actions.append(b);
+  }
+  $('doctor').hidden = false;
+  if (scroll) $('doctor').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+}
+
+/* ---------------------------------------------------------------- map (lazy) */
+function loadMapLibrary() {
+  if (window.maplibregl) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const css = el('link', { rel: 'stylesheet', href: MAPLIBRE.css, integrity: MAPLIBRE.cssSri, crossorigin: 'anonymous' });
+    const js = el('script', { src: MAPLIBRE.js, integrity: MAPLIBRE.jsSri, crossorigin: 'anonymous' });
+    const timer = setTimeout(() => reject(new Error('timeout')), 20000);
+    js.addEventListener('load', () => { clearTimeout(timer); window.maplibregl ? resolve() : reject(new Error('not loaded')); });
+    js.addEventListener('error', () => { clearTimeout(timer); reject(new Error('blocked')); });
+    document.head.append(css, js);
+  });
+}
+
+function lineData() {
+  return { type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: state.route.map((p) => [p.lon, p.lat]) } };
+}
+
+const round6 = (n) => Math.round(n * 1e6) / 1e6;
+
+async function openMap() {
+  if (state.map) { state.map.resize(); return; }
+  if (state.mapLoading) return;
+  state.mapLoading = true;
+  const msg = $('mapMsg');
+  msg.className = 'tool-msg';
+  msg.textContent = 'Loading the map...';
+  try {
+    await loadMapLibrary();
+  } catch (e) {
+    state.mapLoading = false;
+    msg.className = 'tool-msg err';
+    msg.textContent = 'The map could not be loaded. Everything else on this page still works: paste points or drop a file instead.';
+    return;
+  }
+  let map;
+  try {
+    map = new window.maplibregl.Map({
+      container: 'map',
+      style: MAPLIBRE.style,
+      center: [0, 20],
+      zoom: 1.2,
+      cooperativeGestures: true,
+      attributionControl: { compact: true },
+    });
+  } catch (e) {
+    state.mapLoading = false;
+    msg.className = 'tool-msg err';
+    msg.textContent = 'This browser could not start the map (it needs WebGL). Paste points or drop a file instead.';
+    return;
+  }
+  state.map = map;
+  // The library loaded, but the style or tiles may not (ad blocker, firewall, outage).
+  // Without this the tab would say "Loading the map..." forever over a blank canvas.
+  const failed = () => {
+    if (state.mapReady || state.map !== map) return;
+    clearTimeout(loadTimer);
+    state.map = null;
+    state.mapLoading = false;
+    try { map.remove(); } catch (e) {}
+    msg.className = 'tool-msg err';
+    msg.textContent = 'The map could not be loaded. Everything else on this page still works: paste points or drop a file instead.';
+  };
+  const styleLoaded = () => { try { return !!map.isStyleLoaded(); } catch (e) { return false; } };
+  // a slow or missing tile after the style has loaded is not a failure of the whole map
+  const loadTimer = setTimeout(() => { if (!styleLoaded()) failed(); }, 20000);
+  map.on('error', () => { if (!styleLoaded()) failed(); });
+  map.addControl(new window.maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+  map.on('load', () => {
+    clearTimeout(loadTimer);
+    map.addSource('route', { type: 'geojson', data: lineData() });
+    map.addLayer({ id: 'route-line', type: 'line', source: 'route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#185FA5', 'line-width': 4 } });
+    state.mapReady = true;
+    state.mapLoading = false;
+    msg.textContent = '';
+    syncMap(true);
+  });
+  map.on('click', (e) => {
+    if (!state.mapReady) return; // nothing is drawn yet, so a click would add an invisible point
+    const target = e.originalEvent && e.originalEvent.target;
+    if (target && target.closest && target.closest('.gpx-marker')) return;
+    const ll = e.lngLat.wrap();
+    setRoute([...state.route, { lat: round6(ll.lat), lon: round6(ll.lng) }], 'map');
+  });
+}
+
+function syncMap(fit) {
+  if (!state.mapReady) return;
+  const map = state.map;
+  map.getSource('route').setData(lineData());
+  for (const m of state.markers) m.remove();
+  state.markers = [];
+  const n = state.route.length;
+  const msg = $('mapMsg');
+  if (n > MAX_MARKERS) {
+    msg.className = 'tool-msg';
+    msg.textContent = `Showing the line only: ${int(n)} points are too many to drag one by one.`;
+  } else {
+    if (!msg.classList.contains('err')) msg.textContent = '';
+    state.route.forEach((p, i) => {
+      const dot = el('div', { class: 'gpx-marker' + (i === 0 ? ' first' : i === n - 1 ? ' last' : ''), text: String(i + 1), title: `Point ${i + 1}. Drag to move.` });
+      const marker = new window.maplibregl.Marker({ element: dot, draggable: true }).setLngLat([p.lon, p.lat]).addTo(map);
+      const move = () => {
+        const ll = marker.getLngLat().wrap();
+        state.route[i] = { lat: round6(ll.lat), lon: round6(ll.lng) };
+        map.getSource('route').setData(lineData());
+      };
+      marker.on('drag', move);
+      marker.on('dragend', () => { move(); syncTextarea(); refresh(); });
+      state.markers.push(marker);
+    });
+  }
+  if (fit && n === 1) {
+    map.jumpTo({ center: [state.route[0].lon, state.route[0].lat], zoom: 14 });
+  } else if (fit && n > 1) {
+    let w = 180, s = 90, e = -180, nn = -90;
+    for (const p of state.route) { w = Math.min(w, p.lon); e = Math.max(e, p.lon); s = Math.min(s, p.lat); nn = Math.max(nn, p.lat); }
+    map.fitBounds([[w, s], [e, nn]], { padding: 48, maxZoom: 16, duration: 0 });
+  }
+}
+
+function showTab(which) {
+  const map = which === 'map';
+  $('tab-paste').setAttribute('aria-selected', String(!map));
+  $('tab-map').setAttribute('aria-selected', String(map));
+  // only the selected tab is a Tab stop; arrow keys, Home and End move between tabs
+  $('tab-paste').tabIndex = map ? -1 : 0;
+  $('tab-map').tabIndex = map ? 0 : -1;
+  $('panel-paste').hidden = map;
+  $('panel-map').hidden = !map;
+  if (map) openMap();
+}
+
+/* ---------------------------------------------------------------- wiring */
+$('points').addEventListener('input', onPaste);
+$('tab-paste').addEventListener('click', () => showTab('paste'));
+$('tab-map').addEventListener('click', () => showTab('map'));
+document.querySelector('.tabs').addEventListener('keydown', (e) => {
+  let to;
+  if (e.key === 'Home') to = 'paste';
+  else if (e.key === 'End') to = 'map';
+  else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') to = $('tab-paste').getAttribute('aria-selected') === 'true' ? 'map' : 'paste';
+  else return;
+  e.preventDefault();
+  showTab(to);
+  $('tab-' + to).focus();
+});
+
+$('btnExample').addEventListener('click', () => { state.fileName = ''; $('doctor').hidden = true; setRoute(EXAMPLE, 'button'); });
+$('btnReverse').addEventListener('click', () => setRoute(core.reverseRoute(state.route), 'button'));
+$('btnOutBack').addEventListener('click', () => setRoute(core.outAndBack(state.route), 'button'));
+$('btnLoop').addEventListener('click', () => setRoute(core.closeLoop(state.route), 'button'));
+// the input to give focus to when the focused button has just become disabled
+const focusInput = () => ($('panel-paste').hidden ? $('tab-map') : $('points')).focus();
+$('btnUndo').addEventListener('click', () => {
+  setRoute(state.route.slice(0, -1), 'button');
+  if ($('btnUndo').disabled) focusInput();
+});
+$('btnClear').addEventListener('click', () => {
+  state.fileName = '';
+  state.doctorName = '';
+  state.parsed = null;
+  $('doctor').hidden = true;
+  $('fileMsg').textContent = '';
+  setRoute([], 'button');
+  focusInput(); // Clear is disabled now
+});
+
+for (const id of ['speedPreset', 'speedCustom', 'interval', 'dwell', 'start']) {
+  $(id).addEventListener('input', refresh);
+  $(id).addEventListener('change', refresh);
+}
+// a non-integer interval is shown as the whole number actually used, once the user is done typing
+$('interval').addEventListener('change', () => {
+  const v = Number($('interval').value);
+  if (v >= 1 && v <= 3600 && !Number.isInteger(v)) {
+    $('interval').value = String(Math.round(v));
+    refresh();
+    $('intervalNote').textContent = `Rounded to ${Math.round(v)} s.`;
+  }
+});
+$('btnNow').addEventListener('click', () => { setStartNow(); refresh(); });
+
+document.querySelectorAll('[data-download]').forEach((b) => b.addEventListener('click', () => {
+  const o = OUT[b.dataset.download];
+  if (state.plan) download(o.file, fullText(b.dataset.download), o.mime);
+}));
+document.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', () => {
+  if (state.plan) copyText(fullText(b.dataset.copy), b);
+}));
+$('permalink').addEventListener('focus', (e) => e.target.select());
+
+// file picker and drag and drop
+$('pickFile').addEventListener('click', () => $('file').click());
+$('file').addEventListener('change', (e) => { handleFile(e.target.files[0]); e.target.value = ''; });
+const panel = $('inputPanel');
+let dragDepth = 0;
+const hasFiles = (e) => e.dataTransfer && Array.from(e.dataTransfer.types || []).includes('Files');
+panel.addEventListener('dragenter', (e) => { if (hasFiles(e)) { e.preventDefault(); dragDepth++; panel.classList.add('over'); } });
+panel.addEventListener('dragleave', () => { dragDepth = Math.max(0, dragDepth - 1); if (dragDepth === 0) panel.classList.remove('over'); });
+panel.addEventListener('dragover', (e) => { if (hasFiles(e)) { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; } });
+panel.addEventListener('drop', (e) => {
+  if (!hasFiles(e)) return;
+  e.preventDefault();
+  e.stopPropagation();
+  dragDepth = 0;
+  panel.classList.remove('over');
+  showTab('paste');
+  handleFile(e.dataTransfer.files[0]);
+});
+// a file dropped anywhere else on the page must not make the browser navigate to it
+window.addEventListener('dragover', (e) => { if (hasFiles(e)) e.preventDefault(); });
+window.addEventListener('drop', (e) => { if (hasFiles(e)) e.preventDefault(); });
+
+/* ---------------------------------------------------------------- start */
+function applyLink(hash) {
+  const shared = core.parsePermalinkHash(hash);
+  if (!shared) return false;
+  if (Number.isFinite(shared.speed)) {
+    const preset = Object.keys(core.SPEED_PRESETS).find((k) => core.SPEED_PRESETS[k] === shared.speed);
+    $('speedPreset').value = preset || 'custom';
+    if (!preset) $('speedCustom').value = String(shared.speed);
+  }
+  if (Number.isFinite(shared.interval)) $('interval').value = String(shared.interval);
+  if (Number.isFinite(shared.dwell)) $('dwell').value = String(shared.dwell);
+  state.fileName = '';
+  setRoute(shared.points, 'link');
+  return true;
+}
+
+setStartNow();
+if (!applyLink(window.__gpxRouteHash || location.hash)) refresh();
+window.addEventListener('hashchange', () => {
+  if (location.hash.indexOf('#r=') !== 0) return;
+  const hash = location.hash;
+  try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+  applyLink(hash);
+});
+</script>
+<script src="/script.js"></script>
+<script type="module" src="/auth.js"></script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a52c69fd55864ba897a82f7afe24df6c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

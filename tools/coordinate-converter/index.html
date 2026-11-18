@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Coordinate Converter: DMS, Decimal, Plus Code, Geohash | Wander</title>
+<meta name="description" content="Convert a location between decimal degrees, degrees-minutes-seconds, degrees and decimal minutes, Plus Codes and geohash. Free, runs in your browser, uploads nothing." />
+<link rel="canonical" href="https://wanderspoofer.com/tools/coordinate-converter/" />
+<meta property="og:title" content="Coordinate Converter: DMS, Decimal, Plus Code, Geohash" />
+<meta property="og:description" content="Convert a location between decimal degrees, degrees-minutes-seconds, degrees and decimal minutes, Plus Codes and geohash. Free, runs in your browser, uploads nothing." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Wander" />
+<meta property="og:url" content="https://wanderspoofer.com/tools/coordinate-converter/" />
+<meta property="og:image" content="https://wanderspoofer.com/og-image.png" />
+<meta property="og:image:width" content="1600" />
+<meta property="og:image:height" content="900" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Coordinate Converter: DMS, Decimal, Plus Code, Geohash" />
+<meta name="twitter:description" content="Convert a location between decimal degrees, degrees-minutes-seconds, degrees and decimal minutes, Plus Codes and geohash. Free, runs in your browser, uploads nothing." />
+<meta name="twitter:image" content="https://wanderspoofer.com/og-image.png" />
+<meta name="theme-color" content="#185FA5" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/blog/blog.css" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Coordinate Converter",
+  "url": "https://wanderspoofer.com/tools/coordinate-converter/",
+  "description": "Converts a location between decimal degrees, degrees-minutes-seconds, degrees and decimal minutes, Open Location Code (Plus Codes) and geohash, and reads coordinates from common map links. Runs entirely in the browser.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "image": "https://wanderspoofer.com/og-image.png",
+  "publisher": { "@type": "Organization", "name": "Wander", "url": "https://wanderspoofer.com/", "logo": { "@type": "ImageObject", "url": "https://wanderspoofer.com/wander-logo.png" } }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wanderspoofer.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://wanderspoofer.com/tools/" },
+    { "@type": "ListItem", "position": 3, "name": "Coordinate Converter", "item": "https://wanderspoofer.com/tools/coordinate-converter/" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between decimal degrees and degrees, minutes and seconds?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "They are two ways to write the same angle. Decimal degrees use one number, such as 40.446111. Degrees, minutes and seconds (DMS) split that number up. One degree is 60 minutes, and one minute is 60 seconds, so 40.446111 north is 40°26'46\"N. Degrees and decimal minutes (DDM) stop at minutes, as in 40°26.7667'N. All three name the same point."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does latitude or longitude come first?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Latitude usually comes first. Google Maps Help tells you to enter latitude before longitude. Some formats reverse the order. GeoJSON puts longitude first, and so does the Android Emulator's geo fix command. If a latitude comes out above 90, the two numbers are probably the wrong way round. To read them in the other order, choose \"Longitude, latitude\" under \"Read as\"."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What do negative numbers mean?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A negative latitude is south of the equator. A negative longitude is west of the prime meridian, the line of 0° longitude that runs through Greenwich in London. So -33.8688, 151.2093 is the same place as 33.8688 S, 151.2093 E. Use a minus sign or a letter, not both."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a Plus Code?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A Plus Code is a short code for a place, such as 8FVC9G8F+6W. The open system behind it is called Open Location Code, and Google Maps can search for these codes. A full code has 8 characters, a plus sign, and then 2 or more characters. A 10-digit code names an area about 14 by 14 metres at the equator. An 11th digit narrows that to about 2.8 by 3.5 metres. The codes use 20 characters, picked to reduce writing errors and to avoid spelling words."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does a short Plus Code need a nearby place?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A short code such as 9G8F+6W leaves out the first characters of the full code. Many places on Earth share the same ending, so the short code alone does not say which one you mean. Google Maps usually shows a town name after a short code to fill that gap. This page does not look up place names, because that would mean sending them to a map service. Instead, enter the coordinates of any point near the code, and the converter finds the nearest match."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a geohash?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A geohash is a short string of letters and digits that names an area, such as u4pruydqqvj. Gustavo Niemeyer published the system in 2008 and put it in the public domain. Each extra character makes the area smaller. Geohashes use 32 characters: the digits 0 to 9 and the letters of the alphabet except a, i, l and o. Places whose geohashes share a longer start are close together. The reverse is not always true: two close places can have quite different geohashes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How precise are the results?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Decimal degrees are shown to 6 decimal places, which is about 11 centimetres of latitude. Seconds are shown to 2 decimal places, about 31 centimetres. Decimal minutes are shown to 4 places, about 19 centimetres. Longitude steps get shorter away from the equator, so they are finer still. A Plus Code or a geohash names an area, not a point. The converter shows the centre of that area and how big it is."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does this tool send my location anywhere?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The converter runs in your browser and does not upload what you type. \"Use my location\" asks your browser for your position and shows it only on this page. How the browser works out that position depends on the browser and the device. A map link sends the location to Apple, Google or OpenStreetMap only when you open it."
+      }
+    }
+  ]
+}
+</script>
+<style>
+/* ---------- Coordinate converter (page-specific) ---------- */
+.tool .wrap { max-width: 860px; }
+.tool [hidden] { display: none !important; }
+.tool-privacy { margin-top: 16px; padding: 11px 15px; border-radius: 12px; background: var(--bg-soft); border: 1px solid var(--line); color: var(--ink-2); font-size: .95rem; }
+.tool-panel { margin-top: 26px; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow-sm); min-width: 0; }
+.tool-panel > h2 { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; line-height: 1.25; margin-bottom: 14px; }
+.step-n { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--brand); color: #fff; font-size: .9rem; font-weight: 800; }
+.tool label, .tool .label { display: block; font-weight: 700; font-size: .9rem; margin-bottom: 5px; color: var(--ink); }
+.tool input[type="text"], .tool select {
+  width: 100%; max-width: 100%; font: inherit; font-size: 1rem; color: var(--ink); background: #fff;
+  padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 10px;
+}
+.tool input[type="text"] { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.tool input:focus-visible, .tool select:focus-visible, .tool button:focus-visible, .tool a.tbtn:focus-visible {
+  outline: 3px solid var(--brand-300); outline-offset: 2px; border-color: var(--brand);
+}
+.hint { margin-top: 6px; font-size: .88rem; color: var(--ink-2); }
+.hint code, .tool-note code, .how code, .examples code { background: var(--bg-soft); padding: 1px 5px; border-radius: 5px; font-size: .92em; overflow-wrap: anywhere; }
+.in-grid { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 12px 14px; align-items: start; }
+.btn-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
+.tbtn { display: inline-block; font: inherit; font-weight: 700; font-size: .9rem; color: var(--brand); background: #fff; border: 1.5px solid var(--line); border-radius: 100px; padding: 8px 14px; cursor: pointer; text-decoration: none; transition: border-color .15s ease, background .15s ease; }
+.tbtn:hover:not(:disabled) { border-color: var(--brand-300); background: var(--bg-soft); }
+.tbtn:disabled { opacity: .45; cursor: not-allowed; }
+.tbtn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+.tbtn.primary:hover:not(:disabled) { background: var(--brand-600); border-color: var(--brand-600); }
+.tool-msg { margin-top: 10px; font-size: .92rem; overflow-wrap: anywhere; }
+.tool-msg:empty { display: none; }
+.tool-msg.err { color: #9b1c1c; font-weight: 600; }
+.tool-msg.ok { color: #166534; font-weight: 600; }
+.notes { margin-top: 6px; font-size: .9rem; color: var(--ink-2); }
+.notes li { padding: 2px 0; overflow-wrap: anywhere; }
+.tool-note { margin-top: 10px; padding: 10px 14px; border-left: 4px solid var(--brand); background: var(--bg-soft); border-radius: 0 10px 10px 0; font-size: .92rem; color: var(--ink-2); }
+.ref-box { margin-top: 14px; padding: 14px; border: 1.5px dashed var(--brand-300); border-radius: 12px; background: var(--bg-soft); }
+.fmt { display: grid; grid-template-columns: 200px minmax(0, 1fr) auto; gap: 6px 14px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); }
+.fmt:first-of-type { border-top: 0; }
+.fmt-name { font-weight: 700; font-size: .92rem; }
+.fmt-name small { display: block; font-weight: 500; color: var(--ink-2); font-size: .8rem; }
+.fmt-val { min-width: 0; }
+.fmt-val code { display: block; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 1rem; background: var(--bg-soft); padding: 7px 10px; border-radius: 8px; overflow-wrap: anywhere; }
+.fmt-val .hint { margin-top: 4px; }
+.fmt-opts { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.fmt-opts label { margin: 0; font-weight: 600; font-size: .85rem; }
+.tool .fmt-opts select { width: auto; padding: 5px 8px; font-size: .9rem; }
+.empty-out { color: var(--ink-2); font-size: .95rem; }
+.examples { margin: 6px 0 0; padding-left: 1.2em; }
+.examples li { margin: 6px 0; overflow-wrap: anywhere; }
+.how { margin: 8px 0 0; padding-left: 1.3em; list-style: decimal; }
+.how li { margin: 5px 0; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.tool .post-body { margin-top: 44px; }
+.post-body table { width: 100%; border-collapse: collapse; font-size: .93rem; }
+.post-body th, .post-body td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+.table-scroll { overflow-x: auto; max-width: 100%; }
+@media (max-width: 640px) {
+  .tool-panel { padding: 16px 14px; }
+  .in-grid { grid-template-columns: minmax(0, 1fr); }
+  .fmt { grid-template-columns: minmax(0, 1fr) auto; }
+  .fmt-name { grid-column: 1 / -1; }
+  .fmt-val code { font-size: .92rem; }
+  .fmt-table thead { display: none; }
+  .fmt-table tr { display: block; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .fmt-table td { display: block; border: 0; padding: 2px 0; }
+  .fmt-table td:first-child { font-weight: 700; }
+}
+@media (prefers-reduced-motion: reduce) { .tbtn { transition: none; } }
+/* The closed phone menu is only slid off screen by styles.css, so its links stay in the
+   Tab order. Hide it from focus until it is opened (site-wide fix belongs in styles.css). */
+@media (max-width: 980px) {
+  .nav-mobile { visibility: hidden; transition: transform .28s ease, visibility 0s linear .28s; }
+  .nav-mobile.open { visibility: visible; transition: transform .28s ease, visibility 0s linear 0s; }
+}
+/* This page's footer has 4 columns, not the usual 5. */
+@media (min-width: 901px) { .footer-grid { grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
+</style>
+</head>
+
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="/" class="brand" aria-label="Wander home">
+      <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
+      Wander
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="/">Home</a>
+      <a href="/features/">Features</a>
+      <a href="/download/">Download</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/contact/">Contact</a>
+      <a href="/login/" id="navAuthLink">Log in</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost btn-star" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+      <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-discord" target="_blank" rel="noopener" aria-label="Join the Wander Discord">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 5.3A17 17 0 0015.7 4l-.2.4a12 12 0 016.9 0zM8.5 4.4A17 17 0 004 5.3 15.7 15.7 0 001 17a17 17 0 005.2 2.6l.6-1a11 11 0 01-1.7-.8l.4-.3a11.9 11.9 0 0010.2 0l.4.3-1.7.8.6 1A16.6 16.6 0 0023 17 15.7 15.7 0 0020 5.3zM9 14.4c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8zm6 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8z"/></svg>
+        Discord
+      </a>
+      <a href="/pricing/" class="btn btn-primary btn-pro">Get Pro</a>
+      <a href="/download/" class="btn btn-ghost">Download</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="nav-mobile" id="navMobile">
+  <a href="/">Home</a>
+  <a href="/features/">Features</a>
+  <a href="/download/">Download</a>
+  <a href="/pricing/">Pricing</a>
+  <a href="/contact/">Contact</a>
+  <a href="/login/" id="navAuthLinkMobile">Log in</a>
+  <a href="/pricing/" class="btn btn-primary btn-pro nav-mobile-pro">Get Pro</a>
+  <div class="nav-mobile-social">
+    <a href="https://github.com/faisal-nabulsi/Wander" class="btn btn-ghost btn-star" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+    <a href="https://discord.gg/gfHdsRXUVA" class="btn btn-discord" target="_blank" rel="noopener">Discord</a>
+  </div>
+</nav>
+
+<main class="post tool">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/tools/">Tools</a> › Coordinate Converter</nav>
+    <h1>Coordinate Converter</h1>
+    <p class="lede">Paste a location in almost any format and get it back in all the others. Decimal degrees, degrees-minutes-seconds, degrees and decimal minutes, Plus Codes and geohashes, each with a copy button.</p>
+    <p class="tool-privacy"><strong>Runs in your browser, uploads nothing.</strong> What you type stays on this device. The converter itself makes no network requests. A map link sends the location to that map service only when you open it.</p>
+
+    <noscript><p class="tool-note">This converter runs in your browser and needs JavaScript. The format guide further down the page works without it.</p></noscript>
+
+    <!-- ============ 1. INPUT ============ -->
+    <section class="tool-panel" aria-labelledby="h-in">
+      <h2 id="h-in"><span class="step-n" aria-hidden="true">1</span> Enter a location</h2>
+      <div class="in-grid">
+        <div>
+          <label for="loc">Location</label>
+          <input type="text" id="loc" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" enterkeyhint="done" placeholder="40.446111, -79.982222" aria-describedby="locHint" />
+          <p class="hint" id="locHint">For example <code>40.7128, -74.0060</code>, <code>40°26'46"N 79°58'56"W</code>, <code>8FVC9G8F+6W</code>, <code>u4pruydqqvj</code> or a map link.</p>
+        </div>
+        <div>
+          <label for="mode">Read as</label>
+          <select id="mode">
+            <option value="auto" selected>Detect automatically</option>
+            <option value="coords">Latitude, longitude</option>
+            <option value="lonlat">Longitude, latitude</option>
+            <option value="plus">Plus Code</option>
+            <option value="geohash">Geohash</option>
+          </select>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="tbtn" id="btnGeo">Use my location</button>
+        <button type="button" class="tbtn" id="btnExample">Try an example</button>
+        <button type="button" class="tbtn" id="btnClear">Clear</button>
+      </div>
+      <p class="hint" id="geoHint">"Use my location" asks your browser for your position. The page shows it here and sends it nowhere.</p>
+
+      <p class="tool-msg ok" id="readAs" role="status"></p>
+      <p class="tool-msg err" id="inErr" aria-live="polite"></p>
+      <div class="btn-row" id="swapRow" hidden>
+        <button type="button" class="tbtn primary" id="btnSwap">Swap latitude and longitude</button>
+      </div>
+      <ul class="notes" id="notes" aria-live="polite"></ul>
+
+      <div class="ref-box" id="refBox" hidden>
+        <label for="ref">Nearby place (latitude, longitude)</label>
+        <input type="text" id="ref" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="47.37, 8.54" aria-describedby="refHint" />
+        <p class="hint" id="refHint">Any point near the code works, such as the centre of the town it belongs to. You can paste it in any format this page reads.</p>
+        <div class="btn-row">
+          <button type="button" class="tbtn" id="btnGeoRef">Use my location as the nearby place</button>
+        </div>
+        <p class="tool-msg err" id="refErr" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- ============ 2. OUTPUT ============ -->
+    <section class="tool-panel" aria-labelledby="h-out">
+      <h2 id="h-out"><span class="step-n" aria-hidden="true">2</span> Copy any format</h2>
+      <p class="empty-out" id="emptyOut">Enter a location above to see it in every format.</p>
+      <p class="sr-only" id="copyStatus" role="status"></p>
+      <div id="outList" hidden>
+        <div class="fmt">
+          <div class="fmt-name">Decimal degrees<small>latitude, longitude</small></div>
+          <div class="fmt-val"><code id="o-decimal"></code></div>
+          <button type="button" class="tbtn" data-copy="o-decimal" aria-label="Copy decimal degrees">Copy</button>
+        </div>
+        <div class="fmt">
+          <div class="fmt-name">Degrees, minutes, seconds<small>DMS</small></div>
+          <div class="fmt-val"><code id="o-dms"></code></div>
+          <button type="button" class="tbtn" data-copy="o-dms" aria-label="Copy degrees, minutes and seconds">Copy</button>
+        </div>
+        <div class="fmt">
+          <div class="fmt-name">Degrees and decimal minutes<small>DDM, also called DMM</small></div>
+          <div class="fmt-val"><code id="o-ddm"></code></div>
+          <button type="button" class="tbtn" data-copy="o-ddm" aria-label="Copy degrees and decimal minutes">Copy</button>
+        </div>
+        <div class="fmt">
+          <div class="fmt-name">Plus Code<small>Open Location Code</small></div>
+          <div class="fmt-val">
+            <code id="o-plus"></code>
+            <div class="fmt-opts">
+              <label for="plusLen">Length</label>
+              <select id="plusLen">
+                <option value="8">8 digits</option>
+                <option value="10" selected>10 digits</option>
+                <option value="11">11 digits</option>
+                <option value="12">12 digits</option>
+                <option value="13">13 digits</option>
+              </select>
+            </div>
+            <p class="hint" id="o-plus-size"></p>
+          </div>
+          <button type="button" class="tbtn" data-copy="o-plus" aria-label="Copy Plus Code">Copy</button>
+        </div>
+        <div class="fmt">
+          <div class="fmt-name">Geohash</div>
+          <div class="fmt-val">
+            <code id="o-geohash"></code>
+            <div class="fmt-opts">
+              <label for="ghLen">Characters</label>
+              <select id="ghLen"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9" selected>9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select>
+            </div>
+            <p class="hint" id="o-geohash-size"></p>
+          </div>
+          <button type="button" class="tbtn" data-copy="o-geohash" aria-label="Copy geohash">Copy</button>
+        </div>
+        <div class="fmt">
+          <div class="fmt-name">Longitude first<small>GeoJSON order</small></div>
+          <div class="fmt-val"><code id="o-lonlat"></code></div>
+          <button type="button" class="tbtn" data-copy="o-lonlat" aria-label="Copy longitude-first coordinates">Copy</button>
+        </div>
+        <div class="fmt">
+          <div class="fmt-name">Open in a map</div>
+          <div class="fmt-val">
+            <div class="btn-row" style="margin-top:0">
+              <a class="tbtn" id="l-apple" href="#" target="_blank" rel="noopener noreferrer">Apple Maps</a>
+              <a class="tbtn" id="l-google" href="#" target="_blank" rel="noopener noreferrer">Google Maps</a>
+              <a class="tbtn" id="l-osm" href="#" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>
+            </div>
+            <p class="hint">Opening a link sends this location to that map service.</p>
+          </div>
+          <span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GUIDE ============ -->
+    <div class="post-body" id="guide">
+      <h2 id="how">How to use it</h2>
+      <ol class="how">
+        <li>Paste or type a location into the box. The converter works it out as you type.</li>
+        <li>Check the green line under the box. It says which format the converter read.</li>
+        <li>If it guessed wrong, pick the right format under <strong>Read as</strong>.</li>
+        <li>Click <strong>Copy</strong> next to the format you need, or open the location in a map.</li>
+      </ol>
+
+      <h2 id="formats">Formats it reads</h2>
+      <ul class="examples">
+        <li><strong>Decimal degrees.</strong> <code>40.7128, -74.0060</code>, <code>40.7128 -74.0060</code> or <code>40.7128° N, 74.0060° W</code>. Latitude comes first unless N, S, E and W letters say otherwise.</li>
+        <li><strong>Degrees, minutes and seconds.</strong> <code>40°26'46"N 79°58'56"W</code>, <code>40 26 46 N 79 58 56 W</code>, <code>N 40 26 46 W 79 58 56</code> or <code>40d26m46s N, 79d58m56s W</code>. Curly quotes and the prime marks ′ and ″ work too.</li>
+        <li><strong>Degrees and decimal minutes.</strong> <code>N 40° 26.767' W 079° 58.933'</code> or <code>41 24.2028, 2 10.4418</code>.</li>
+        <li><strong>Plus Codes.</strong> Full codes such as <code>8FVC9G8F+6W</code>, in capitals or lower case. Short codes such as <code>9G8F+6W</code> need a nearby place, explained in the FAQ.</li>
+        <li><strong>Geohashes.</strong> Up to 12 characters, such as <code>u4pruydqqvj</code>.</li>
+        <li><strong>Map links.</strong> Full Google Maps, Apple Maps and OpenStreetMap links, and <code>geo:</code> links. Short links such as maps.app.goo.gl cannot be read here. Reading one means asking Google where it leads, and this page sends nothing.</li>
+        <li><strong>Negative numbers and letters.</strong> A minus sign means south or west. So does the letter S or W, written before or after the number.</li>
+      </ul>
+      <p>Separate latitude and longitude with a comma, a semicolon or a space. If you use decimal commas, as in <code>48,8584; 2,2945</code>, put a semicolon between the two numbers.</p>
+
+      <h2 id="table">The same place in each format</h2>
+      <p>These all name the same point in Pittsburgh, rounded as this converter rounds them.</p>
+      <div class="table-scroll">
+        <table class="fmt-table">
+          <thead><tr><th>Format</th><th>Example</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Decimal degrees</td><td><code>40.446111, -79.982222</code></td><td>Latitude first. A minus sign means south or west.</td></tr>
+            <tr><td>Degrees, minutes, seconds (DMS)</td><td><code>40°26&#x27;46.00&quot;N 79°58&#x27;56.00&quot;W</code></td><td>Seconds to 2 decimal places.</td></tr>
+            <tr><td>Degrees and decimal minutes (DDM)</td><td><code>40°26.7667&#x27;N 79°58.9333&#x27;W</code></td><td>Minutes to 4 decimal places.</td></tr>
+            <tr><td>Plus Code, 10 digits</td><td><code>87G2C2W9+C4</code></td><td>An area about 14 m by 11 m here.</td></tr>
+            <tr><td>Plus Code, 11 digits</td><td><code>87G2C2W9+C4R</code></td><td>One more digit gives a smaller area.</td></tr>
+            <tr><td>Geohash, 9 characters</td><td><code>dppn5fyxx</code></td><td>An area about 4.8 m by 3.6 m here.</td></tr>
+            <tr><td>Geohash, 7 characters</td><td><code>dppn5fy</code></td><td>An area about 153 m by 116 m here.</td></tr>
+            <tr><td>Longitude first</td><td><code>-79.982222, 40.446111</code></td><td>The order GeoJSON uses.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The Plus Code and geohash name small areas. Their centres sit a few metres from the exact point, so converting them back gives a slightly different decimal result.</p>
+
+      <h2 id="developers">For developers</h2>
+      <p>Location tools disagree about the order of the two numbers. Most people and most map apps write latitude first. GeoJSON (<a href="https://www.rfc-editor.org/rfc/rfc7946#section-3.1.1" target="_blank" rel="noopener">RFC 7946</a>) writes longitude first. So does the Android Emulator console command <code>geo fix</code>, according to Google's <a href="https://developer.android.com/studio/run/emulator-console" target="_blank" rel="noopener">emulator console guide</a>. Copy the "Longitude first" line when a tool wants that order. To turn a list of points into a route file for Xcode or the Android Emulator, use the free <a href="/tools/simulator-gpx/">Simulator GPX Builder</a>.</p>
+
+      <h2 id="faq">FAQ</h2>
+      <h3>What is the difference between decimal degrees and degrees, minutes and seconds?</h3>
+      <p>They are two ways to write the same angle. Decimal degrees use one number, such as 40.446111. Degrees, minutes and seconds (DMS) split that number up. One degree is 60 minutes, and one minute is 60 seconds, so 40.446111 north is 40°26'46"N. Degrees and decimal minutes (DDM) stop at minutes, as in 40°26.7667'N. All three name the same point.</p>
+      <h3>Does latitude or longitude come first?</h3>
+      <p>Latitude usually comes first. Google Maps Help tells you to enter latitude before longitude. Some formats reverse the order. GeoJSON puts longitude first, and so does the Android Emulator's geo fix command. If a latitude comes out above 90, the two numbers are probably the wrong way round. To read them in the other order, choose "Longitude, latitude" under "Read as".</p>
+      <h3>What do negative numbers mean?</h3>
+      <p>A negative latitude is south of the equator. A negative longitude is west of the prime meridian, the line of 0° longitude that runs through Greenwich in London. So -33.8688, 151.2093 is the same place as 33.8688 S, 151.2093 E. Use a minus sign or a letter, not both.</p>
+      <h3>What is a Plus Code?</h3>
+      <p>A Plus Code is a short code for a place, such as 8FVC9G8F+6W. The open system behind it is called Open Location Code, and Google Maps can search for these codes. A full code has 8 characters, a plus sign, and then 2 or more characters. A 10-digit code names an area about 14 by 14 metres at the equator. An 11th digit narrows that to about 2.8 by 3.5 metres. The codes use 20 characters, picked to reduce writing errors and to avoid spelling words.</p>
+      <h3>Why does a short Plus Code need a nearby place?</h3>
+      <p>A short code such as 9G8F+6W leaves out the first characters of the full code. Many places on Earth share the same ending, so the short code alone does not say which one you mean. Google Maps usually shows a town name after a short code to fill that gap. This page does not look up place names, because that would mean sending them to a map service. Instead, enter the coordinates of any point near the code, and the converter finds the nearest match.</p>
+      <h3>What is a geohash?</h3>
+      <p>A geohash is a short string of letters and digits that names an area, such as u4pruydqqvj. Gustavo Niemeyer published the system in 2008 and put it in the public domain. Each extra character makes the area smaller. Geohashes use 32 characters: the digits 0 to 9 and the letters of the alphabet except a, i, l and o. Places whose geohashes share a longer start are close together. The reverse is not always true: two close places can have quite different geohashes.</p>
+      <h3>How precise are the results?</h3>
+      <p>Decimal degrees are shown to 6 decimal places, which is about 11 centimetres of latitude. Seconds are shown to 2 decimal places, about 31 centimetres. Decimal minutes are shown to 4 places, about 19 centimetres. Longitude steps get shorter away from the equator, so they are finer still. A Plus Code or a geohash names an area, not a point. The converter shows the centre of that area and how big it is.</p>
+      <h3>Does this tool send my location anywhere?</h3>
+      <p>No. The converter runs in your browser and does not upload what you type. "Use my location" asks your browser for your position and shows it only on this page. How the browser works out that position depends on the browser and the device. A map link sends the location to Apple, Google or OpenStreetMap only when you open it.</p>
+    </div>
+
+    <aside class="post-cta">
+      <h2>Need your iPhone or Android to report one of these locations?</h2>
+      <p>Wander can set it. In the app, paste coordinates or a Plus Code, or tap a spot on the map. Some apps' terms forbid changing your location, so check the terms of the apps you use it with.</p>
+      <div class="hero-cta">
+        <a href="/download/" class="btn btn-primary">Download Wander free</a>
+        <a href="/features/" class="btn btn-ghost">See all features</a>
+      </div>
+    </aside>
+
+    <section class="post-sources">
+      <h2>Sources</h2>
+      <ol>
+        <li><a href="https://github.com/google/open-location-code/blob/main/Documentation/Specification/specification.md" rel="noopener" target="_blank">Open Location Code specification</a> - Open Location Code project on GitHub (code sizes, alphabet and short codes)</li>
+        <li><a href="https://github.com/google/open-location-code/tree/main/test_data" rel="noopener" target="_blank">Open Location Code test data</a> - the official encoding, decoding, validity and short-code test files. This converter passes all of them, checked 17 Nov 2026.</li>
+        <li><a href="https://support.google.com/maps/answer/18539" rel="noopener" target="_blank">Search by latitude &amp; longitude in Google Maps</a> - Google Maps Help (formats Google Maps accepts, latitude first)</li>
+        <li><a href="https://support.google.com/maps/answer/7047426" rel="noopener" target="_blank">Find and share a location using Plus Codes</a> - Google Maps Help</li>
+        <li><a href="https://developers.google.com/maps/documentation/urls/get-started" rel="noopener" target="_blank">Maps URLs: Get started</a> - Google for Developers (the search link format)</li>
+        <li><a href="https://en.wikipedia.org/wiki/Geohash" rel="noopener" target="_blank">Geohash</a> - Wikipedia (history, alphabet, examples and cell sizes)</li>
+        <li><a href="https://www.rfc-editor.org/rfc/rfc7946#section-3.1.1" rel="noopener" target="_blank">RFC 7946, section 3.1.1: Position</a> - IETF (GeoJSON puts longitude first)</li>
+        <li><a href="https://developer.android.com/studio/run/emulator-console" rel="noopener" target="_blank">Send emulator console commands</a> - Android Developers (<code>geo fix</code> takes longitude, then latitude)</li>
+      </ol>
+    </section>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="brand">
+          <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
+          Wander
+        </a>
+        <p>Your location, anywhere. A clean, affordable location changer for iPhone, Android, Mac &amp; Windows, with a free trial.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/download/#instructions">Install guide</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="/iphone/">iPhone</a></li>
+          <li><a href="/android/">Android</a></li>
+          <li><a href="/imyfone-anyto-alternative/">vs iMyFone AnyTo</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/tools/simulator-gpx/">Free GPX tool</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/security/">How it works</a></li>
+          <li><a href="/changelog/">Changelog</a></li>
+          <li><a href="/status/">Status</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/refund/">Refunds</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:faisalnab25@gmail.com">Email</a></li>
+          <li><a href="https://github.com/faisal-nabulsi/Wander" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://discord.gg/gfHdsRXUVA" target="_blank" rel="noopener">Discord</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Wander.</span>
+      <span>For personal &amp; testing use — you're responsible for the terms of the apps you use it with.</span>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+import * as core from '/tools/coordinate-converter/coord-core.js';
+
+const $ = (id) => document.getElementById(id);
+const EXAMPLES = [
+  '40°26\'46"N 79°58\'56"W',
+  '8FVC9G8F+6W',
+  'u4pruydqqvj',
+  'N 40° 26.767\' W 079° 58.933\'',
+  '-33.8688, 151.2093',
+  '9G8F+6W',
+];
+let exampleIndex = 0;
+let current = null; // { lat, lon } being shown
+let lastResult = null;
+
+function el(tag, attrs, ...children) {
+  const node = document.createElement(tag);
+  if (attrs) {
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === 'class') node.className = v;
+      else if (k === 'text') node.textContent = v;
+      else node.setAttribute(k, v);
+    }
+  }
+  for (const c of children) node.append(c);
+  return node;
+}
+
+function debounce(fn, ms) {
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
+/* ---------------------------------------------------------------- reading */
+function readReference() {
+  const text = $('ref').value.trim();
+  $('refErr').textContent = '';
+  if (!text) return null;
+  const r = core.parseLocation(text, { mode: 'auto' });
+  if (!r.ok) {
+    $('refErr').textContent = 'Nearby place: ' + (r.error || 'could not read it.');
+    return null;
+  }
+  return { lat: r.lat, lon: r.lon };
+}
+
+function update() {
+  const mode = $('mode').value;
+  const reference = $('refBox').hidden ? null : readReference();
+  const r = core.parseLocation($('loc').value, { mode, reference });
+  lastResult = r;
+
+  $('readAs').textContent = '';
+  $('inErr').textContent = '';
+  $('notes').replaceChildren();
+  $('swapRow').hidden = true;
+
+  const wantsRef = (!r.ok && r.needsReference) || (r.ok && r.recovered);
+  $('refBox').hidden = !wantsRef;
+  if (!wantsRef) $('refErr').textContent = '';
+  if (!r.ok && r.needsReference && $('ref').value.trim()) {
+    // the reference box just appeared with text already in it
+    const ref = readReference();
+    if (ref) return update();
+  }
+
+  if (r.ok) {
+    $('readAs').textContent = r.label;
+    for (const n of r.notes) $('notes').append(el('li', { text: n }));
+    show(r.lat, r.lon);
+    return;
+  }
+  if (!r.empty) $('inErr').textContent = r.error;
+  if (r.swap) $('swapRow').hidden = false;
+  show(null);
+}
+
+/* ---------------------------------------------------------------- output */
+function show(lat, lon) {
+  if (lat === null || lat === undefined) {
+    current = null;
+    $('outList').hidden = true;
+    $('emptyOut').hidden = false;
+    return;
+  }
+  current = { lat, lon };
+  const f = core.allFormats(lat, lon, { plusLength: Number($('plusLen').value), geohashPrecision: Number($('ghLen').value) });
+  $('o-decimal').textContent = f.decimal;
+  $('o-dms').textContent = f.dms;
+  $('o-ddm').textContent = f.ddm;
+  $('o-plus').textContent = f.plus;
+  $('o-plus-size').textContent = 'Names an area ' + f.plusSize + '.';
+  $('o-geohash').textContent = f.geohash;
+  $('o-geohash-size').textContent = 'Names an area ' + f.geohashSize + '.';
+  $('o-lonlat').textContent = f.lonlat;
+  $('l-apple').setAttribute('href', f.links.apple);
+  $('l-google').setAttribute('href', f.links.google);
+  $('l-osm').setAttribute('href', f.links.osm);
+  $('outList').hidden = false;
+  $('emptyOut').hidden = true;
+}
+
+/* ---------------------------------------------------------------- copy */
+function flash(btn, text) {
+  const status = $('copyStatus');
+  status.textContent = '';
+  setTimeout(() => { status.textContent = text === 'Copied' ? 'Copied to the clipboard.' : 'Copy failed. Select the text and copy it yourself.'; }, 50);
+  const old = btn.dataset.label || btn.textContent;
+  btn.dataset.label = old;
+  btn.textContent = text;
+  clearTimeout(btn._t);
+  btn._t = setTimeout(() => { btn.textContent = old; }, 1600);
+}
+
+async function copyText(text, btn) {
+  try {
+    await navigator.clipboard.writeText(text);
+    flash(btn, 'Copied');
+  } catch (e) {
+    const ta = el('textarea', { class: 'sr-only', 'aria-hidden': 'true' });
+    ta.value = text;
+    document.body.append(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e2) { ok = false; }
+    ta.remove();
+    flash(btn, ok ? 'Copied' : 'Copy failed');
+  }
+}
+
+document.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', () => {
+  const text = $(b.dataset.copy).textContent;
+  if (current && text) copyText(text, b);
+}));
+
+/* ---------------------------------------------------------------- location */
+function geoSupported() {
+  return 'geolocation' in navigator && window.isSecureContext !== false;
+}
+
+function locate(target, msgEl) {
+  if (!geoSupported()) {
+    msgEl.textContent = 'This browser cannot share a location with the page.';
+    return;
+  }
+  const btn = target === 'ref' ? $('btnGeoRef') : $('btnGeo');
+  btn.disabled = true;
+  const old = btn.textContent;
+  btn.textContent = 'Finding you...';
+  navigator.geolocation.getCurrentPosition((pos) => {
+    btn.disabled = false;
+    btn.textContent = old;
+    const { latitude, longitude, accuracy } = pos.coords;
+    const text = core.formatDecimal(latitude, longitude);
+    if (target === 'ref') {
+      $('ref').value = text;
+    } else {
+      $('mode').value = 'auto';
+      $('loc').value = text;
+      $('refBox').hidden = true;
+    }
+    update();
+    if (target !== 'ref' && Number.isFinite(accuracy)) {
+      $('notes').append(el('li', { text: `Your browser says this position is accurate to about ${core.formatLength(accuracy)}.` }));
+    }
+  }, (e) => {
+    btn.disabled = false;
+    btn.textContent = old;
+    const why = e && e.code === 1 ? 'Location permission was not given. You can allow it in your browser settings for this site.'
+      : e && e.code === 3 ? 'Finding your location took too long. Try again.'
+      : 'Your browser could not find your location.';
+    msgEl.textContent = why;
+  }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 });
+}
+
+/* ---------------------------------------------------------------- events */
+const onInput = debounce(update, 150);
+$('loc').addEventListener('input', onInput);
+$('ref').addEventListener('input', onInput);
+$('mode').addEventListener('change', update);
+$('plusLen').addEventListener('change', () => { if (current) show(current.lat, current.lon); });
+$('ghLen').addEventListener('change', () => { if (current) show(current.lat, current.lon); });
+$('btnGeo').addEventListener('click', () => locate('loc', $('inErr')));
+$('btnGeoRef').addEventListener('click', () => locate('ref', $('refErr')));
+$('btnExample').addEventListener('click', () => {
+  $('mode').value = 'auto';
+  $('loc').value = EXAMPLES[exampleIndex % EXAMPLES.length];
+  exampleIndex++;
+  update();
+});
+$('btnClear').addEventListener('click', () => {
+  $('loc').value = '';
+  $('ref').value = '';
+  $('mode').value = 'auto';
+  update();
+  $('loc').focus();
+});
+$('btnSwap').addEventListener('click', () => {
+  if (!lastResult || !lastResult.swap) return;
+  $('mode').value = 'coords';
+  $('loc').value = core.formatDecimal(lastResult.swap.lat, lastResult.swap.lon);
+  update();
+  $('loc').focus();
+});
+if (!geoSupported()) {
+  $('btnGeo').disabled = true;
+  $('btnGeoRef').disabled = true;
+  $('geoHint').textContent = '"Use my location" needs a browser that can share its location with a page.';
+}
+
+update();
+</script>
+<script src="/script.js"></script>
+<script type="module" src="/auth.js"></script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a52c69fd55864ba897a82f7afe24df6c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

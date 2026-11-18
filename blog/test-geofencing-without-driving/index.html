@@ -324,6 +324,7 @@
       <p>On most devices the geofence service uses network location, so we would expect that a mock which only feeds the GPS provider might not reach it. That is our inference, not something Google states. Google does say the fused location provider's mock mode affects geofencing, so the most direct test is a debug app that calls <code>setMockMode(true)</code> and <code>setMockLocation()</code>. Test any other mock tool against a known fence first.</p>
       <h3>Can I test geofencing with the app killed?</h3>
       <p>Partly. Swipe the app away, move the simulated location across the fence and log whether the app wakes. On iOS this needs Always permission. Confirm the result with one real walk.</p>
+      <div class="note">Need a route file the iOS Simulator or Android Emulator will actually play? Our free <a href="/tools/simulator-gpx/">Simulator GPX Builder and Fixer</a> makes one and checks existing files. It runs in your browser and uploads nothing.</div>
     </div>
 
     <aside class="post-cta">
@@ -387,6 +388,7 @@
           <li><a href="/android/">Android</a></li>
           <li><a href="/imyfone-anyto-alternative/">vs iMyFone AnyTo</a></li>
           <li><a href="/blog/">Blog</a></li>
+          <li><a href="/tools/simulator-gpx/">Free GPX tool</a></li>
           <li><a href="/life360/">Fake Life360 location</a></li>
           <li><a href="/find-my/">Change Find My location</a></li>
           <li><a href="/dating/">Change dating app location</a></li>

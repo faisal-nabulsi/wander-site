@@ -6,7 +6,47 @@
     <atom:link href="https://wanderspoofer.com/blog/feed.xml" rel="self" type="application/rss+xml" />
     <description>Practical guides from the Wander team: testing location features in Xcode and Android, fixing setup problems, sideloading explained, and location privacy.</description>
     <language>en</language>
-    <lastBuildDate>Sun, 15 Nov 2026 12:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 17 Nov 2026 12:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Apple Verification Code Not Showing Up? How to Get One on iOS 18 and iOS 26</title>
+      <link>https://wanderspoofer.com/blog/apple-verification-code-not-showing/</link>
+      <guid isPermaLink="true">https://wanderspoofer.com/blog/apple-verification-code-not-showing/</guid>
+      <pubDate>Tue, 17 Nov 2026 12:00:00 GMT</pubDate>
+      <category>How-to</category>
+      <description>No Apple verification code on your trusted iPhone? On iOS 18 and iOS 26, Get Verification Code only appears offline. Step-by-step fix, plus the text or call option.</description>
+    </item>
+    <item>
+      <title>Does GPS Work in Airplane Mode or Without Data? What Your Phone Can Still Do Offline</title>
+      <link>https://wanderspoofer.com/blog/does-gps-work-in-airplane-mode/</link>
+      <guid isPermaLink="true">https://wanderspoofer.com/blog/does-gps-work-in-airplane-mode/</guid>
+      <pubDate>Sun, 15 Nov 2026 12:00:00 GMT</pubDate>
+      <category>Explainer</category>
+      <description>Phone GPS usually keeps working in airplane mode and without mobile data, but your map may not. What Apple and Google say, the limits, and a quick test.</description>
+    </item>
+    <item>
+      <title>How Your Phone Knows Where You Are, With or Without GPS</title>
+      <link>https://wanderspoofer.com/blog/how-your-phone-knows-where-you-are/</link>
+      <guid isPermaLink="true">https://wanderspoofer.com/blog/how-your-phone-knows-where-you-are/</guid>
+      <pubDate>Sun, 15 Nov 2026 12:00:00 GMT</pubDate>
+      <category>Explainer</category>
+      <description>How your phone finds you with or without GPS: how satellites, Wi-Fi, cell towers and sensors combine, how accurate they can be, and which settings matter.</description>
+    </item>
+    <item>
+      <title>GPX vs KML vs GeoJSON: What Each Route File Stores and Which One Your Tool Needs</title>
+      <link>https://wanderspoofer.com/blog/gpx-vs-kml-vs-geojson/</link>
+      <guid isPermaLink="true">https://wanderspoofer.com/blog/gpx-vs-kml-vs-geojson/</guid>
+      <pubDate>Sun, 15 Nov 2026 12:00:00 GMT</pubDate>
+      <category>Explainer</category>
+      <description>GPX, KML and GeoJSON all store points and paths, but not the same details. What each keeps, the coordinate-order trap, and which file your tool can read.</description>
+    </item>
+    <item>
+      <title>How to Set a Location in the Android Emulator (and Fix It When It Won't Update)</title>
+      <link>https://wanderspoofer.com/blog/android-emulator-set-location/</link>
+      <guid isPermaLink="true">https://wanderspoofer.com/blog/android-emulator-set-location/</guid>
+      <pubDate>Sun, 15 Nov 2026 12:00:00 GMT</pubDate>
+      <category>Developers</category>
+      <description>Set a single point, play a route or load a GPX or KML file in the Android Emulator, then fix a blank map, a stuck blue dot or a geo fix that does nothing.</description>
+    </item>
     <item>
       <title>Xcode Simulate Location Not Working? How to Fix It in the Simulator and on a Real iPhone</title>
       <link>https://wanderspoofer.com/blog/xcode-simulate-location-not-working/</link>

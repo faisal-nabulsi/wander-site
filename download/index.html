@@ -147,7 +147,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
         <div style="font-size:12px;color:#7a6a48;margin:-2px 0 6px">Tip: one click on the black box copies the whole command. (If your browser blocks the auto-copy, it's selected — just press ⌘C.)</div>
         <div style="font-size:13px;color:#7a6a48">For the desktop app, use <code style="background:#eaeaea;padding:1px 5px;border-radius:4px;font-family:ui-monospace,Menlo,monospace">xattr -cr /Applications/Wander\ Desktop.app</code> instead.</div>
 
-        <div style="margin-top:14px"><b>Option 2 — no Terminal.</b> Right-click the app → <b>Open</b>. If it's still blocked, open <b>System Settings → Privacy &amp; Security</b>, scroll down to <b>Security</b>, and click <b>"Open Anyway"</b> next to the Wander message — then confirm with your Mac password or Touch ID. <span style="color:#7a6a48">(If it still says "damaged," use Option 1 — that always works.)</span></div>
+        <div style="margin-top:14px"><b>Option 2 — no Terminal.</b> Open the app once and click <b>Done</b> on the warning. Then open <b>System Settings → Privacy &amp; Security</b>, scroll down to <b>Security</b>, and click <b>"Open Anyway"</b> next to the Wander message — then confirm with your Mac password or Touch ID. On macOS 14 and earlier, right-clicking the app → <b>Open</b> also works. <span style="color:#7a6a48">(If it still says "damaged," use Option 1 — that always works.)</span></div>
       </div>
       <div class="star-strip reveal">
         <span class="star-copy">Wander is an honest, affordable spoofer with a real free trial — a star helps more people find it.</span>
@@ -207,7 +207,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
           <ol>
             <li><b>Open &amp; trust the Wander Installer</b> you downloaded above — it's an indie build, so your computer will warn once before it lets you open it:
               <ul>
-                <li>🍎 <b>Mac:</b> open the downloaded <code>.dmg</code> and drag <b>Wander Installer</b> into <b>Applications</b>. Then <b>right-click it → Open → Open</b> to get past the "unidentified developer" warning. If macOS instead says it's <b>"damaged,"</b> run the <code>xattr -cr</code> command in the yellow box above — that always clears it.</li>
+                <li>🍎 <b>Mac:</b> open the downloaded <code>.dmg</code> and drag <b>Wander Installer</b> into <b>Applications</b>. macOS will block it the first time because it is an indie build: follow the two options in the yellow box above (the <code>xattr -cr</code> command, or <b>System Settings → Privacy &amp; Security → Open Anyway</b>). Hit an error at any step? See <a href="/help/install-errors/" style="font-weight:600;text-decoration:underline;text-underline-offset:3px">install errors and fixes</a>.</li>
                 <li>🪟 <b>Windows:</b> run <b>Wander-Installer-Windows.exe</b>. SmartScreen may warn — click <b>"More info" → "Run anyway,"</b> then approve the admin (UAC) prompt.</li>
               </ul>
             </li>
@@ -242,7 +242,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
           <p class="lead">Spoof a tethered iPhone straight from your Mac. Nothing gets installed on the phone.</p>
           <ol>
             <li>Download <b>Wander for Mac</b> above, unzip it, and drag <b>Wander Desktop</b> into your <b>Applications</b> folder.</li>
-            <li>First launch only: <b>right-click the app → Open → Open</b> to clear the unsigned-app warning. If macOS says "damaged," run the <code>xattr -cr</code> command in the yellow box above — that always fixes it.</li>
+            <li>First launch only: macOS will block the unsigned app. Run the <code>xattr -cr</code> command in the yellow box above, or use <b>System Settings → Privacy &amp; Security → Open Anyway</b>.</li>
             <li>Open <b>Wander Desktop</b> and enter your Mac password once — it needs admin just to open the secure tunnel to your iPhone. No Terminal needed.</li>
             <li>Plug your iPhone in (or put it on the same Wi-Fi), click <b>Connect Device</b>, then teleport, joystick, or run a route — all from your Mac.</li>
           </ol>
@@ -307,6 +307,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
           <li><a href="/android/">Android</a></li>
           <li><a href="/imyfone-anyto-alternative/">vs iMyFone AnyTo</a></li>
           <li><a href="/blog/">Blog</a></li>
+          <li><a href="/tools/simulator-gpx/">Free GPX tool</a></li>
         </ul>
       </div>
       <div>
