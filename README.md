@@ -6,7 +6,7 @@
 
 # Wander — Website
 
-### The landing page for **Wander**, the affordable location spoofer for iPhone, Android, Mac & Windows — with a real free trial.
+### The landing page for **Wander**, the affordable location spoofer for iPhone, Android, Mac & Windows — with a free plan that refills.
 
 The free alternative to paid apps like **iMyFone AnyTo** and **Tenorshare iAnyGo**.
 
@@ -16,7 +16,7 @@ The free alternative to paid apps like **iMyFone AnyTo** and **Tenorshare iAnyGo
 [![Download](https://img.shields.io/badge/⬇️_Download-Free-22C55E?style=for-the-badge)](https://wanderspoofer.com/#download)
 [![Discord](https://img.shields.io/badge/💬_Discord-Join-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/gfHdsRXUVA)
 
-![Free trial](https://img.shields.io/badge/Free_trial-no_card-22C55E?style=flat-square)
+![Free plan](https://img.shields.io/badge/Free_plan-no_card-22C55E?style=flat-square)
 ![Platform](https://img.shields.io/badge/platform-iOS_·_Android_·_macOS_·_Windows-lightgrey?style=flat-square)
 
 <br/>
@@ -116,7 +116,7 @@ python3 -m http.server 8080   # then open http://localhost:8080
 
 ## 💸 Why Wander
 
-- **A real free trial** — no credit card, real features (not a countdown lock).
+- **A free plan that refills** — no credit card, real features (not a countdown lock).
 - **Affordable, one-time pricing** — $3.99/mo, $36/yr, or an $80 lifetime license, instead of the recurring subscriptions rivals charge.
 - **Four platforms, one license** — iPhone, Android, Mac & Windows.
 - **No jailbreak, no root**, and honest, privacy-respecting by design.

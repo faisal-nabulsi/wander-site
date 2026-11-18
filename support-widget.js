@@ -32,7 +32,7 @@
   var MAX_HISTORY = 10; // messages sent to the server (user+assistant combined)
 
   var GREETING =
-    "Hi, I'm Wanda 🐧 — your Wander guide! Ask me anything about features, setup, which devices work, or the free trial. " +
+    "Hi, I'm Wanda 🐧 — your Wander guide! Ask me anything about features, setup, which devices work, or the free plan. " +
     "For billing or account help, waddle over to our Discord.";
 
   // Running client-side history (role/content pairs).

@@ -95,7 +95,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
     <!-- Your plan (filled from Firestore licenses/{uid} by the script below) -->
     <div class="account-card reveal">
       <h2>Your plan</h2>
-      <div class="plan-badge" id="planBadge">Free <span class="chip">Trial</span></div>
+      <div class="plan-badge" id="planBadge">Free <span class="chip">Plan</span></div>
       <p class="muted" id="planDesc">Checking your plan…</p>
       <div class="account-actions" id="planActions" style="margin-top:16px">
         <a href="/pricing/" class="btn btn-primary">Upgrade to Pro</a>
@@ -158,7 +158,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
     <!-- Danger zone: irreversible account deletion, visually separated. -->
     <div class="account-card reveal" id="dangerZone" style="border:1px solid #E5484D;background:#fff5f5">
       <h2 style="color:#C62828">Danger zone</h2>
-      <p class="muted">Permanently delete your Wander account and all its data — your license, trial history, and saved places. This can't be undone. If you have Pro, deleting here does not cancel a subscription in Lemon Squeezy; <a href="https://wanderapp.lemonsqueezy.com/billing" target="_blank" rel="noopener">cancel that separately first</a> if it's still active.</p>
+      <p class="muted">Permanently delete your Wander account and all its data — your license, free plan usage, and saved places. This can't be undone. If you have Pro, deleting here does not cancel a subscription in Lemon Squeezy; <a href="https://wanderapp.lemonsqueezy.com/billing" target="_blank" rel="noopener">cancel that separately first</a> if it's still active.</p>
       <div class="account-actions" style="margin-top:16px">
         <button type="button" class="btn btn-ghost" id="deleteAccountBtn" style="border-color:#E5484D;color:#C62828">Delete my account</button>
       </div>
@@ -176,7 +176,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
           <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
           Wander
         </a>
-        <p>Your location, anywhere. A clean, affordable location changer for iPhone, Android, Mac &amp; Windows, with a free trial.</p>
+        <p>Your location, anywhere. A clean, affordable location changer for iPhone, Android, Mac &amp; Windows, with a free plan.</p>
       </div>
       <div>
         <h4>Product</h4>
@@ -184,12 +184,16 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
           <li><a href="/features/">Features</a></li>
           <li><a href="/pricing/">Pricing</a></li>
           <li><a href="/download/#instructions">Install guide</a></li>
+          <li><a href="/help/install-errors/">Install help</a></li>
           <li><a href="/download/">Download</a></li>
           <li><a href="/iphone/">iPhone</a></li>
           <li><a href="/android/">Android</a></li>
           <li><a href="/imyfone-anyto-alternative/">vs iMyFone AnyTo</a></li>
+          <li><a href="/tenorshare-ianygo-alternative/">vs Tenorshare iAnyGo</a></li>
+          <li><a href="/itoolab-anygo-alternative/">vs iToolab AnyGo</a></li>
           <li><a href="/blog/">Blog</a></li>
           <li><a href="/tools/simulator-gpx/">Free GPX tool</a></li>
+          <li><a href="/tools/coordinate-converter/">Coordinate converter</a></li>
         </ul>
       </div>
       <div>
@@ -291,8 +295,8 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
         ' <a href="https://wanderapp.lemonsqueezy.com/billing" class="btn btn-ghost" target="_blank" rel="noopener">Manage subscription</a>' +
         '<p class="muted" style="margin-top:10px">Cancel, switch plans or change your card. Enter the email you paid with and Lemon Squeezy emails you a sign-in link.</p>';
     } else {
-      badge.innerHTML = 'Free <span class="chip">Trial</span>';
-      desc.textContent = "You're on the free trial. Upgrade to Wander Pro for unlimited teleports, joystick, and routes.";
+      badge.innerHTML = 'Free <span class="chip">Plan</span>';
+      desc.textContent = "You're on the free plan. Upgrade to Wander Pro for unlimited teleports, joystick, and routes.";
       actions.innerHTML = '<a href="/pricing/" class="btn btn-primary">Upgrade to Pro</a>';
     }
   }
@@ -516,7 +520,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
     if (deleteMsg) { deleteMsg.textContent = ""; deleteMsg.className = "auth-msg err"; }
     const sure = window.confirm(
       "Delete your Wander account?\n\n" +
-      "This permanently removes your account and all its data — license, trial history, and saved places. " +
+      "This permanently removes your account and all its data — license, free plan usage, and saved places. " +
       "This cannot be undone."
     );
     if (!sure) return;

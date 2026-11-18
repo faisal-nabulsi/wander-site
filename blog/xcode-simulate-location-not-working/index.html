@@ -239,7 +239,7 @@ pymobiledevice3 developer dvt simulate-location clear</code></pre>
         <li><strong>The iPhone app.</strong> A one-time setup on a Mac or Windows PC installs it with a free Apple ID (the Windows installer is in beta and needs Apple's free Apple Devices app). You turn on Developer Mode and add LocalDevVPN, a free tunnel app from the App Store. After that, you don't need the computer. The <a href="/download/">download page</a> has every step.</li>
         <li><strong>Wander Desktop for Mac.</strong> It drives a tethered iPhone (one connected to the Mac by cable or on the same Wi-Fi) with nothing installed on the phone, on Apple Silicon and Intel Macs. It is an unsigned build: it isn't signed with a paid code-signing certificate, so macOS may warn you the first time you open it. It also asks for your Mac password once because it needs admin rights to open the secure tunnel to your iPhone. Plug the phone in (or join the same Wi-Fi), click Connect Device, then teleport or run a route. On a PC, see <a href="/blog/change-iphone-location-from-windows/">changing iPhone location from Windows</a>.</li>
       </ul>
-      <p>For testing: search by coordinates is free, multi-stop routes snap to roads at a realistic speed, GPX import lets you bring your own GPX files, and the Panic Button snaps you back to real GPS. Multi-stop routes and GPX import need Pro; the free trial includes 1 teleport a day and 3 two-stop routes a month (see <a href="/pricing/">pricing</a> and <a href="/features/">features</a>). The iPhone app is open source (GNU AGPL v3), as is the desktop app (GNU GPL v3); see our <a href="/security/">security page</a>.</p>
+      <p>For testing: search by coordinates is free, multi-stop routes snap to roads at a realistic speed, GPX import lets you bring your own GPX files, and the Panic Button snaps you back to real GPS. Multi-stop routes and GPX import need Pro; the free plan includes 1 teleport a day and 3 two-stop routes a month (see <a href="/pricing/">pricing</a> and <a href="/features/">features</a>). The iPhone app is open source (GNU AGPL v3), as is the desktop app (GNU GPL v3); see our <a href="/security/">security page</a>.</p>
       <div class="note"><strong>Developer-tunnel locations count as simulated.</strong> iOS marks any location set through Apple's developer tunnel as software-simulated. Core Location reports it as <code>isSimulatedBySoftware</code> in a location's <code>sourceInformation</code>, and Apple's docs give GPX playback in the Xcode debugger as an example. An app that reads that flag treats Xcode, pymobiledevice3 and Wander's developer-tunnel mode (the one described above) the same way. If your app rejects simulated fixes outside testing, as Apple suggests apps may, test that path on purpose with Xcode or a developer-tunnel tool.</div>
       <p>Some apps' terms forbid changing your location. If you use a location tool with someone else's app, following its rules is up to you.</p>
 
@@ -266,7 +266,7 @@ pymobiledevice3 developer dvt simulate-location clear</code></pre>
 
     <aside class="post-cta">
       <h2>Need a location without Xcode or a terminal?</h2>
-      <p>Wander sets the location for the whole iPhone from an app, so every app on it, your own build included, reads the same spot. After setup, the iPhone app doesn't need a computer. Try it with the free trial: 1 teleport a day, no card.</p>
+      <p>Wander sets the location for the whole iPhone from an app, so every app on it, your own build included, reads the same spot. After setup, the iPhone app doesn't need a computer. Try it with the free plan: 1 teleport a day, no card.</p>
       <div class="hero-cta">
         <a href="/download/" class="btn btn-primary">Download Wander free</a>
         <a href="/features/" class="btn btn-ghost">See all features</a>
@@ -322,7 +322,7 @@ pymobiledevice3 developer dvt simulate-location clear</code></pre>
           <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
           Wander
         </a>
-        <p>Your location, anywhere. A clean, affordable location changer for iPhone, Android, Mac &amp; Windows, with a free trial.</p>
+        <p>Your location, anywhere. A clean, affordable location changer for iPhone, Android, Mac &amp; Windows, with a free plan.</p>
       </div>
       <div>
         <h4>Product</h4>
@@ -330,11 +330,15 @@ pymobiledevice3 developer dvt simulate-location clear</code></pre>
           <li><a href="/features/">Features</a></li>
           <li><a href="/pricing/">Pricing</a></li>
           <li><a href="/download/">Download</a></li>
+          <li><a href="/help/install-errors/">Install help</a></li>
           <li><a href="/iphone/">iPhone</a></li>
           <li><a href="/android/">Android</a></li>
           <li><a href="/imyfone-anyto-alternative/">vs iMyFone AnyTo</a></li>
+          <li><a href="/tenorshare-ianygo-alternative/">vs Tenorshare iAnyGo</a></li>
+          <li><a href="/itoolab-anygo-alternative/">vs iToolab AnyGo</a></li>
           <li><a href="/blog/">Blog</a></li>
           <li><a href="/tools/simulator-gpx/">Free GPX tool</a></li>
+          <li><a href="/tools/coordinate-converter/">Coordinate converter</a></li>
           <li><a href="/life360/">Fake Life360 location</a></li>
           <li><a href="/find-my/">Change Find My location</a></li>
           <li><a href="/dating/">Change dating app location</a></li>

@@ -486,7 +486,7 @@ ul { list-style: none; }
 .cmp-no{background:#eef1f5;color:var(--ink-3)}
 .cmp-yes svg,.cmp-no svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .cmp-note{display:block;margin-top:6px;font-size:.78rem;font-weight:700;color:var(--brand)}
-.cmp-table tbody td[data-plan="Free Trial"] .cmp-note{color:var(--ink-2)}
+.cmp-table tbody td[data-plan="Free plan"] .cmp-note{color:var(--ink-2)}
 
 .cmp-price-row th{font-weight:800;color:var(--ink);font-size:1.02rem}
 .cmp-price-free{font-size:1.25rem;font-weight:800;color:var(--ink)}
@@ -726,6 +726,10 @@ ul { list-style: none; }
    left and the centered text looked shoved to one side. Let them span the full card width. */
 #download .dl-col .dl-sub, #download .dl-col .dl-note{max-width:100%;margin-left:auto;margin-right:auto}
 #download .dl-ipa-link{display:inline-block;margin:12px 0 0;font-size:13px;color:#fff;opacity:.82;text-decoration:underline}
+/* Offer strip under the download buttons: what is free, what Pro costs, link to /pricing/. */
+#download .dl-offer{margin:22px auto 0;max-width:760px;text-align:center}
+#download .dl-offer p{margin:0;max-width:100%;font-size:14px;line-height:1.6;opacity:.92}
+#download .dl-offer a{color:#fff;font-weight:700;text-decoration:underline}
 /* iPhone card: two OS installers side by side (pick your computer), so the card isn't much
    taller than the single-button cards next to it — keeps the download grid balanced. */
 @media(min-width:721px){

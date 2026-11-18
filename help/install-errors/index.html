@@ -192,6 +192,7 @@
             <ul>
               <li><a href="#socket-io-failed">"device socket io failed"</a></li>
               <li><a href="#maximum-apps">"maximum number of installed apps"</a></li>
+              <li><a href="#apple-id-blocked">"0xe8008024" or "0xe8008018"</a></li>
               <li><a href="#own-apple-id">Installing for a friend or family member</a></li>
             </ul>
           </li>
@@ -351,6 +352,19 @@
         <li>Click <strong>Install Wander</strong> again.</li>
       </ol>
 
+      <h2 id="apple-id-blocked">"Application verification failed": 0xe8008024 or 0xe8008018</h2>
+      <pre class="err"><code>0xe8008024</code></pre>
+      <pre class="err"><code>0xe8008018 (The identity used to sign the executable is no longer valid.)</code></pre>
+      <p>The text after <code>0xe8008024</code> says the provisioning profile is blocked. A provisioning profile is the file that lets an app signed with your Apple ID run on your iPhone.</p>
+      <p><strong>What it means:</strong> The reports point to Apple blocking some Apple IDs from installing apps they sign. The Installer signs Wander with your Apple ID. Then the iPhone refuses the app at the install step.</p>
+      <p>People using other sideloading tools report it too. The reports do not show what triggers it. In the test linked below, a new certificate, key and app identifier did not get past it. Checked 17 Nov 2026.</p>
+      <p><code>0xe8008018</code> can also mean an expired or revoked signing certificate. Try the install once more first.</p>
+      <ol>
+        <li>Click <strong>Install Wander</strong> again.</li>
+        <li>Same error? Then Apple is most likely blocking that Apple ID. The reported workaround is to sign in with a different Apple ID that belongs to you.</li>
+      </ol>
+      <p>Sources: two reports on GitHub for iloader, an open-source sideloading installer. In <a href="https://github.com/nab138/iloader/issues/583" target="_blank" rel="noopener">issue 583</a>, its developer says the error does not appear to be limited to iloader. In <a href="https://github.com/nab138/iloader/issues/653" target="_blank" rel="noopener">issue 653</a>, a tester's blocked Apple ID still failed with a new certificate, key and app identifier, and a second Apple ID installed on the same iPhone.</p>
+
       <h2 id="own-apple-id">Installing for a friend or family member: use their own Apple ID</h2>
       <p>Use the phone owner's own Apple ID, not yours. They need to be there to sign in and approve the code.</p>
       <p><strong>Why:</strong> Wander renews with whichever Apple ID installed it, once you sign in to that Apple ID in Wander's Settings. So install with the Apple ID of the person who uses the phone.</p>
@@ -450,7 +464,7 @@
           <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
           Wander
         </a>
-        <p>Your location, anywhere. A clean, affordable location changer for iPhone, Android, Mac &amp; Windows, with a free trial.</p>
+        <p>Your location, anywhere. A clean, affordable location changer for iPhone, Android, Mac &amp; Windows, with a free plan.</p>
       </div>
       <div>
         <h4>Product</h4>
@@ -458,12 +472,16 @@
           <li><a href="/features/">Features</a></li>
           <li><a href="/pricing/">Pricing</a></li>
           <li><a href="/download/#instructions">Install guide</a></li>
+          <li><a href="/help/install-errors/">Install help</a></li>
           <li><a href="/download/">Download</a></li>
           <li><a href="/iphone/">iPhone</a></li>
           <li><a href="/android/">Android</a></li>
           <li><a href="/imyfone-anyto-alternative/">vs iMyFone AnyTo</a></li>
+          <li><a href="/tenorshare-ianygo-alternative/">vs Tenorshare iAnyGo</a></li>
+          <li><a href="/itoolab-anygo-alternative/">vs iToolab AnyGo</a></li>
           <li><a href="/blog/">Blog</a></li>
           <li><a href="/tools/simulator-gpx/">Free GPX tool</a></li>
+          <li><a href="/tools/coordinate-converter/">Coordinate converter</a></li>
         </ul>
       </div>
       <div>

@@ -104,7 +104,7 @@
   <article class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Blog</a></nav>
     <h1>How to Set a Real iPhone's Location From a Windows PC: pymobiledevice3, GeoPort and Wander Desktop Compared</h1>
-    <p class="lede">You can set a real iPhone's GPS location from a Windows PC with no Mac and no Xcode, Apple's Mac developer app. On iOS 17 and later, use a tool built for Apple's newer developer tunnel: pymobiledevice3 and GeoPort are free, and Wander Desktop has a free trial.</p>
+    <p class="lede">You can set a real iPhone's GPS location from a Windows PC with no Mac and no Xcode, Apple's Mac developer app. On iOS 17 and later, use a tool built for Apple's newer developer tunnel: pymobiledevice3 and GeoPort are free, and Wander Desktop has a free plan.</p>
     <p class="post-meta">Published 15 November 2026 · 12 min read</p>
     <div class="post-body">
       <div class="toc">
@@ -130,7 +130,7 @@
           <tr><th></th><th>pymobiledevice3</th><th>GeoPort</th><th>Wander Desktop</th></tr>
         </thead>
         <tbody>
-          <tr><td>Price</td><td>Free</td><td>Free, donations welcome</td><td>Free trial, then Pro from $3.99/month</td></tr>
+          <tr><td>Price</td><td>Free</td><td>Free, donations welcome</td><td>Free plan; Pro from $3.99/month</td></tr>
           <tr><td>License</td><td>GPL v3</td><td>GPL v3</td><td>GPL v3 (desktop app)</td></tr>
           <tr><td>Interface</td><td>Command line and Python API</td><td>Map you click</td><td>Map you click</td></tr>
           <tr><td>Windows admin rights</td><td>None on iOS 17.4+; Administrator for iOS 17.0&ndash;17.3</td><td>Required for iOS 17, per its README</td><td>Yes, an admin (UAC) prompt for the device tunnel</td></tr>
@@ -225,7 +225,7 @@ pymobiledevice3 developer dvt simulate-location clear</code></pre>
       <img src="/screenshots/wander-desktop-map.png" alt="Wander Desktop showing a map with a dropped pin, the flight planner panel and a Panic Real GPS button" width="1280" height="820" loading="lazy">
       <p><strong>Why the SmartScreen warning?</strong> The Mac and Windows builds are unsigned because code-signing certificates cost money every year. The warning is about that missing certificate. The desktop app is open source under the GPL v3, so you can read the code. The <a href="/security/">security page</a> links to Wander's source on GitHub.</p>
       <p><strong>Several iPhones at once (beta).</strong> The Mac and Windows apps can hold a location across every connected iPhone. You can set one phone, a few, or all of them. Connect each phone first, then pick which ones move.</p>
-      <p><strong>Price.</strong> The free trial gives you 1 teleport a day, plus 15 minutes of joystick and 3 routes a month, with no card. Pro costs $3.99 a month, $36 a year, or $80 once for lifetime. The <a href="/pricing/">pricing page</a> says one license covers iPhone, Android, Mac and Windows. Its FAQ says Pro follows your account, not a device. Its yearly plan card, though, lists "Use it on up to 3 devices". If you want to move several iPhones at once, <a href="/contact/">ask us</a> about that limit before you buy the yearly plan. Wander's site doesn't list supported iOS versions, so try the free trial on your iPhone before you pay.</p>
+      <p><strong>Price.</strong> The free plan gives you 1 teleport a day, plus 15 minutes of joystick and 3 routes a month, with no card. Pro costs $3.99 a month, $36 a year, or $80 once for lifetime. The <a href="/pricing/">pricing page</a> says one license covers iPhone, Android, Mac and Windows. Its FAQ says Pro follows your account, not a device. Its yearly plan card, though, lists "Use it on up to 3 devices". If you want to move several iPhones at once, <a href="/contact/">ask us</a> about that limit before you buy the yearly plan. Wander's site doesn't list supported iOS versions, so try the free plan on your iPhone before you pay.</p>
 
       <h2 id="no-pc-afterward">Option 4: install Wander on the iPhone, so the PC isn't needed afterward</h2>
       <p>The three desktop tools all run on the computer, with the iPhone connected to it. If you'd rather have the location changer on the phone itself, you can install the <a href="/iphone/">Wander iPhone app</a> from Windows. The download page puts it at a one-time setup of about 10 minutes, with a free Apple ID. The Windows installer is a fresh beta and needs the free Apple Devices app.</p>
@@ -244,7 +244,7 @@ pymobiledevice3 developer dvt simulate-location clear</code></pre>
       <ul>
         <li><strong>Scripts, automated tests or CI: pymobiledevice3.</strong> It's free. It needs no admin rights on iOS 17.4 and later. Its Python API makes it the better choice for automation.</li>
         <li><strong>A quick, free teleport with a map: GeoPort, if it supports your iOS version.</strong> It may not work on iOS 26.4 or later, so check its issue tracker first. Expect to install iTunes and run it as Administrator.</li>
-        <li><strong>Routes, a joystick, several iPhones at once, or an app on the phone itself: Wander.</strong> It's paid after the trial. The builds are unsigned, and the Windows iPhone installer is in beta. Its site doesn't list supported iOS versions, so start with the free trial.</li>
+        <li><strong>Routes, a joystick, several iPhones at once, or an app on the phone itself: Wander.</strong> Its free plan is limited, and Pro is paid. The builds are unsigned, and the Windows iPhone installer is in beta. Its site doesn't list supported iOS versions, so start with the free plan.</li>
       </ul>
       <p>If a free tool does what you need, use it. If you do have a Mac and Xcode's Simulate Location misbehaves, see <a href="/blog/xcode-simulate-location-not-working/">Xcode Simulate Location not working</a>. Wander's full feature list is on the <a href="/features/">features page</a>.</p>
 
@@ -285,7 +285,7 @@ pymobiledevice3 developer dvt simulate-location clear</code></pre>
 
     <aside class="post-cta">
       <h2>Prefer a map to a command line?</h2>
-      <p>Wander Desktop for Windows lets you teleport, joystick-walk or run a route on an iPhone plugged into your PC, with nothing installed on the phone. It's open source, and the free trial needs no card.</p>
+      <p>Wander Desktop for Windows lets you teleport, joystick-walk or run a route on an iPhone plugged into your PC, with nothing installed on the phone. It's open source, and the free plan needs no card.</p>
       <div class="hero-cta">
         <a href="/download/" class="btn btn-primary">Download Wander free</a>
         <a href="/features/" class="btn btn-ghost">See all features</a>
@@ -332,7 +332,7 @@ pymobiledevice3 developer dvt simulate-location clear</code></pre>
           <img class="logo" src="/wander-logo.png" alt="Wander" width="34" height="34">
           Wander
         </a>
-        <p>Your location, anywhere. A clean, affordable location changer for iPhone, Android, Mac &amp; Windows, with a free trial.</p>
+        <p>Your location, anywhere. A clean, affordable location changer for iPhone, Android, Mac &amp; Windows, with a free plan.</p>
       </div>
       <div>
         <h4>Product</h4>
@@ -340,11 +340,15 @@ pymobiledevice3 developer dvt simulate-location clear</code></pre>
           <li><a href="/features/">Features</a></li>
           <li><a href="/pricing/">Pricing</a></li>
           <li><a href="/download/">Download</a></li>
+          <li><a href="/help/install-errors/">Install help</a></li>
           <li><a href="/iphone/">iPhone</a></li>
           <li><a href="/android/">Android</a></li>
           <li><a href="/imyfone-anyto-alternative/">vs iMyFone AnyTo</a></li>
+          <li><a href="/tenorshare-ianygo-alternative/">vs Tenorshare iAnyGo</a></li>
+          <li><a href="/itoolab-anygo-alternative/">vs iToolab AnyGo</a></li>
           <li><a href="/blog/">Blog</a></li>
           <li><a href="/tools/simulator-gpx/">Free GPX tool</a></li>
+          <li><a href="/tools/coordinate-converter/">Coordinate converter</a></li>
           <li><a href="/life360/">Fake Life360 location</a></li>
           <li><a href="/find-my/">Change Find My location</a></li>
           <li><a href="/dating/">Change dating app location</a></li>
