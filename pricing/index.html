@@ -630,7 +630,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
   });
 </script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a52c69fd55864ba897a82f7afe24df6c"}'></script><!-- End Cloudflare Web Analytics -->
-<!-- Localized price display: convert the USD prices to the visitor's currency (display only; charged in local currency at checkout). -->
+<!-- Localized price display: convert the USD prices to the visitor's currency (display only; checkout charges US dollars). -->
 <script>
 (function(){
   var API=(window.WANDER_API||"https://wander-payments.wanderlocation.workers.dev").replace(/\/+$/,"");
@@ -647,7 +647,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
     if(note&&note.parentNode){
       var p=document.createElement("div");
       p.style.cssText="font-size:.85em;opacity:.75;margin-top:6px";
-      p.textContent="Prices shown in "+d.currency+" at today's rate — you're charged in your local currency at secure checkout.";
+      p.textContent="Prices shown in "+d.currency+" are an estimate at today's rate. Checkout charges US dollars, plus any VAT or sales tax for your country.";
       note.parentNode.insertBefore(p, note.nextSibling);
     }
   }).catch(function(){});
