@@ -133,7 +133,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
         <a href="/contact/" class="btn btn-ghost btn-block js-buy" data-tier="lifetime">Get Lifetime</a>
       </div>
     </div>
-    <p class="price-note" id="buyNote">Secure card checkout. You'll sign in first so your purchase links to your Wander account — one plan unlocks iOS, Android &amp; desktop, and it survives reinstalls and new phones.</p>
+    <p class="price-note" id="buyNote">Secure card checkout. You'll sign in first so your purchase links to your Wander account — one plan unlocks iOS, Android &amp; desktop, and it survives reinstalls and new phones. Prices are in US dollars; sales tax or VAT may be added at checkout.</p>
   </div>
 </section>
 
@@ -592,9 +592,9 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
       b.textContent = user.email || "your account";
       note.appendChild(b);
       note.appendChild(document.createTextNode(
-        " — your purchase links to this account automatically. One plan unlocks iOS, Android & desktop and survives reinstalls."));
+        " — your purchase links to this account automatically. One plan unlocks iOS, Android & desktop and survives reinstalls. Prices are in US dollars; sales tax or VAT may be added at checkout."));
     } else {
-      note.textContent = "Secure card checkout. You'll sign in first so your purchase links to your Wander account — one plan unlocks iOS, Android & desktop, and it survives reinstalls and new phones.";
+      note.textContent = "Secure card checkout. You'll sign in first so your purchase links to your Wander account — one plan unlocks iOS, Android & desktop, and it survives reinstalls and new phones. Prices are in US dollars; sales tax or VAT may be added at checkout.";
     }
   }
 
@@ -647,7 +647,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
     if(note&&note.parentNode){
       var p=document.createElement("div");
       p.style.cssText="font-size:.85em;opacity:.75;margin-top:6px";
-      p.textContent="Prices shown in "+d.currency+" are an estimate at today's rate. Checkout charges US dollars, plus any VAT or sales tax for your country.";
+      p.textContent="Prices shown in "+d.currency+" are an estimate at today's rate. Checkout charges the US-dollar price.";
       note.parentNode.insertBefore(p, note.nextSibling);
     }
   }).catch(function(){});
