@@ -1,7 +1,7 @@
 {
   "_comment": "Each release: bump WANDER_VERSION in main.py AND version here, then upload zips with: gh release upload current Wander-Desktop-mac.zip Wander-Windows.zip --repo faisal-nabulsi/wander-site --clobber (binaries are NOT committed to this repo).",
-  "version": "1.17.1",
-  "notes": "Shows the correct version number and no longer shows a false update notice. Removes a leftover connection report inherited from the original code, and re-checks Pro when you return to the app.",
+  "version": "1.17.2",
+  "notes": "Clearer wording across the app.",
   "url_mac": "https://github.com/faisal-nabulsi/wander-site/releases/download/current/Wander-Desktop-mac.zip",
   "url_win": "https://github.com/faisal-nabulsi/wander-site/releases/download/current/Wander-Windows.zip"
 }
