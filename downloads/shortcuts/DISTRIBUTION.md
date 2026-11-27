@@ -8,7 +8,7 @@ All six are self-contained: they call fixed URLs/schemes only, so they import an
 |---|---|
 | **Wander: Teleport** | Prompts for (or accepts) lat/lng, then `Get Contents of URL` GET → `http://wander.gsloc/set?latitude={LAT}&longitude={LNG}`. Pushes one coordinate to the active tunnel. |
 | **Wander: Teleport to preset** | Same call, but lat/lng come from a hardcoded `Dictionary`/menu of saved spots (user edits the list once). One tap → pick a spot → teleport. |
-| **Wander: Reset to real location** | GET → `http://wander.gsloc/set?reset=1`. Drops the spoof, returns to real GPS. |
+| **Wander: Reset to real location** | GET → `http://wander.gsloc/set?reset=1`. Clears the location you set, returns to real GPS. |
 | **Wander: Open Location Services** | Opens `prefs:root=Privacy&path=LOCATION`. Convenience jump to the pane the user needs during setup/troubleshooting. |
 | **Wander: Connect proxy** | `shadowrocket://connect` then `shadowrocket://route/config`. Brings the tunnel up and sets routing so `wander.gsloc` calls will fire. |
 
@@ -121,7 +121,7 @@ Its full action-by-action breakdown lived here and in `RECIPES.md`; both are gon
 
 These two include a **Set VPN** action. `Set VPN` targets *a named VPN configuration on the user's own device* — the config name isn't knowable at build time, so a hardcoded file would import with an empty/broken VPN action. We ship these as **written recipes**, not files.
 
-**Wander: Spoof mode** (switch into Wi-Fi positioning mode)
+**Wander: Location mode** (switch into Wi-Fi positioning mode)
 1. `Set VPN` → toggle **On** → pick **Shadowrocket** (user's config).
 2. *(optional)* `URL` `shadowrocket://route/config` → `Open URLs`.
 3. `Open App` → pick **Wander** (user must select it — dynamic bundle id, see §6).
@@ -140,7 +140,7 @@ These are configured per-device in **Shortcuts › Automation**. They can't be s
 |---|---|---|---|
 | **App opens → Connect proxy** | App-open trigger on the app you choose | **Yes** — app-open triggers support "Run Immediately" with no notification. | User must set "Run Immediately" (default on iOS 26) and un-check "Notify When Run" to make it invisible. If the tunnel is already up, the re-connect is a harmless no-op. |
 | **Back Tap (double) → Teleport** | Accessibility Back Tap bound to run the shortcut | **Partially** — Back Tap fires the shortcut instantly, but if Teleport *prompts* for coordinates it will show UI. | Bind Back Tap to a **preset/no-prompt** variant so it's one gesture, zero dialogs. Back Tap is set in Settings › Accessibility › Touch, not the Shortcuts app. |
-| **NFC tag → Connect proxy** | Scan an NFC tag | **Yes**, once triggered — but NFC-triggered automations **always require the trigger; iOS may still show a tap-to-run banner** depending on setup. | NFC automations are iPhone-only (not iPad), and the tag must be registered on each device. Good for a "tap phone to sticker on desk = go spoof mode" ritual. |
+| **NFC tag → Connect proxy** | Scan an NFC tag | **Yes**, once triggered — but NFC-triggered automations **always require the trigger; iOS may still show a tap-to-run banner** depending on setup. | NFC automations are iPhone-only (not iPad), and the tag must be registered on each device. Good for a "tap phone to sticker on desk = go to location mode" ritual. |
 
 General iOS 26 note: personal automations set to **Run Immediately** skip the confirmation prompt; leave that on for all three.
 
@@ -176,7 +176,7 @@ Everything else — **Open Location Services** (pure `prefs:` deep link) and **C
 
 **Fix:** register a stable custom URL scheme `wander://`. Because URL schemes are resolved by the OS registry, not the bundle id, a scheme survives the dynamic id and the re-sign churn of free sideloading. That unlocks:
 
-- **`wander://open`** — deep link to open the app from any shortcut/automation with a hardcoded `Open URLs` action. Kills the manual "pick Wander" step, so **Spoof mode becomes a fully shippable file** instead of a recipe.
+- **`wander://open`** — deep link to open the app from any shortcut/automation with a hardcoded `Open URLs` action. Kills the manual "pick Wander" step, so **Location mode becomes a fully shippable file** instead of a recipe.
 - **`wander://teleport?lat=..&lng=..`** — open **and** drive Wander in one call. More robust than the plain-HTTP `wander.gsloc` GET (which is at the mercy of TEST 1), because it hands the coordinate to the app to push, rather than betting on Shortcuts firing a local-HTTP request through the tunnel itself.
 - **`wander://connect`**, **`wander://reset`** — round out the set so the entire pack can run on schemes, which import cleanly and never touch the untrusted-file wall.
 

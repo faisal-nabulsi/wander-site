@@ -6,7 +6,7 @@
 
 # Wander — Website
 
-### The landing page for **Wander**, the affordable location spoofer for iPhone, Android, Mac & Windows — with a free plan that refills.
+### The landing page for **Wander**, the affordable location changer for iPhone, Android, Mac & Windows — with a free plan that refills.
 
 The free alternative to paid apps like **iMyFone AnyTo** and **Tenorshare iAnyGo**.
 
@@ -27,7 +27,7 @@ The free alternative to paid apps like **iMyFone AnyTo** and **Tenorshare iAnyGo
 
 <a href="https://github.com/faisal-nabulsi/Wander"><img src="https://img.shields.io/badge/⭐_Star_Wander_on_GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Star Wander on GitHub"/></a>
 
-**⭐ [Star Wander on GitHub](https://github.com/faisal-nabulsi/Wander) — it's free, takes one click, and helps more people find a free alternative to the paid spoofers.**
+**⭐ [Star Wander on GitHub](https://github.com/faisal-nabulsi/Wander) — it's free, takes one click, and helps more people find a free alternative to the paid location changers.**
 
 <br/>
 
@@ -119,7 +119,7 @@ python3 -m http.server 8080   # then open http://localhost:8080
 - **A free plan that refills** — no credit card, real features (not a countdown lock).
 - **Affordable, one-time pricing** — $3.99/mo, $36/yr, or an $80 lifetime license, instead of the recurring subscriptions rivals charge.
 - **Four platforms, one license** — iPhone, Android, Mac & Windows.
-- **No jailbreak, no root**, and honest, privacy-respecting by design.
+- **No jailbreak, no root**, and privacy-respecting by design.
 
 ---
 

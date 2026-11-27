@@ -255,7 +255,7 @@
         <li><strong>Wander</strong> sets the location from the phone itself, over Apple's own developer tunnel (the connection Apple's developer tools use to reach a phone). After a one-time setup from a Mac or Windows PC (Developer Mode, a free Apple ID and the free LocalDevVPN tunnel app from the App Store; see the <a href="/download/">install guide</a>), no computer is needed, and scheduled moves keep going in the background. See <a href="/iphone/">Wander on iPhone</a>.</li>
       </ul>
       <p>Expect iOS to mark all of these fixes as simulated, Xcode's included. Apple's <code>CLLocationSourceInformation.isSimulatedBySoftware</code> is true for locations simulated on the device, and Wander's own pricing FAQ says iOS marks locations set through the developer tunnel as simulated. If your app checks that flag and rejects simulated fixes, these tests will exercise that rejection path rather than your normal one, so plan a separate test for each.</p>
-      <p>An honest limit: we haven't verified whether iOS relaunches a terminated app when a simulated location meets a condition. A 2015 Stack Overflow question about testing with the app killed has no answers either. Test it, and let the real walk decide.</p>
+      <p>One limit: we haven't verified whether iOS relaunches a terminated app when a simulated location meets a condition. A 2015 Stack Overflow question about testing with the app killed has no answers either. Test it, and let the real walk decide.</p>
 
       <h2 id="test-routes">Designing test routes</h2>
       <ul>

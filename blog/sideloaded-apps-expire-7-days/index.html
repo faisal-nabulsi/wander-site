@@ -61,7 +61,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Can you bypass the 7-day limit?",
+      "name": "Can you avoid the 7-day re-sign?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "No. With a free Apple ID, every provisioning profile expires 7 days after Apple issues it. Tools can only refresh the app before that happens, which gets a new 7-day profile."
@@ -297,12 +297,12 @@
       <p>Every tool in this post asks for your Apple ID, because Apple issues the profile to your account. So you are trusting the tool with your account sign-in. A few habits help:</p>
       <ul>
         <li><strong>Download tools only from their official sites.</strong> A modified copy of a signing tool could misuse your sign-in.</li>
-        <li><strong>Prefer open source.</strong> Anyone can read open-source code, so someone can check what it does with your credentials. AltStore is licensed under the GNU AGPL. Wander's iPhone app is open source under the GNU AGPL v3, and its desktop app under the GNU GPL v3. The <a href="/security/">security page</a> links to the source.</li>
+        <li><strong>Prefer open source.</strong> Anyone can read open-source code, so someone can check what it does with your credentials. AltStore is open source, and so are Wander's iPhone and desktop apps. The <a href="/security/">security page</a> links to the source.</li>
         <li><strong>Know how the tool signs in to Apple.</strong> SideStore's FAQ is open about this: the anisette server it signs in through can add a generated Mac to your account's device list, and older, heavily shared anisette servers have been known to cause Apple ID locks. Ask the same question of any tool you use, Wander included.</li>
       </ul>
 
       <h2 id="faq">FAQ</h2>
-      <h3>Can you bypass the 7-day limit?</h3>
+      <h3>Can you avoid the 7-day re-sign?</h3>
       <p>No. With a free Apple ID, every provisioning profile expires 7 days after Apple issues it. Tools can only refresh the app before that happens, which gets a new 7-day profile.</p>
       <h3>Does the paid $99 developer account remove the limit?</h3>
       <p>It changes it. The Apple Developer Program costs 99 USD a year. Sideloadly and SideStore say paid profiles last about a year, and SideStore says the 3-app cap no longer applies. You still re-sign, but about once a year instead of every week.</p>

@@ -104,7 +104,7 @@
   <article class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Blog</a></nav>
     <h1>Xcode Simulate Location Not Working? How to Fix It in the Simulator and on a Real iPhone</h1>
-    <p class="lede">Xcode's Simulate Location usually breaks for one of four reasons: no debug session is attached, the GPX file is greyed out or missing, the GPX file uses tracks instead of waypoints, or the fake location lingers after you stop. Here is how to spot and fix each one, in the Simulator and on a real iPhone.</p>
+    <p class="lede">Xcode's Simulate Location usually breaks for one of four reasons: no debug session is attached, the GPX file is greyed out or missing, the GPX file uses tracks instead of waypoints, or the simulated location lingers after you stop. Here is how to spot and fix each one, in the Simulator and on a real iPhone.</p>
     <p class="post-meta">Published 15 November 2026 · 13 min read</p>
     <div class="post-body">
       <div class="toc">
@@ -125,7 +125,7 @@
       <h2 id="quick-answer">Quick answer: the four usual causes</h2>
       <ol>
         <li><strong>No debug session on a real iPhone.</strong> A debug session is the live link between Xcode's debugger and your running app. Xcode's Simulate Location menu works through that link. Fix: start the app with Run, debugger on, and pick the location again. To set a location without the debugger, see <code>devicectl</code> in Fix 4.</li>
-        <li><strong>The GPX file is greyed out or missing.</strong> GPX (GPS Exchange Format) is the XML file type Xcode reads for fake locations. Fix: add the file to your project, tick Allow Location Simulation in the scheme, and move other copies of Xcode out of the way.</li>
+        <li><strong>The GPX file is greyed out or missing.</strong> GPX (GPS Exchange Format) is the XML file type Xcode reads for simulated locations. Fix: add the file to your project, tick Allow Location Simulation in the scheme, and move other copies of Xcode out of the way.</li>
         <li><strong>The GPX file has the wrong elements.</strong> Xcode plays waypoints (<code>&lt;wpt&gt;</code>), not tracks (<code>&lt;trk&gt;</code>). Fix: turn track points into waypoints and give each one a timestamp.</li>
         <li><strong>The location lingers after you stop.</strong> Fix: restart the iPhone, or reconnect and choose Don't Simulate Location.</li>
       </ol>
@@ -197,7 +197,7 @@
       <p>Then pick a location from the debug bar.</p>
 
       <h2 id="fix-stops">Fix 4: It stopped when I stopped debugging (or it won't stop)</h2>
-      <p>If the fake location vanished when you pressed Stop, nothing is broken. A location set from the debug bar belongs to the debug session, and ending the session can hand location back to the phone's real sensors. One developer on iOS 17 reported the phone returning to real GPS after disconnecting from Xcode.</p>
+      <p>If the simulated location vanished when you pressed Stop, nothing is broken. A location set from the debug bar belongs to the debug session, and ending the session can hand location back to the phone's real sensors. One developer on iOS 17 reported the phone returning to real GPS after disconnecting from Xcode.</p>
       <h3>Keeping a location without the debugger: devicectl</h3>
       <p>If you want the location to stay after you stop, try <code>devicectl</code>, the device command-line tool that comes with Xcode. In Xcode 27.2 it has a <code>simulate location</code> command with <code>coordinate</code>, <code>route</code>, <code>scenario</code>, <code>list</code> and <code>clear</code> subcommands. Its built-in help says a <code>coordinate</code> simulation continues until you clear it, and doesn't mention the debugger. For <code>--device</code>, pass your phone's name or its UDID.</p>
       <pre><code>xcrun devicectl device simulate location coordinate --device "My iPhone" --latitude 51.5007 --longitude -0.1246
@@ -225,7 +225,7 @@ xcrun devicectl device simulate location clear --device "My iPhone"</code></pre>
       </ul>
 
       <h2 id="beyond-xcode">When Xcode isn't enough</h2>
-      <p>Xcode is the right free tool while you debug, and its fake location even reaches other apps (one of the 2014 questions saw it in Google Maps). The debugger's Simulate Location ends with the debug session, and <code>devicectl</code> (Fix 4) needs a Mac with Xcode and a terminal. Sometimes you need a location on a real iPhone without those: from a Windows or Linux computer, for a tester who doesn't use Xcode, or with no computer nearby. For automated tests and CI (continuous integration: automated builds that run your tests on a server), stick with Xcode's own tools.</p>
+      <p>Xcode is the right free tool while you debug, and its simulated location even reaches other apps (one of the 2014 questions saw it in Google Maps). The debugger's Simulate Location ends with the debug session, and <code>devicectl</code> (Fix 4) needs a Mac with Xcode and a terminal. Sometimes you need a location on a real iPhone without those: from a Windows or Linux computer, for a tester who doesn't use Xcode, or with no computer nearby. For automated tests and CI (continuous integration: automated builds that run your tests on a server), stick with Xcode's own tools.</p>
       <h3>Free option: pymobiledevice3</h3>
       <p>pymobiledevice3 is an open-source Python tool (GPL 3.0) for working with iPhones from macOS, Windows or Linux. Its location commands use DVT, the developer-tools service Xcode uses, and need Developer Mode. On iOS 17 and later:</p>
       <pre><code>pymobiledevice3 developer dvt simulate-location set -- 51.5007 -0.1246
@@ -239,7 +239,7 @@ pymobiledevice3 developer dvt simulate-location clear</code></pre>
         <li><strong>The iPhone app.</strong> A one-time setup on a Mac or Windows PC installs it with a free Apple ID (the Windows installer is in beta and needs Apple's free Apple Devices app). You turn on Developer Mode and add LocalDevVPN, a free tunnel app from the App Store. After that, you don't need the computer. The <a href="/download/">download page</a> has every step.</li>
         <li><strong>Wander Desktop for Mac.</strong> It drives a tethered iPhone (one connected to the Mac by cable or on the same Wi-Fi) with nothing installed on the phone, on Apple Silicon and Intel Macs. It is an unsigned build: it isn't signed with a paid code-signing certificate, so macOS may warn you the first time you open it. It also asks for your Mac password once because it needs admin rights to open the secure tunnel to your iPhone. Plug the phone in (or join the same Wi-Fi), click Connect Device, then teleport or run a route. On a PC, see <a href="/blog/change-iphone-location-from-windows/">changing iPhone location from Windows</a>.</li>
       </ul>
-      <p>For testing: search by coordinates is free, multi-stop routes snap to roads at a realistic speed, GPX import lets you bring your own GPX files, and the Panic Button snaps you back to real GPS. Multi-stop routes and GPX import need Pro; the free plan includes 1 teleport a day and 3 two-stop routes a month (see <a href="/pricing/">pricing</a> and <a href="/features/">features</a>). The iPhone app is open source (GNU AGPL v3), as is the desktop app (GNU GPL v3); see our <a href="/security/">security page</a>.</p>
+      <p>For testing: search by coordinates is free, multi-stop routes snap to roads at a realistic speed, GPX import lets you bring your own GPX files, and the Panic Button snaps you back to real GPS. Multi-stop routes and GPX import need Pro; the free plan includes 1 teleport a day and 3 two-stop routes a month (see <a href="/pricing/">pricing</a> and <a href="/features/">features</a>). The iPhone and desktop apps are open source; see our <a href="/security/">security page</a>.</p>
       <div class="note"><strong>Developer-tunnel locations count as simulated.</strong> iOS marks any location set through Apple's developer tunnel as software-simulated. Core Location reports it as <code>isSimulatedBySoftware</code> in a location's <code>sourceInformation</code>, and Apple's docs give GPX playback in the Xcode debugger as an example. An app that reads that flag treats Xcode, pymobiledevice3 and Wander's developer-tunnel mode (the one described above) the same way. If your app rejects simulated fixes outside testing, as Apple suggests apps may, test that path on purpose with Xcode or a developer-tunnel tool.</div>
       <p>Some apps' terms forbid changing your location. If you use a location tool with someone else's app, following its rules is up to you.</p>
 
