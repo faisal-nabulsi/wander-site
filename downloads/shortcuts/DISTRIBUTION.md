@@ -121,7 +121,7 @@ Its full action-by-action breakdown lived here and in `RECIPES.md`; both are gon
 
 These two include a **Set VPN** action. `Set VPN` targets *a named VPN configuration on the user's own device* — the config name isn't knowable at build time, so a hardcoded file would import with an empty/broken VPN action. We ship these as **written recipes**, not files.
 
-**Wander: Spoof mode** (get into PoGo-spoofing state)
+**Wander: Spoof mode** (switch into Wi-Fi positioning mode)
 1. `Set VPN` → toggle **On** → pick **Shadowrocket** (user's config).
 2. *(optional)* `URL` `shadowrocket://route/config` → `Open URLs`.
 3. `Open App` → pick **Wander** (user must select it — dynamic bundle id, see §6).
@@ -138,7 +138,7 @@ These are configured per-device in **Shortcuts › Automation**. They can't be s
 
 | Automation | Trigger | Runs silently on iOS 26? | Caveat |
 |---|---|---|---|
-| **PoGo opens → Connect proxy** | App-open trigger on Pokémon GO | **Yes** — app-open triggers support "Run Immediately" with no notification. | User must set "Run Immediately" (default on iOS 26) and un-check "Notify When Run" to make it invisible. If the tunnel is already up, the re-connect is a harmless no-op. |
+| **App opens → Connect proxy** | App-open trigger on the app you choose | **Yes** — app-open triggers support "Run Immediately" with no notification. | User must set "Run Immediately" (default on iOS 26) and un-check "Notify When Run" to make it invisible. If the tunnel is already up, the re-connect is a harmless no-op. |
 | **Back Tap (double) → Teleport** | Accessibility Back Tap bound to run the shortcut | **Partially** — Back Tap fires the shortcut instantly, but if Teleport *prompts* for coordinates it will show UI. | Bind Back Tap to a **preset/no-prompt** variant so it's one gesture, zero dialogs. Back Tap is set in Settings › Accessibility › Touch, not the Shortcuts app. |
 | **NFC tag → Connect proxy** | Scan an NFC tag | **Yes**, once triggered — but NFC-triggered automations **always require the trigger; iOS may still show a tap-to-run banner** depending on setup. | NFC automations are iPhone-only (not iPad), and the tag must be registered on each device. Good for a "tap phone to sticker on desk = go spoof mode" ritual. |
 

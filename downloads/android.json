@@ -3,6 +3,6 @@
   "versionCode": 41,
   "versionName": "0.32.0",
   "url": "https://github.com/faisal-nabulsi/wander-site/releases/download/current/Wander.apk",
-  "notes": "New: a floating joystick that stays on top of your game — steer while Pokémon GO is open, no app-switching (Pro). Share a spot or route as a link your friends can import. Set a distance goal (walk until N km, then stop) and lock your heading to walk hands-free. Curated hotspots now load from the server with freshness info instead of being frozen into the app.",
+  "notes": "New: a floating joystick that stays on top of other apps — steer without switching back to Wander (Pro). Share a spot or route as a link your friends can import. Set a distance goal (walk until N km, then stop) and lock your heading to walk hands-free. Curated hotspots now load from the server with freshness info instead of being frozen into the app.",
   "size": 49667856
 }

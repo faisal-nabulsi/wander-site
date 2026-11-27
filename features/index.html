@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Wander Features — Teleport, Routes &amp; PoGo Mode</title>
-<meta name="description" content="Everything Wander does: teleport, joystick walking, realistic routes, PoGo Mode, GPX import and self-updates — on iPhone, Android, Mac &amp; Windows." />
+<title>Wander Features — Teleport, Joystick &amp; Routes</title>
+<meta name="description" content="Everything Wander does: teleport, joystick walking, realistic routes, a jump-teleport cooldown timer, GPX import and self-updates — on iPhone, Android, Mac &amp; Windows." />
 <link rel="canonical" href="https://wanderspoofer.com/features/" />
-<meta property="og:title" content="Wander Features — Teleport, Routes &amp; PoGo Mode" />
-<meta property="og:description" content="Teleport, joystick walking, realistic routes and PoGo Mode — see Wander in action on iPhone, Android, Mac &amp; Windows." />
+<meta property="og:title" content="Wander Features — Teleport, Joystick &amp; Routes" />
+<meta property="og:description" content="Teleport, joystick walking, realistic routes and a cooldown timer — see Wander in action on iPhone, Android, Mac &amp; Windows." />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Wander" />
 <meta property="og:url" content="https://wanderspoofer.com/features/" />
@@ -16,8 +16,8 @@
 <meta property="og:image:height" content="900" />
 <meta property="og:image:alt" content="Wander — change your location on iPhone, Android, Mac or Windows" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Wander Features — Teleport, Routes &amp; PoGo Mode" />
-<meta name="twitter:description" content="Teleport, joystick walking, realistic routes and PoGo Mode — see Wander in action on iPhone, Android, Mac &amp; Windows." />
+<meta name="twitter:title" content="Wander Features — Teleport, Joystick &amp; Routes" />
+<meta name="twitter:description" content="Teleport, joystick walking, realistic routes and a cooldown timer — see Wander in action on iPhone, Android, Mac &amp; Windows." />
 <meta name="twitter:image" content="https://wanderspoofer.com/og-image.png" />
 <meta name="theme-color" content="#185FA5" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -116,8 +116,8 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
 
       <div class="feature reveal">
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 3L4 14h6l-1 7 9-11h-6l1-7z"/></svg></div>
-        <h3>PoGo Mode</h3>
-        <p>Jump-teleport with a cooldown timer and an optional block-until-cooldown lock. Built-in presets for Pokémon GO, Monster Hunter Now, Pikmin Bloom &amp; Ingress.</p>
+        <h3>Jump-Teleport Cooldown</h3>
+        <p>Jump-teleport with a cooldown timer and an optional lock that holds the next jump until the timer runs out.</p>
       </div>
 
       <div class="feature reveal">
@@ -208,12 +208,6 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
       </div>
 
       <div class="feature reveal">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 3L4 14h6l-1 7 9-11h-6l1-7z"/><circle cx="18" cy="6" r="2"/></svg></div>
-        <h3>Raids, Eggs &amp; Events</h3>
-        <p>A read-only board of current Pokémon GO raids, eggs and events, so you know where the action is before you hop.</p>
-      </div>
-
-      <div class="feature reveal">
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3"/></svg></div>
         <h3>Scheduling</h3>
         <p>Set Wander to be at a place during set hours and it starts and stops on its own. On Android it runs even when the app is closed; on iPhone it keeps going in the background.</p>
@@ -254,7 +248,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
       <div class="feature reveal">
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15h8m-8 4h5"/><path d="M6 9l4-4 3 3 5-5"/><circle cx="18" cy="6" r="1"/></svg></div>
         <h3>Distance-jump Smoothing</h3>
-        <p>Big teleports glide across the gap over a few seconds instead of snapping, so apps can't flag an impossible instant jump — handy for dating and location-sharing apps. On iPhone &amp; Android.</p>
+        <p>Big teleports glide across the gap over a few seconds instead of snapping straight to the new spot. On iPhone &amp; Android.</p>
       </div>
 
       <div class="feature reveal">
@@ -271,8 +265,8 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
 
       <div class="feature reveal">
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z"/><path d="M12 8v3M12 15h.01"/></svg></div>
-        <h3>Anti-detection Tips</h3>
-        <p>A heads-up when your device's time zone doesn't match your spoofed spot, plus clear guidance on lining up your VPN and IP so the network agrees with your location.</p>
+        <h3>Time Zone &amp; IP Check</h3>
+        <p>A heads-up when your device's time zone doesn't match the spot you set, plus clear guidance on matching your VPN region to it.</p>
       </div>
 
       <div class="feature reveal">
@@ -357,7 +351,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
           </svg>
         </span>
         <h3 class="wc-title">Free Plan That Refills</h3>
-        <p class="wc-blurb">1 free teleport every day, plus 15 minutes of joystick and 3 routes every month. Actual features, not a 2-hour lockout.</p>
+        <p class="wc-blurb">1 free teleport every day, plus 15 minutes of joystick and 3 routes every month.</p>
       </li>
 
       <li class="wc-cell">
@@ -428,7 +422,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
       <figure class="gal-item"><img src="/screenshots/wander-app-settings.png" alt="Wander Settings on iPhone — Pro status and one-tap self-refresh" loading="lazy"><figcaption>Pro &amp; self-refresh</figcaption></figure>
 
       <h3 class="gal-platform">On Android</h3>
-      <figure class="gal-item"><img src="/screenshots/wander-android-map.png" alt="Wander on Android — live map with Teleport, Joystick, Route and PoGo modes" loading="lazy"><figcaption>Map &amp; modes</figcaption></figure>
+      <figure class="gal-item"><img src="/screenshots/wander-android-map.png" alt="Wander on Android — live map with Teleport, Joystick and Route modes" loading="lazy"><figcaption>Map &amp; modes</figcaption></figure>
       <figure class="gal-item"><img src="/screenshots/wander-android-advanced.png" alt="Wander on Android — Advanced GPS with realistic altitude, accuracy, bearing &amp; speed, plus geofence triggers and schedules" loading="lazy"><figcaption>Advanced GPS &amp; automation</figcaption></figure>
 
       <h3 class="gal-platform">On Mac &amp; Windows</h3>
@@ -441,7 +435,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
 <section class="section section-soft">
   <div class="wrap">
     <div class="cta-band reveal">
-      <h2>Try every feature free</h2>
+      <h2>Start free, no card needed</h2>
       <p>1 free teleport every day, plus 15 minutes of joystick and 3 routes every month — no card to start.</p>
       <div class="hero-cta" style="justify-content:center">
         <a href="/download/" class="btn btn-light btn-lg">
@@ -497,7 +491,7 @@ setTimeout(function(){if(!window.__wanderRevealReady)document.documentElement.cl
       <div>
         <h4>Use cases</h4>
         <ul>
-          <li><a href="/pokemon-go/">Location-based games</a></li>
+          <li><a href="/location-based-games/">Location-based games</a></li>
           <li><a href="/find-my/">Location sharing apps</a></li>
           <li><a href="/dating/">Dating apps</a></li>
           <li><a href="/vpn/">Match IP to GPS</a></li>

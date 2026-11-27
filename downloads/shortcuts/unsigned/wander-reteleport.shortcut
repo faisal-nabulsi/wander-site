@@ -31,7 +31,7 @@
 			<key>WFWorkflowActionParameters</key>
 			<dict>
 				<key>WFCommentActionText</key>
-				<string>Wander: Teleport. Requires Shadowrocket connected + routing=config, or run Wander: Connect proxy first. Enter lat then lng in decimal degrees (e.g. 40.6892 then -74.0445). Opens Wander to push the spot (PoGo-safe gs-loc).</string>
+				<string>Wander: Teleport. Requires Shadowrocket connected + routing=config, or run Wander: Connect proxy first. Enter lat then lng in decimal degrees (e.g. 40.6892 then -74.0445). Opens Wander to push the spot (Wi-Fi positioning mode).</string>
 			</dict>
 		</dict>
 		<dict>

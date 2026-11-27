@@ -42,7 +42,7 @@ Hand-build in the Shortcuts app (guaranteed fallback if the file will not import
 
 7. Run order top to bottom: Comment -> Ask (Latitude) -> Ask (Longitude) -> Text -> Get Contents of URL.
 
-To use: connect Shadowrocket (shadowrocket://connect) and set routing to config first, keep Pokemon GO open, then run this from the Share sheet / widget / Back Tap; enter lat then lng.
+To use: connect Shadowrocket (shadowrocket://connect) and set routing to config first, keep the app you're using open, then run this from the Share sheet / widget / Back Tap; enter lat then lng.
 
 
 ## Wander: Teleport to preset  ()
