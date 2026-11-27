@@ -1,8 +1,8 @@
 {
   "_comment": "Android update manifest. Each release: bump versionCode in build.gradle.kts AND here, then upload the APK with: gh release upload current Wander.apk --repo faisal-nabulsi/wander-site --clobber (binaries are NOT committed to this repo).",
-  "versionCode": 41,
-  "versionName": "0.32.0",
+  "versionCode": 42,
+  "versionName": "0.33.0",
   "url": "https://github.com/faisal-nabulsi/wander-site/releases/download/current/Wander.apk",
-  "notes": "New: a floating joystick that stays on top of other apps — steer without switching back to Wander (Pro). Share a spot or route as a link your friends can import. Set a distance goal (walk until N km, then stop) and lock your heading to walk hands-free. Curated hotspots now load from the server with freshness info instead of being frozen into the app.",
-  "size": 49667856
+  "notes": "This update needs a fresh install, just once. Tap Later, uninstall Wander, then download it again from wanderspoofer.com/download and install it. Sign in afterward and your saved places come back. After this, updates install normally again.",
+  "size": 49697084
 }
