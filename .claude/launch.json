@@ -4,7 +4,7 @@
     {
       "name": "wander-site",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8099", "--directory", "/Users/faisalnabulsi/Developer/wander-site/github-pages"],
+      "runtimeArgs": ["-m", "http.server", "8099", "--directory", "/Users/faisalnabulsi/Desktop/Projects/wander/site/github-pages"],
       "port": 8099
     }
   ]
